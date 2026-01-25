@@ -1197,8 +1197,7 @@ class PartnerCharacter {
 
     // Apply character-specific scale (villagerGirl is a younger/smaller character)
     const characterScales = {
-      villagerGirl: 0.8,
-      villagerGirl2: 0.8
+      villagerGirl: 0.8
     };
     const scaleFactor = characterScales[characterType] || 1.0;
     this.group.scale.setScalar(scaleFactor);
