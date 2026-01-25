@@ -1,50 +1,43 @@
-# TrencherRPG
+# idleTrencher
 
-A gamified cryptocurrency wallet tracking system that transforms portfolio performance into an RPG battle experience.
+Turn your Solana token holdings into RPG partners. Each token you hold becomes a 3D character that levels up the longer you hold it.
 
-## Concept
+## How It Works
 
-TrencherRPG tracks cryptocurrency wallet addresses and visualizes trading results as RPG combat:
+- **Connect your Solana wallet** via Privy
+- **Your top tokens become Partners** - 3D characters displayed in an idle scene
+- **Partners gain EXP** based on days held (not profit/loss)
+- **HP bars** show current value vs your designated value (cost basis)
+- **Level up** by holding tokens longer (max Lv60 at 1 year)
 
-- **Daily wallet value change %** = EXP accumulation (profit = EXP++)
-- **Each held token** (above threshold) = an enemy in battle
-- **Current P&L status** = win/lose state in combat
+## Partner Slots
+
+- **Free tier**: 1 partner slot
+- **Hold $idle tokens** to unlock more slots
+  - 10,000 $idle = 1 additional slot
+  - Maximum 10 partners (90,000 $idle for all paid slots)
 
 ## Features
 
-### Backend
-- Automated periodic tracking of wallet total value
-- Daily value change calculation
-- EXP system based on profit/loss
-- Multi-wallet support
-
-### Frontend (Three.js)
-- 3D battle scene visualization
-- Real-time combat status based on token P&L
-- Visual win/lose indicators per token position
-
-### Tokenomics ($TRPG)
-- Hold 100 $TRPG = display 1 token battle
-- Hold 1000 $TRPG = display 10 battles (current max)
-- Token gates access to battle visualization tiers
+- 3D idle scene with animated characters
+- HP bars based on value change from your entry point
+- Level system (Lv1-60) based on holding time
+- Explore mode to view other wallets
+- Mobile-friendly responsive design
 
 ## Tech Stack
 
-- **Backend**: Node.js + Express
-- **Frontend**: Three.js + Vite + React
-- **Blockchain**: Solana (@solana/web3.js)
-- **Wallet**: @solana/wallet-adapter (Phantom, Solflare)
-- **Data**: DexScreener API, Solscan, Helius
+- **Frontend**: React + Vite + Three.js
+- **Auth**: Privy (embedded wallet)
+- **Blockchain**: Solana
+- **Hosting**: Vercel
 
-## Project Structure
+## Development
 
-```
-trencherrpg/
-├── mayor/rig/          # Main application
-│   ├── backend/        # API server
-│   ├── frontend/       # Three.js client
-│   └── shared/         # Shared types/utils
-└── .beads/             # Issue tracking
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
 ## License
