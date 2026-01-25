@@ -765,7 +765,7 @@ class PartnerCharacter {
   async init() {
     await this.loadCharacterModel();
     this.createHPBar();
-    this.createLevelBadge();
+    // Level badge removed to reduce visual clutter
     this.createNameLabel();
     this.createSpeechBubble();
     this.startAnimation();
@@ -782,6 +782,20 @@ class PartnerCharacter {
     canvas.height = 256;
     this.speechCanvas = canvas;
     this.speechContext = canvas.getContext('2d');
+
+    // Preload token logo for speech bubble
+    this.tokenLogoImage = null;
+    if (this.data.logoUrl) {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        this.tokenLogoImage = img;
+      };
+      img.onerror = () => {
+        console.warn('Failed to load token logo:', this.data.logoUrl);
+      };
+      img.src = this.data.logoUrl;
+    }
 
     // Create texture and sprite
     const texture = new THREE.CanvasTexture(canvas);
@@ -803,7 +817,7 @@ class PartnerCharacter {
   }
 
   /**
-   * Draw the speech bubble with text
+   * Draw the speech bubble with text and token logo (RPG dialog style)
    */
   drawSpeechBubble(text) {
     const ctx = this.speechContext;
@@ -817,6 +831,12 @@ class PartnerCharacter {
     const bubbleWidth = canvas.width - padding * 2;
     const bubbleHeight = canvas.height - 60;
     const cornerRadius = 20;
+
+    // Logo dimensions
+    const logoSize = 70;
+    const logoMargin = 15;
+    const hasLogo = !!this.tokenLogoImage;
+    const textOffsetX = hasLogo ? logoSize + logoMargin * 2 : 0;
 
     ctx.fillStyle = 'rgba(30, 30, 40, 0.95)';
     ctx.strokeStyle = '#FFD700';
@@ -844,15 +864,36 @@ class PartnerCharacter {
     ctx.fill();
     ctx.stroke();
 
+    // Draw token logo as avatar (RPG style)
+    if (hasLogo) {
+      const logoX = padding + logoMargin;
+      const logoY = padding + (bubbleHeight - logoSize) / 2;
+
+      // Draw circular clip for logo
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.drawImage(this.tokenLogoImage, logoX, logoY, logoSize, logoSize);
+      ctx.restore();
+
+      // Draw border around logo
+      ctx.strokeStyle = '#FFD700';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
     // Draw text
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 32px "Noto Sans TC", sans-serif';
-    ctx.textAlign = 'center';
+    ctx.font = 'bold 28px "Noto Sans TC", sans-serif';
+    ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
 
-    // Word wrap
-    const maxWidth = bubbleWidth - 40;
-    const lineHeight = 40;
+    // Word wrap with adjusted width for logo
+    const textAreaWidth = bubbleWidth - textOffsetX - 40;
+    const lineHeight = 36;
     const words = text.split('');
     let line = '';
     const lines = [];
@@ -860,7 +901,7 @@ class PartnerCharacter {
     for (const char of words) {
       const testLine = line + char;
       const metrics = ctx.measureText(testLine);
-      if (metrics.width > maxWidth && line !== '') {
+      if (metrics.width > textAreaWidth && line !== '') {
         lines.push(line);
         line = char;
       } else {
@@ -869,12 +910,13 @@ class PartnerCharacter {
     }
     lines.push(line);
 
-    // Draw lines centered
+    // Draw lines (left-aligned after logo)
     const totalHeight = lines.length * lineHeight;
     const startY = padding + (bubbleHeight - totalHeight) / 2 + lineHeight / 2;
+    const textX = padding + textOffsetX + 10;
 
     lines.forEach((line, i) => {
-      ctx.fillText(line, canvas.width / 2, startY + i * lineHeight);
+      ctx.fillText(line, textX, startY + i * lineHeight);
     });
 
     // Update texture
@@ -1313,6 +1355,25 @@ class PartnerCharacter {
 
     this.currentAnimationType = targetAnim;
     this.model = this.animationModels[targetAnim]?.root;
+
+    // Adjust nameLabel position for situps (character is lower to the ground)
+    if (this.nameLabel) {
+      if (targetAnim === 'situps') {
+        this.nameLabel.position.y = 1.5;  // Lower position for situps
+      } else {
+        // Restore based on HP bars
+        const hpBars = this.data.hpBars;
+        const showBar2 = hpBars?.bar2?.show && hpBars?.bar2?.green > 0;
+        const showBar3 = hpBars?.bar3?.show && hpBars?.bar3?.green > 0;
+        if (showBar3) {
+          this.nameLabel.position.y = 2.7;
+        } else if (showBar2) {
+          this.nameLabel.position.y = 2.6;
+        } else {
+          this.nameLabel.position.y = 2.45;
+        }
+      }
+    }
 
     console.log(`Animation: ${targetAnim}, moving: ${this.moveState.isMoving}`);
   }
