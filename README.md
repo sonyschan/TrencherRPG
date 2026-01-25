@@ -40,6 +40,12 @@ npm install
 npm run dev
 ```
 
+## Future Work
+
+- **Wardrobe** - Customize your partners with different skins (Knight, Mage, Adventurer...)
+- **Leaderboard** - Compare partner levels and holdings with other players
+- **AI Integration** - Coming soon...
+
 ## License
 
 MIT
