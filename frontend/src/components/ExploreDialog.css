@@ -1,0 +1,184 @@
+/* Explore Dialog Styles */
+
+.explore-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fade-in 0.2s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.explore-dialog {
+  width: 90%;
+  max-width: 480px;
+  animation: dialog-slide-up 0.3s ease;
+}
+
+@keyframes dialog-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dialog-frame {
+  background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%);
+  border: 3px solid #4a4a6a;
+  border-radius: 12px;
+  box-shadow:
+    0 0 0 1px #1a1a2a,
+    0 0 20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, #3a3a4a 0%, #2a2a3a 100%);
+  border-bottom: 2px solid #4a4a6a;
+}
+
+.dialog-icon {
+  font-size: 20px;
+}
+
+.dialog-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dialog-content {
+  padding: 20px;
+}
+
+.typewriter-text {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e0e0e0;
+  min-height: 50px;
+  margin-bottom: 16px;
+}
+
+.cursor {
+  animation: blink 0.7s step-end infinite;
+  color: #87CEEB;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.explore-form {
+  animation: form-fade-in 0.3s ease;
+}
+
+@keyframes form-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.address-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  border: 2px solid #4a4a6a;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.address-input:focus {
+  border-color: #87CEEB;
+  box-shadow: 0 0 8px rgba(135, 206, 235, 0.3);
+}
+
+.address-input::placeholder {
+  color: #666;
+}
+
+.address-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  margin-top: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 4px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-cancel,
+.btn-explore {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #aaa;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.btn-explore {
+  background: linear-gradient(180deg, #4a90d9 0%, #357abd 100%);
+  border: 2px solid #5aa0e9;
+  color: #fff;
+}
+
+.btn-explore:hover:not(:disabled) {
+  background: linear-gradient(180deg, #5aa0e9 0%, #4a90d9 100%);
+  transform: translateY(-1px);
+}
+
+.btn-explore:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

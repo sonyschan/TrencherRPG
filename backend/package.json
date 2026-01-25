@@ -1,18 +1,23 @@
 {
-  "name": "trencherrpg-backend",
+  "name": "idletrencher-backend",
   "version": "0.1.0",
-  "description": "TrencherRPG - Gamified crypto wallet tracking backend",
+  "description": "idleTrencher - Gamified crypto portfolio visualization backend",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js"
+    "start": "node --env-file=.env.production index.js",
+    "dev": "node --env-file=.env.development --watch index.js"
   },
   "dependencies": {
+    "@google-cloud/storage": "^7.7.0",
+    "@privy-io/node": "^0.8.0",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.98.0",
+    "better-sqlite3": "^11.0.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "ethers": "^6.13.0",
     "express": "^4.18.2",
-    "better-sqlite3": "^11.0.0"
+    "express-rate-limit": "^7.1.5"
   },
   "engines": {
     "node": ">=22"

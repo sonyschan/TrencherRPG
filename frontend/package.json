@@ -1,7 +1,7 @@
 {
-  "name": "trencherrpg-frontend",
+  "name": "idletrencher-frontend",
   "version": "0.1.0",
-  "description": "TrencherRPG - 3D battle visualization frontend",
+  "description": "idleTrencher - 3D partner visualization frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,9 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "three": "^0.170.0"
+    "@privy-io/react-auth": "^2.0.0",
+    "@solana-program/system": "^0.10.0",
+    "@solana/kit": "^5.4.0",
+    "@solana/spl-token": "^0.4.14",
+    "@solana/web3.js": "^1.98.0",
+    "buffer": "^6.0.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.170.0",
+    "vite-plugin-node-polyfills": "^0.25.0"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
     "vite": "^6.0.0"
   }
 }

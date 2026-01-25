@@ -5,10 +5,29 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
+
+# Database
+*.db
+*.db-wal
+*.db-shm
+backend/data/
 
 # Build
 dist/
 build/
+
+# Nested directory mistakes (prevent accidental commits)
+**/frontend/frontend/
+**/backend/backend/
+**/public/frontend/
+**/public/backend/
+
+# Claude Code
+.claude/
+CLAUDE.md
+**/CLAUDE.md
 
 # IDE
 .idea/

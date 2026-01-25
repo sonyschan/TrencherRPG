@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animation Demo - idleTrencher</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #fff;
+      min-height: 100vh;
+    }
+    .header {
+      padding: 20px;
+      background: rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .header p {
+      color: #888;
+      font-size: 14px;
+    }
+    .container {
+      display: flex;
+      height: calc(100vh - 100px);
+    }
+    .sidebar {
+      width: 280px;
+      background: rgba(0,0,0,0.2);
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .sidebar h3 {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .animation-btn {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .animation-btn:hover {
+      background: rgba(99, 102, 241, 0.3);
+    }
+    .animation-btn.active {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      font-weight: 600;
+    }
+    .animation-btn .emoji {
+      margin-right: 8px;
+    }
+    .category {
+      margin-bottom: 24px;
+    }
+    .category-title {
+      font-size: 12px;
+      color: #22c55e;
+      margin-bottom: 8px;
+      padding: 4px 8px;
+      background: rgba(34, 197, 94, 0.1);
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .category-title.down {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+    }
+    .category-title.neutral {
+      color: #eab308;
+      background: rgba(234, 179, 8, 0.1);
+    }
+    .category-title.action {
+      color: #6366f1;
+      background: rgba(99, 102, 241, 0.1);
+    }
+    .viewer {
+      flex: 1;
+      position: relative;
+    }
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+    }
+    .info-panel {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: rgba(0,0,0,0.7);
+      padding: 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+    .info-panel h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .info-panel p {
+      color: #888;
+      font-size: 14px;
+    }
+    .suggestion {
+      margin-top: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .suggestion.up {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+    .suggestion.down {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+    .suggestion.neutral {
+      background: rgba(234, 179, 8, 0.2);
+      color: #eab308;
+    }
+    .character-select {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .char-btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .char-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .char-btn.active {
+      background: #6366f1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Animation Demo</h1>
+    <p>Preview all 18 animations to choose for token states (Up / Down / Stable)</p>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <div class="character-select">
+        <button class="char-btn active" data-char="male1">Male 1</button>
+        <button class="char-btn" data-char="male2">Male 2</button>
+        <button class="char-btn" data-char="female1">Female 1</button>
+        <button class="char-btn" data-char="female2">Female 2</button>
+      </div>
+
+      <div class="category">
+        <div class="category-title">Suggested for UP (Happy)</div>
+        <button class="animation-btn" data-anim="Wave"><span class="emoji">👋</span>Wave</button>
+        <button class="animation-btn" data-anim="Yes"><span class="emoji">😊</span>Yes (Nodding)</button>
+        <button class="animation-btn" data-anim="Jump"><span class="emoji">🎉</span>Jump</button>
+        <button class="animation-btn" data-anim="Run"><span class="emoji">🏃</span>Run</button>
+        <button class="animation-btn" data-anim="Punch"><span class="emoji">👊</span>Punch (Celebrate)</button>
+      </div>
+
+      <div class="category">
+        <div class="category-title down">Suggested for DOWN (Sad)</div>
+        <button class="animation-btn" data-anim="Death"><span class="emoji">😵</span>Death (Lying down)</button>
+        <button class="animation-btn" data-anim="No"><span class="emoji">😞</span>No (Shaking head)</button>
+        <button class="animation-btn" data-anim="HitReact"><span class="emoji">😰</span>HitReact</button>
+        <button class="animation-btn" data-anim="Duck"><span class="emoji">😔</span>Duck (Crouching)</button>
+      </div>
+
+      <div class="category">
+        <div class="category-title neutral">Suggested for STABLE</div>
+        <button class="animation-btn active" data-anim="Idle"><span class="emoji">🧍</span>Idle (Standing)</button>
+        <button class="animation-btn" data-anim="Idle_Hold"><span class="emoji">🤲</span>Idle Hold</button>
+        <button class="animation-btn" data-anim="Walk"><span class="emoji">🚶</span>Walk</button>
+      </div>
+
+      <div class="category">
+        <div class="category-title action">Other Actions</div>
+        <button class="animation-btn" data-anim="Idle_Attack"><span class="emoji">⚔️</span>Idle Attack</button>
+        <button class="animation-btn" data-anim="Walk_Hold"><span class="emoji">🚶</span>Walk Hold</button>
+        <button class="animation-btn" data-anim="Run_Attack"><span class="emoji">🏃</span>Run Attack</button>
+        <button class="animation-btn" data-anim="Run_Hold"><span class="emoji">🏃</span>Run Hold</button>
+        <button class="animation-btn" data-anim="Jump_Idle"><span class="emoji">🪂</span>Jump Idle (Float)</button>
+        <button class="animation-btn" data-anim="Jump_Land"><span class="emoji">🦶</span>Jump Land</button>
+      </div>
+    </div>
+
+    <div class="viewer">
+      <div id="canvas-container"></div>
+      <div class="info-panel">
+        <h2 id="anim-name">Idle</h2>
+        <p id="anim-desc">Character standing still, breathing animation</p>
+        <div id="suggestion" class="suggestion neutral">Recommended for: Stable state (±1%)</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+    // Animation descriptions and suggestions
+    const animationInfo = {
+      'Idle': { desc: 'Character standing still with breathing animation', suggest: 'neutral', text: 'Stable state (±1%)' },
+      'Idle_Hold': { desc: 'Standing while holding something', suggest: 'neutral', text: 'Stable state (±1%)' },
+      'Idle_Attack': { desc: 'Attack animation while standing', suggest: 'action', text: 'Battle action' },
+      'Walk': { desc: 'Normal walking animation', suggest: 'neutral', text: 'Stable state (±1%)' },
+      'Walk_Hold': { desc: 'Walking while holding something', suggest: 'neutral', text: 'Stable state' },
+      'Run': { desc: 'Fast running animation', suggest: 'up', text: 'UP state (Excited)' },
+      'Run_Hold': { desc: 'Running while holding something', suggest: 'up', text: 'UP state' },
+      'Run_Attack': { desc: 'Attacking while running', suggest: 'action', text: 'Battle action' },
+      'Jump': { desc: 'Jumping up animation', suggest: 'up', text: 'UP state (Excited)' },
+      'Jump_Idle': { desc: 'Floating in the air', suggest: 'up', text: 'UP state (Floating)' },
+      'Jump_Land': { desc: 'Landing from a jump', suggest: 'neutral', text: 'Transition animation' },
+      'Wave': { desc: 'Friendly waving hand gesture', suggest: 'up', text: 'UP state (Happy)' },
+      'Yes': { desc: 'Nodding head in agreement', suggest: 'up', text: 'UP state (Positive)' },
+      'No': { desc: 'Shaking head in disagreement', suggest: 'down', text: 'DOWN state (Disappointed)' },
+      'Punch': { desc: 'Punching forward attack', suggest: 'up', text: 'UP state (Celebration punch)' },
+      'Duck': { desc: 'Crouching down to avoid', suggest: 'down', text: 'DOWN state (Hiding)' },
+      'HitReact': { desc: 'Reaction to getting hit', suggest: 'down', text: 'DOWN state (Taking a hit)' },
+      'Death': { desc: 'Falling down defeated', suggest: 'down', text: 'DOWN state (Lying flat)' }
+    };
+
+    const characterPaths = {
+      'male1': 'assets/characters/Character_Male_1.gltf',
+      'male2': 'assets/characters/Character_Male_2.gltf',
+      'female1': 'assets/characters/Character_Female_1.gltf',
+      'female2': 'assets/characters/Character_Female_2.gltf'
+    };
+
+    let scene, camera, renderer, controls;
+    let currentModel, mixer, animations;
+    let currentAnimation = 'Idle';
+    let currentCharacter = 'male1';
+    const clock = new THREE.Clock();
+    const loader = new GLTFLoader();
+
+    function init() {
+      const container = document.getElementById('canvas-container');
+
+      // Scene
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x87ceeb);
+
+      // Camera
+      camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      camera.position.set(0, 1.5, 4);
+
+      // Renderer
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+      container.appendChild(renderer.domElement);
+
+      // Controls
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.target.set(0, 1, 0);
+
+      // Lighting
+      const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambient);
+
+      const sun = new THREE.DirectionalLight(0xfff5e6, 1.2);
+      sun.position.set(5, 10, 5);
+      sun.castShadow = true;
+      scene.add(sun);
+
+      // Ground
+      const ground = new THREE.Mesh(
+        new THREE.PlaneGeometry(20, 20),
+        new THREE.MeshLambertMaterial({ color: 0x4a7c4e })
+      );
+      ground.rotation.x = -Math.PI / 2;
+      ground.receiveShadow = true;
+      scene.add(ground);
+
+      // Load initial character
+      loadCharacter(currentCharacter);
+
+      // Resize handler
+      window.addEventListener('resize', onResize);
+
+      // Start animation loop
+      animate();
+    }
+
+    function loadCharacter(charKey) {
+      if (currentModel) {
+        scene.remove(currentModel);
+        if (mixer) mixer.stopAllAction();
+      }
+
+      loader.load(characterPaths[charKey], (gltf) => {
+        currentModel = gltf.scene;
+        currentModel.traverse((child) => {
+          if (child.isMesh) {
+            child.castShadow = true;
+            if (child.material?.map) {
+              child.material.map.colorSpace = THREE.SRGBColorSpace;
+            }
+          }
+        });
+
+        // Scale and position
+        const box = new THREE.Box3().setFromObject(currentModel);
+        const height = box.max.y - box.min.y;
+        const scale = 2 / height;
+        currentModel.scale.setScalar(scale);
+        currentModel.position.y = 0;
+
+        scene.add(currentModel);
+
+        // Setup animations
+        animations = {};
+        mixer = new THREE.AnimationMixer(currentModel);
+        gltf.animations.forEach((clip) => {
+          animations[clip.name] = mixer.clipAction(clip);
+        });
+
+        // Play current animation
+        playAnimation(currentAnimation);
+      });
+    }
+
+    function playAnimation(name) {
+      if (!animations || !animations[name]) return;
+
+      // Stop all animations
+      Object.values(animations).forEach(action => action.stop());
+
+      // Play new animation
+      const action = animations[name];
+      action.reset();
+      action.play();
+
+      // Update UI
+      currentAnimation = name;
+      updateInfo(name);
+
+      document.querySelectorAll('.animation-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.anim === name);
+      });
+    }
+
+    function updateInfo(name) {
+      const info = animationInfo[name] || { desc: 'Animation', suggest: 'neutral', text: 'General' };
+      document.getElementById('anim-name').textContent = name;
+      document.getElementById('anim-desc').textContent = info.desc;
+
+      const suggestion = document.getElementById('suggestion');
+      suggestion.className = 'suggestion ' + info.suggest;
+      suggestion.textContent = 'Recommended for: ' + info.text;
+    }
+
+    function onResize() {
+      const container = document.getElementById('canvas-container');
+      camera.aspect = container.clientWidth / container.clientHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const delta = clock.getDelta();
+      if (mixer) mixer.update(delta);
+
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    // Event listeners
+    document.querySelectorAll('.animation-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        playAnimation(btn.dataset.anim);
+      });
+    });
+
+    document.querySelectorAll('.char-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCharacter = btn.dataset.char;
+        loadCharacter(currentCharacter);
+      });
+    });
+
+    // Initialize
+    init();
+  </script>
+</body>
+</html>

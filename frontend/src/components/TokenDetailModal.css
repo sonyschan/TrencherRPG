@@ -1,0 +1,332 @@
+/* TokenDetailModal - RPG-style dialog */
+
+.token-detail-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+}
+
+.modal-container {
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #dc2626;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  background: #dc2626;
+  transform: scale(1.1);
+}
+
+.modal-content {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16162a 100%);
+  border: 3px solid #4a4a6a;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+/* Token Avatar */
+.token-avatar-large {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+}
+
+.token-avatar-large img,
+.avatar-placeholder-large {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #6366f1;
+  background: #2a2a4a;
+}
+
+.avatar-placeholder-large {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: #8b8bab;
+}
+
+.avatar-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.3) 0%, transparent 70%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.avatar-glow.talking {
+  animation: talkingPulse 0.3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes talkingPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+/* Dialog Box */
+.dialog-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid #3a3a5a;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #3a3a5a;
+}
+
+.speaker-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.speaker-level {
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.dialog-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #e0e0e0;
+  white-space: pre-wrap;
+  min-height: 180px;
+}
+
+.typing-cursor {
+  display: inline-block;
+  animation: blink 0.7s infinite;
+  color: #6366f1;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.dialog-hint {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #3a3a5a;
+  font-size: 13px;
+  color: #8b8bab;
+  text-align: center;
+}
+
+.edit-btn {
+  background: none;
+  border: none;
+  color: #6366f1;
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 4px;
+}
+
+.edit-btn:hover {
+  color: #818cf8;
+}
+
+/* Edit Form */
+.edit-form {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  cursor: default;
+}
+
+.edit-form label {
+  display: block;
+  font-size: 13px;
+  color: #8b8bab;
+  margin-bottom: 8px;
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #3a3a5a;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.edit-form input:focus {
+  border-color: #6366f1;
+}
+
+.edit-form input::placeholder {
+  color: #6b6b8b;
+}
+
+.edit-error {
+  color: #f87171;
+  font-size: 13px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: rgba(248, 113, 113, 0.1);
+  border-radius: 6px;
+  border-left: 3px solid #f87171;
+}
+
+.edit-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.edit-actions button {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 2px solid #4a4a6a;
+  color: #8b8bab;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  border-color: #6a6a8a;
+  color: #fff;
+}
+
+.btn-save {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  border: none;
+  color: #fff;
+}
+
+.btn-save:hover:not(:disabled) {
+  background: linear-gradient(135deg, #818cf8, #6366f1);
+  transform: translateY(-1px);
+}
+
+.btn-save:disabled,
+.btn-cancel:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Social Links Bar - minimal style */
+.social-links-bar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.social-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #8b8bab;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.social-link-btn:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.social-link-btn:active {
+  transform: scale(1);
+}
+
+/* Hover glow effect */
+.social-link-btn:hover svg {
+  filter: drop-shadow(0 0 4px currentColor);
+}

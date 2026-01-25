@@ -1,0 +1,150 @@
+/* Feature Menu Styles */
+
+.feature-menu {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 24px;
+  z-index: 100;
+  padding: 8px;
+}
+
+.menu-item {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-item:hover:not(.disabled) {
+  transform: translateY(-4px) scale(1.1);
+}
+
+.menu-item:active:not(.disabled) {
+  transform: translateY(0) scale(0.95);
+}
+
+.menu-item.active {
+  filter: drop-shadow(0 0 8px rgba(255, 165, 0, 0.6));
+}
+
+.menu-item.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Pixel Icon Base Styles */
+.pixel-icon {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Campfire Animation */
+.campfire .spark {
+  animation: float-spark 1.5s ease-in-out infinite;
+}
+
+.campfire .spark-1 {
+  animation-delay: 0s;
+}
+
+.campfire .spark-2 {
+  animation-delay: 0.5s;
+}
+
+.campfire .spark-3 {
+  animation-delay: 1s;
+}
+
+@keyframes float-spark {
+  0%, 100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(-3px);
+  }
+}
+
+/* Campfire glow effect when active */
+.menu-item.active .campfire {
+  filter: drop-shadow(0 0 4px rgba(255, 165, 0, 0.6));
+}
+
+/* Gate hover effect */
+.menu-item:hover:not(.disabled) .gate {
+  filter: drop-shadow(0 0 4px rgba(252, 211, 77, 0.6));
+}
+
+/* Clothes hover effect when enabled */
+.menu-item:hover:not(.disabled) .clothes:not(.disabled) {
+  filter: drop-shadow(0 0 4px rgba(220, 38, 38, 0.6));
+}
+
+/* Tooltip */
+.menu-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 8px;
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-radius: 4px;
+  pointer-events: none;
+  animation: tooltip-fade-in 0.15s ease;
+}
+
+.menu-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+}
+
+@keyframes tooltip-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .feature-menu {
+    bottom: 10px;
+    right: 10px;
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .menu-item {
+    width: 64px;
+    height: 64px;
+  }
+
+  .pixel-icon {
+    width: 56px;
+    height: 56px;
+  }
+}

@@ -31,9 +31,10 @@ TrencherRPG tracks cryptocurrency wallet addresses and visualizes trading result
 ## Tech Stack
 
 - **Backend**: Node.js + Express
-- **Frontend**: Three.js for 3D rendering
-- **Blockchain**: BSC (Binance Smart Chain)
-- **Data**: DexScreener API, Moralis/MegaNode
+- **Frontend**: Three.js + Vite + React
+- **Blockchain**: Solana (@solana/web3.js)
+- **Wallet**: @solana/wallet-adapter (Phantom, Solflare)
+- **Data**: DexScreener API, Solscan, Helius
 
 ## Project Structure
 

@@ -1,0 +1,324 @@
+/* Explore View Styles */
+
+.explore-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Back Button */
+.back-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(8px);
+}
+
+.back-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateX(-2px);
+}
+
+.back-arrow {
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+
+.back-button:hover .back-arrow {
+  transform: translateX(-3px);
+}
+
+/* Explore Header */
+.explore-header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(135, 206, 235, 0.3);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.explore-wallet-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explore-icon {
+  font-size: 18px;
+}
+
+.explore-address {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  color: #87CEEB;
+  font-weight: 600;
+}
+
+.explore-label {
+  font-size: 12px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.explore-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Cache Info Toast */
+.cache-info {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  padding: 8px 16px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  font-size: 12px;
+  color: #888;
+  animation: toast-fade-in 0.3s ease;
+}
+
+.cache-info.refreshed {
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+@keyframes toast-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Scene Container */
+.explore-scene-container {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  display: flex;
+}
+
+.explore-scene-container .scene-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* Partner List (right side panel) */
+.explore-partner-list {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100%;
+  background: rgba(18, 18, 26, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+}
+
+.explore-partner-list .list-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.explore-partner-list .partners-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.no-partners {
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+  padding: 20px;
+}
+
+/* Explore Partner Card */
+.explore-partner-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.explore-partner-card.increasing {
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.explore-partner-card.decreasing {
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.explore-partner-card .partner-rank {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.explore-partner-card .partner-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.explore-partner-card .partner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.explore-partner-card .avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-text-secondary);
+  background: linear-gradient(135deg, #333, #222);
+}
+
+.explore-partner-card .partner-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.explore-partner-card .partner-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.explore-partner-card .partner-symbol {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.explore-partner-card .level-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border-radius: 4px;
+}
+
+.explore-partner-card .partner-value {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.explore-partner-card .value {
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.explore-partner-card .change {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.explore-partner-card .change.increasing {
+  color: var(--color-hp-up);
+}
+
+.explore-partner-card .change.decreasing {
+  color: var(--color-hp-down);
+}
+
+.explore-partner-card .hp-indicator {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.explore-partner-card .hp-indicator.increasing {
+  color: var(--color-hp-up);
+}
+
+.explore-partner-card .hp-indicator.decreasing {
+  color: var(--color-hp-down);
+}
+
+.explore-partner-card .hp-indicator.stable {
+  color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .explore-partner-list {
+    width: 100%;
+    height: auto;
+    max-height: 40%;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px 16px 0 0;
+  }
+
+  .explore-header {
+    top: 70px;
+  }
+}
