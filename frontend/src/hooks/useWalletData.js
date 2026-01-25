@@ -2,9 +2,9 @@
  * Custom hook for wallet data management
  */
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
-import { getWalletData, refreshWalletData } from '../services/api';
+import { getWalletData, refreshWalletData, initApiAuth } from '../services/api';
 
 // Constants
 const SOL_ADDRESS = '11111111111111111111111111111111';
@@ -48,7 +48,16 @@ function generateDemoSOL() {
 }
 
 export function useWalletData() {
-  const { ready, authenticated, user } = usePrivy();
+  const { ready, authenticated, user, getAccessToken } = usePrivy();
+  const apiAuthInitialized = useRef(false);
+
+  // Initialize API auth with Privy's getAccessToken (once)
+  useEffect(() => {
+    if (ready && getAccessToken && !apiAuthInitialized.current) {
+      initApiAuth(getAccessToken);
+      apiAuthInitialized.current = true;
+    }
+  }, [ready, getAccessToken]);
 
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
