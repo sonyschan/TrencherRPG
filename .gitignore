@@ -1,3 +1,7 @@
+# Backend (private - not open source)
+backend/
+gcp/
+
 # Dependencies
 node_modules/
 
