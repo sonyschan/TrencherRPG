@@ -177,7 +177,7 @@ export class FarmScene {
     // Camera setup - lower angle, closer zoom for farm view
     const aspect = this.container.clientWidth / this.container.clientHeight;
     this.camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
-    this.camera.position.set(0, 10, 20); // Lower Y (15->10), closer Z (25->20, -20%)
+    this.camera.position.set(0, 8, 18); // Y=8 height, Z=18 distance
 
     // Renderer setup
     this.renderer = new THREE.WebGLRenderer({
@@ -431,13 +431,13 @@ export class FarmScene {
 
     const envAssets = this.assetManifest.environment;
     const farmRadius = 12;
-    const outerRadius = 18;
+    const outerRadius = 16;
 
     // Trees around the perimeter (reduced from 15 to 10)
     const treeAssets = envAssets.filter(a => a.key.startsWith('tree'));
     for (let i = 0; i < 10; i++) {
       const angle = (i / 10) * Math.PI * 2 + Math.random() * 0.3;
-      const radius = outerRadius + Math.random() * 5;
+      const radius = outerRadius + Math.random() * 5;  // 16-21 units from center
       const x = Math.cos(angle) * radius;
       const z = Math.sin(angle) * radius;
 
@@ -619,7 +619,7 @@ export class FarmScene {
 
     // Arrange in a spread pattern centered at (0, 0)
     const cols = Math.ceil(Math.sqrt(count));
-    const spacing = 4; // Space between characters
+    const spacing = 6; // Space between characters (increased to prevent overlap)
 
     partners.forEach((partner, i) => {
       const row = Math.floor(i / cols);
@@ -741,12 +741,12 @@ class PartnerCharacter {
     this.isCheeringPhase = false;  // Track which phase of up animation
     this.faceAwayDuringCheer = false;  // Rotate 180° during cheer
 
-    // Simplified movement state
+    // Simplified movement state - characters can roam the entire farm
     this.moveState = {
       isMoving: true,
       moveDirection: new THREE.Vector3(),
       moveSpeed: 0.5,  // Default: walking speed (half of running)
-      wanderRadius: 5.85,
+      farmRadius: 11,  // Characters can roam within farm area (slightly inside boundary)
       directionChangeTimer: 0
     };
 
@@ -768,8 +768,46 @@ class PartnerCharacter {
     // Level badge removed to reduce visual clutter
     this.createNameLabel();
     this.createSpeechBubble();
+    // Adjust positions based on initial animation state (e.g., situps needs lower positions)
+    this.adjustPositionsForAnimation();
     this.startAnimation();
     // pickNewDirection() is called by setTargetPosition() when position is assigned
+  }
+
+  /**
+   * Adjust HP bar and name label positions based on current animation
+   */
+  adjustPositionsForAnimation() {
+    const anim = this.currentAnimationType;
+    const hpBars = this.data.hpBars;
+    const showBar2 = hpBars?.bar2?.show && hpBars?.bar2?.green > 0;
+    const showBar3 = hpBars?.bar3?.show && hpBars?.bar3?.green > 0;
+
+    if (anim === 'situps') {
+      // Situps: lower positions, but still account for number of HP bars
+      if (showBar3) {
+        if (this.hpBarGroup) this.hpBarGroup.position.y = 1.3;
+        if (this.nameLabel) this.nameLabel.position.y = 1.9;
+      } else if (showBar2) {
+        if (this.hpBarGroup) this.hpBarGroup.position.y = 1.2;
+        if (this.nameLabel) this.nameLabel.position.y = 1.6;
+      } else {
+        if (this.hpBarGroup) this.hpBarGroup.position.y = 1.2;
+        if (this.nameLabel) this.nameLabel.position.y = 1.45;
+      }
+    } else {
+      // Default positions
+      if (this.hpBarGroup) this.hpBarGroup.position.y = 2.2;
+      if (this.nameLabel) {
+        if (showBar3) {
+          this.nameLabel.position.y = 2.7;
+        } else if (showBar2) {
+          this.nameLabel.position.y = 2.65;
+        } else {
+          this.nameLabel.position.y = 2.45;
+        }
+      }
+    }
   }
 
   /**
@@ -973,6 +1011,9 @@ class PartnerCharacter {
       }
       this.currentAnimationType = 'talk';
       this.model = this.animationModels.talk.root;
+
+      // Adjust positions back to default (talk is not situps)
+      this.adjustPositionsForAnimation();
 
       // Tilt head up 0 degrees when speaking
       this.tiltHeadUp(this.model, 0 * Math.PI / 180);
@@ -1356,24 +1397,8 @@ class PartnerCharacter {
     this.currentAnimationType = targetAnim;
     this.model = this.animationModels[targetAnim]?.root;
 
-    // Adjust nameLabel position for situps (character is lower to the ground)
-    if (this.nameLabel) {
-      if (targetAnim === 'situps') {
-        this.nameLabel.position.y = 1.5;  // Lower position for situps
-      } else {
-        // Restore based on HP bars
-        const hpBars = this.data.hpBars;
-        const showBar2 = hpBars?.bar2?.show && hpBars?.bar2?.green > 0;
-        const showBar3 = hpBars?.bar3?.show && hpBars?.bar3?.green > 0;
-        if (showBar3) {
-          this.nameLabel.position.y = 2.7;
-        } else if (showBar2) {
-          this.nameLabel.position.y = 2.6;
-        } else {
-          this.nameLabel.position.y = 2.45;
-        }
-      }
-    }
+    // Adjust nameLabel and HP bar position based on animation
+    this.adjustPositionsForAnimation();
 
     console.log(`Animation: ${targetAnim}, moving: ${this.moveState.isMoving}`);
   }
@@ -1726,11 +1751,11 @@ class PartnerCharacter {
   setTargetPosition(x, y, z) {
     this.basePosition.set(x, y, z);
 
-    // Spawn at random position within wander radius (not at center)
+    // Spawn at random position within farm area (characters can roam entire farm)
     const spawnAngle = Math.random() * Math.PI * 2;
-    const spawnRadius = Math.random() * this.moveState.wanderRadius;
-    const spawnX = x + Math.cos(spawnAngle) * spawnRadius;
-    const spawnZ = z + Math.sin(spawnAngle) * spawnRadius;
+    const spawnRadius = Math.random() * this.moveState.farmRadius * 0.8;  // Start within 80% of farm radius
+    const spawnX = Math.cos(spawnAngle) * spawnRadius;
+    const spawnZ = Math.sin(spawnAngle) * spawnRadius;
 
     this.group.position.set(spawnX, y, spawnZ);
     this.targetPosition.set(spawnX, y, spawnZ);
@@ -1829,12 +1854,13 @@ class PartnerCharacter {
         this.moveState.moveDirection.clone().multiplyScalar(moveAmount)
       );
 
-      // Keep within wander radius of base position
-      const distFromBase = newPos.distanceTo(this.basePosition);
-      if (distFromBase > this.moveState.wanderRadius) {
-        // Turn back toward base
-        const toBase = this.basePosition.clone().sub(newPos).normalize();
-        this.moveState.moveDirection.lerp(toBase, 0.1);
+      // Keep within farm boundary (centered at origin)
+      const farmCenter = new THREE.Vector3(0, 0, 0);
+      const distFromCenter = newPos.distanceTo(farmCenter);
+      if (distFromCenter > this.moveState.farmRadius) {
+        // Turn back toward farm center
+        const toCenter = farmCenter.clone().sub(newPos).normalize();
+        this.moveState.moveDirection.lerp(toCenter, 0.15);
         this.targetRotation = Math.atan2(
           this.moveState.moveDirection.x,
           this.moveState.moveDirection.z
