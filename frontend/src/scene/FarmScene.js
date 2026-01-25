@@ -1195,6 +1195,14 @@ class PartnerCharacter {
     // Only load the initial animation (lazy loading)
     await this.loadSingleAnimation(characterType, initialAnim);
 
+    // Apply character-specific scale (villagerGirl is a younger/smaller character)
+    const characterScales = {
+      villagerGirl: 0.8,
+      villagerGirl2: 0.8
+    };
+    const scaleFactor = characterScales[characterType] || 1.0;
+    this.group.scale.setScalar(scaleFactor);
+
     // Set initial animation
     this.updateAdventurerAnimation();
   }
