@@ -9,6 +9,9 @@ import SettingsMenu from './SettingsMenu';
 import { MobileWalletSelector } from './MobileWalletSelector';
 import './Header.css';
 
+// App version from package.json
+const APP_VERSION = __APP_VERSION__ || '0.0.0';
+
 // Detect mobile browser (not in-app wallet browser)
 const isMobileBrowser = () => {
   const ua = navigator.userAgent;
@@ -210,6 +213,7 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
         <h1 className="logo">
           <span className="logo-icon">⚔️</span>
           idleTrencher
+          <span className="app-version">v{APP_VERSION}</span>
         </h1>
       </div>
 
