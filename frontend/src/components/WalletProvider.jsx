@@ -15,8 +15,29 @@ const solanaConnectors = toSolanaWalletConnectors({
   shouldAutoConnect: true
 });
 
-// Detect if running on mobile
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+// Detect device and browser type
+const userAgent = navigator.userAgent;
+const isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+const isInWalletBrowser = /Phantom|OKApp|Solflare/i.test(userAgent);
+
+/**
+ * Determine login methods based on context:
+ * - In wallet's in-app browser: Only show wallet (it's already injected)
+ * - On mobile browser: Only email/google (use MobileWalletSelector for wallets)
+ * - On desktop: All options
+ */
+function getLoginMethods() {
+  if (isInWalletBrowser) {
+    // In wallet's built-in browser - wallet is injected, show only wallet option
+    return ['wallet'];
+  }
+  if (isMobile) {
+    // Mobile browser - use MobileWalletSelector for external wallets
+    return ['email', 'google'];
+  }
+  // Desktop - show all options
+  return ['wallet', 'email', 'google'];
+}
 
 export function WalletContextProvider({ children }) {
   const appId = import.meta.env.VITE_PRIVY_APP_ID;
@@ -40,12 +61,8 @@ export function WalletContextProvider({ children }) {
             ? 'Sign in to view your token partners'
             : undefined
         },
-        // Login methods - email for embedded wallet, wallet for external
-        // On mobile: only email/google (we use MobileWalletSelector for external wallets)
-        // On desktop: wallet first, then email/google
-        loginMethods: isMobile
-          ? ['email', 'google']
-          : ['wallet', 'email', 'google'],
+        // Login methods based on context (see getLoginMethods function)
+        loginMethods: getLoginMethods(),
         // Solana embedded wallet configuration
         embeddedWallets: {
           // Create embedded wallet for users who login via email/social
