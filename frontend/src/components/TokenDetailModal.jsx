@@ -22,6 +22,7 @@ export function TokenDetailModal({ partner, walletAddress, onClose, onUpdateDesi
   const audioContextRef = useRef(null);
   const typingIntervalRef = useRef(null);
   const fullTextRef = useRef('');
+  const dialogTextRef = useRef(null);
 
   // Generate the dialog text with 24h price change and state-based fun messages
   const generateDialogText = useCallback(() => {
@@ -247,6 +248,13 @@ ${t('dialog.adjustBase')}`;
     };
   }, [partner, initAudio, startTyping]);
 
+  // Auto-scroll to bottom while typing
+  useEffect(() => {
+    if (isTyping && dialogTextRef.current) {
+      dialogTextRef.current.scrollTop = dialogTextRef.current.scrollHeight;
+    }
+  }, [displayedText, isTyping]);
+
   if (!partner) return null;
 
   return (
@@ -285,7 +293,7 @@ ${t('dialog.adjustBase')}`;
               <span className="speaker-level">Lv{partner.level}</span>
             </div>
 
-            <div className="dialog-text">
+            <div className="dialog-text" ref={dialogTextRef}>
               {displayedText}
               {isTyping && <span className="typing-cursor">|</span>}
             </div>
