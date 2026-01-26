@@ -1,6 +1,10 @@
 /**
  * Privy Wallet Provider - Solana Only
  * https://docs.privy.io/basics/react/setup
+ *
+ * Supports both:
+ * - External wallets (Phantom, OKX, etc.) - best for desktop
+ * - Embedded wallet (via email/social) - best for mobile PWA
  */
 
 import { PrivyProvider } from '@privy-io/react-auth';
@@ -10,6 +14,9 @@ import { toSolanaWalletConnectors } from '@privy-io/react-auth/solana';
 const solanaConnectors = toSolanaWalletConnectors({
   shouldAutoConnect: true
 });
+
+// Detect if running on mobile
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 export function WalletContextProvider({ children }) {
   const appId = import.meta.env.VITE_PRIVY_APP_ID;
@@ -27,16 +34,24 @@ export function WalletContextProvider({ children }) {
           theme: 'dark',
           accentColor: '#6366f1',
           logo: '/idle.svg',
-          walletChainType: 'solana-only'
+          walletChainType: 'solana-only',
+          // On mobile, show email login first for better UX
+          loginMessage: isMobile
+            ? 'Sign in to view your token partners'
+            : undefined
         },
-        // Login methods - wallet only
-        loginMethods: ['wallet'],
-        // Wallet login settings
-        showWalletLoginFirst: true,
+        // Login methods - email for embedded wallet, wallet for external
+        // Email first on mobile for better PWA experience
+        loginMethods: isMobile
+          ? ['email', 'google', 'wallet']
+          : ['wallet', 'email', 'google'],
         // Solana embedded wallet configuration
         embeddedWallets: {
-          createOnLogin: 'off', // Don't create embedded wallet, use external
-          requireUserPasswordOnCreate: false
+          // Create embedded wallet for users who login via email/social
+          createOnLogin: 'users-without-wallets',
+          requireUserPasswordOnCreate: false,
+          // Don't prompt for signature on every action (better mobile UX)
+          noPromptOnSignature: true
         },
         // External wallet connectors - Solana only
         externalWallets: {
