@@ -229,3 +229,163 @@ button {
     opacity: 1;
   }
 }
+
+/* ===========================================
+   PWA & Mobile Responsive Styles
+   =========================================== */
+
+/* iOS Safe Area Support */
+@supports (padding: env(safe-area-inset-top)) {
+  .header {
+    padding-top: calc(12px + env(safe-area-inset-top));
+  }
+
+  .feature-menu {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .language-toast,
+  .error-toast,
+  .access-warning {
+    bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+}
+
+/* Touch-friendly tap targets */
+@media (pointer: coarse) {
+  button, .partner-card, .menu-item {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Mobile Layout (< 768px) */
+@media (max-width: 768px) {
+  /* Hide partner list sidebar on mobile - will use carousel later */
+  .partner-list {
+    display: none;
+  }
+
+  /* Make scene container full width */
+  .main-content {
+    flex-direction: column;
+  }
+
+  .scene-container {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Compact header */
+  .header {
+    padding: 8px 12px;
+  }
+
+  .header-center {
+    display: none;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+
+  .logo-icon {
+    font-size: 20px;
+  }
+
+  /* Smaller refresh button */
+  .btn-refresh {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .refresh-text {
+    display: none;
+  }
+
+  .last-updated {
+    display: none;
+  }
+
+  /* Compact wallet address */
+  .wallet-address {
+    max-width: 70px;
+    font-size: 11px;
+    padding: 4px 8px;
+  }
+
+  /* Adjust feature menu for mobile */
+  .feature-menu {
+    bottom: 8px;
+    right: 8px;
+    gap: 8px;
+  }
+
+  .menu-item {
+    width: 56px;
+    height: 56px;
+  }
+
+  /* Modal adjustments */
+  .modal-container {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .dialog-text {
+    font-size: 14px;
+    min-height: auto;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .token-avatar-large {
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Demo banner */
+  .demo-banner {
+    font-size: 11px;
+    padding: 6px 12px;
+    max-width: 90%;
+    text-align: center;
+  }
+}
+
+/* Small phones (< 375px) */
+@media (max-width: 375px) {
+  .header {
+    padding: 6px 8px;
+  }
+
+  .logo {
+    font-size: 14px;
+  }
+
+  .btn-refresh {
+    padding: 4px 8px;
+  }
+
+  .settings-button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .feature-menu {
+    gap: 4px;
+  }
+
+  .menu-item {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Standalone PWA mode detection */
+@media (display-mode: standalone) {
+  /* PWA is running in standalone mode */
+  .demo-banner {
+    top: calc(60px + env(safe-area-inset-top, 0px));
+  }
+}
