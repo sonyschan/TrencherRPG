@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://trencherrpg-zytpk4xzgq-as.a.run.app/api/:path*"
+      "destination": "https://trencherrpg-836651762884.asia-southeast1.run.app/api/:path*"
     }
   ],
   "headers": [

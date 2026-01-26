@@ -5,11 +5,13 @@
  */
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import './TokenDetailModal.css';
 
 const TYPING_SPEED = 50; // ms per character
 
 export function TokenDetailModal({ partner, walletAddress, onClose, onUpdateDesignatedValue }) {
+  const { t } = useTranslation();
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -39,21 +41,21 @@ export function TokenDetailModal({ partner, walletAddress, onClose, onUpdateDesi
 
     // Special onboarding message for demo SOL token (logged-out users)
     if (isDemo) {
-      return `嗨，歡迎來到 idleTrencher！
+      return `${t('dialog.demo.greeting')}
 
-我是 ${tokenSymbol}，Solana 區塊鏈的主要代幣，被當作基礎貨幣使用。
+${t('dialog.demo.intro', { symbol: tokenSymbol })}
 
-這是一個將錢包資產 RPG 遊戲化的螢幕保護程式！我們希望你能用更輕鬆的角度來看待代幣投資與價值變化。
+${t('dialog.demo.description')}
 
-每個代幣都可以是你的好夥伴，陪伴你經歷市場的起起落落。
+${t('dialog.demo.companion')}
 
-當代幣上漲時，你的夥伴會開心地跳舞慶祝！
-當代幣下跌時，夥伴會努力做仰臥起坐鍛鍊...
-價格穩定時，夥伴就悠閒地在農場散步。
+${t('dialog.demo.upAction')}
+${t('dialog.demo.downAction')}
+${t('dialog.demo.stableAction')}
 
-代幣持有越久，等級會越高，未來還可以更換不同的服裝喔！
+${t('dialog.demo.levelUp')}
 
-連接你的 Solana 錢包，讓你的代幣們成為你的夥伴吧！`;
+${t('dialog.demo.cta')}`;
     }
 
     const multiplier = designatedValue > 0 ? (currentValue / designatedValue) : 1;
@@ -67,43 +69,44 @@ export function TokenDetailModal({ partner, walletAddress, onClose, onUpdateDesi
     // Fun status text based on animation state
     let statusText = '';
     if (!has24hData) {
-      // No 24h data - show refresh hint
-      statusText = `我的 24 小時表現數據需要刷新才能看到喔！請點擊上方的刷新按鈕。`;
+      statusText = t('dialog.needRefresh');
     } else if (state === 'increasing') {
-      statusText = `看我多麼歡欣鼓舞地雀躍呀！24 小時漲了 ${change24hText}！`;
+      statusText = t('dialog.statusUp', { change: change24hText });
     } else if (state === 'decreasing') {
-      statusText = `因為表現不佳（24h: ${change24hText}），我正在努力地做仰臥起坐呢...`;
+      statusText = t('dialog.statusDown', { change: change24hText });
     } else {
-      statusText = `目前價格沒有明顯變化（24h: ${change24hText}），我就悠閒地散散步吧。`;
+      statusText = t('dialog.statusStable', { change: change24hText });
     }
 
     // Base value comparison text with HP info
     let baseValueText = '';
     if (multiplier >= 2) {
-      baseValueText = `從基準價值來看，我們已經漲了 ${baseChangePercent}%！太棒了！HP上升現在有 ${totalHPBlocks} 格了！`;
+      baseValueText = t('dialog.hpUpBig', { percent: baseChangePercent, blocks: totalHPBlocks });
     } else if (multiplier >= 1) {
-      baseValueText = `從基準價值來看，我們上漲了 ${baseChangePercent}%。HP上升現在有 ${totalHPBlocks} 格了！`;
+      baseValueText = t('dialog.hpUp', { percent: baseChangePercent, blocks: totalHPBlocks });
     } else {
-      baseValueText = `從基準價值來看，我們下跌了 ${baseChangePercent}%。所以HP剩下了 ${totalHPBlocks} 格了...`;
+      baseValueText = t('dialog.hpDown', { percent: Math.abs(parseFloat(baseChangePercent)).toFixed(2), blocks: totalHPBlocks });
     }
 
-    // Days held text (moved from partner list)
-    const daysHeldText = levelInfo ? `我們已經一起冒險 ${levelInfo.exp} 天了！` : '';
+    // Days held text
+    const daysHeldText = levelInfo
+      ? (levelInfo.exp > 0 ? t('dialog.daysHeld', { days: levelInfo.exp }) : t('dialog.daysHeldFirst'))
+      : '';
 
-    return `嘿，夥伴！
+    return `${t('dialog.greeting')}
 
-我是 ${tokenSymbol}，你的 Lv${level} 同伴。
+${t('dialog.intro', { symbol: tokenSymbol, level: level })}
 ${daysHeldText}
 
 ${statusText}
 
 ${baseValueText}
 
-基準價值: $${designatedValue?.toFixed(2) || '0.00'}
-目前價值: $${currentValue?.toFixed(2) || '0.00'}
+${t('dialog.baseValue', { value: designatedValue?.toFixed(2) || '0.00' })}
+${t('dialog.currentValue', { value: currentValue?.toFixed(2) || '0.00' })}
 
-要調整基準價值嗎？`;
-  }, [partner]);
+${t('dialog.adjustBase')}`;
+  }, [partner, t]);
 
   // Initialize audio context
   const initAudio = useCallback(() => {
@@ -206,7 +209,7 @@ ${baseValueText}
   const handleSave = useCallback(async () => {
     const newValue = parseFloat(editValue);
     if (isNaN(newValue) || newValue <= 0) {
-      setEditError('請輸入大於 0 的數值');
+      setEditError(t('dialog.errorPositive'));
       return;
     }
 
@@ -217,11 +220,11 @@ ${baseValueText}
       setShowEditForm(false);
     } catch (error) {
       console.error('Failed to update designated value:', error);
-      setEditError('更新失敗，請再試一次');
+      setEditError(t('dialog.errorUpdate'));
     } finally {
       setIsSaving(false);
     }
-  }, [editValue, partner, onUpdateDesignatedValue]);
+  }, [editValue, partner, onUpdateDesignatedValue, t]);
 
   // Handle cancel edit
   const handleCancel = useCallback(() => {

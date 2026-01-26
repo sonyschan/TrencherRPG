@@ -4,6 +4,8 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
+import { useTranslation } from 'react-i18next';
+import SettingsMenu from './SettingsMenu';
 import './Header.css';
 
 const COOLDOWN_DURATION = 60 * 60; // 1 hour in seconds
@@ -12,6 +14,7 @@ const PREMIUM_THRESHOLD = 100000; // 100,000 $idle tokens
 
 export function Header({ wallet, onRefresh, loading, lastUpdated, access, isConnected }) {
   const { ready, authenticated, login, logout, user } = usePrivy();
+  const { t } = useTranslation();
 
   // Cooldown state for basic users
   const [cooldownRemaining, setCooldownRemaining] = useState(0);
@@ -152,7 +155,7 @@ export function Header({ wallet, onRefresh, loading, lastUpdated, access, isConn
       show: true,
       disabled: loading || onCooldown,
       isAuto: false,
-      text: loading ? 'Updating...' : (onCooldown ? formatCooldown(cooldownRemaining) : 'Refresh'),
+      text: loading ? t('header.updating') : (onCooldown ? formatCooldown(cooldownRemaining) : t('header.refresh')),
       className: `btn-refresh ${onCooldown ? 'cooldown' : ''}`
     };
   };
@@ -193,14 +196,14 @@ export function Header({ wallet, onRefresh, loading, lastUpdated, access, isConn
               <div className="refresh-section">
                 {lastUpdated && (
                   <span className="last-updated">
-                    Updated: {formatTime(lastUpdated)}
+                    {t('header.updated', { time: formatTime(lastUpdated) })}
                   </span>
                 )}
                 <button
                   className={refreshState.className}
                   onClick={handleRefresh}
                   disabled={refreshState.disabled}
-                  title={refreshState.isAuto ? 'Toggle auto-refresh' : 'Refresh portfolio data'}
+                  title={refreshState.isAuto ? t('header.toggleAutoRefresh') : t('header.refreshPortfolio')}
                 >
                   <span className="refresh-icon">
                     {refreshState.isAuto ? (refreshState.isActive ? '◉' : '○') : '⏳'}
@@ -211,19 +214,21 @@ export function Header({ wallet, onRefresh, loading, lastUpdated, access, isConn
             )}
 
             {authenticated ? (
-              <div className="wallet-connected">
-                <span className="wallet-address">
-                  {formatAddress(user?.wallet?.address)}
-                </span>
-                <button className="btn-disconnect" onClick={logout}>
-                  Disconnect
-                </button>
-              </div>
+              <span className="wallet-address">
+                {formatAddress(user?.wallet?.address)}
+              </span>
             ) : (
               <button className="btn-connect" onClick={login}>
-                Connect Wallet
+                {t('header.connectWallet')}
               </button>
             )}
+
+            {/* Settings Menu - rightmost position */}
+            <SettingsMenu
+              authenticated={authenticated}
+              onLogout={logout}
+              walletAddress={user?.wallet?.address}
+            />
           </>
         )}
       </div>

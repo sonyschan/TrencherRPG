@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useRef, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FarmScene } from '../scene/FarmScene';
 import { FeatureMenu } from './FeatureMenu';
 import './Scene3D.css';
@@ -12,6 +13,7 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
   const containerRef = useRef(null);
   const sceneRef = useRef(null);
   const onPartnerClickRef = useRef(onPartnerClick);
+  const { t, i18n } = useTranslation();
 
   // Keep callback ref up to date
   useEffect(() => {
@@ -25,11 +27,11 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
     }
   }, []);
 
-  // Initialize Three.js scene
+  // Initialize Three.js scene (only once)
   useEffect(() => {
     if (!containerRef.current) return;
 
-    sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick);
+    sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick, t);
 
     return () => {
       if (sceneRef.current) {
@@ -37,7 +39,15 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
         sceneRef.current = null;
       }
     };
-  }, [handlePartnerClick]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handlePartnerClick]); // Don't include t - use setTranslation instead
+
+  // Update translation function when language changes
+  useEffect(() => {
+    if (sceneRef.current) {
+      sceneRef.current.setTranslation(t);
+    }
+  }, [t, i18n.language]);
 
   // Update partners when data changes
   useEffect(() => {
@@ -52,10 +62,10 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
         <div className="scene-placeholder">
           <div className="placeholder-content">
             <span className="placeholder-icon">{isExploreMode ? '🔍' : '🌾'}</span>
-            <h2>{isExploreMode ? 'Empty Village' : 'Welcome to idleTrencher'}</h2>
+            <h2>{isExploreMode ? t('scene.emptyVillage') : t('scene.welcome')}</h2>
             <p>{isExploreMode
-              ? 'This wallet has no token partners yet'
-              : 'Connect your wallet to see your token partners on the farm'
+              ? t('scene.noPartners')
+              : t('scene.connectPrompt')
             }</p>
           </div>
         </div>

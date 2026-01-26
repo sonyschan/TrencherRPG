@@ -86,9 +86,10 @@ function normalizeToHeightAndGround(object, targetHeight, sink = 0.0) {
 }
 
 export class FarmScene {
-  constructor(container, onPartnerClick = null) {
+  constructor(container, onPartnerClick = null, translateFn = null) {
     this.container = container;
     this.onPartnerClick = onPartnerClick;
+    this.t = translateFn || ((key) => key);  // Translation function
     this.partners = new Map();
     this.environmentObjects = [];
     this.animationId = null;
@@ -107,6 +108,17 @@ export class FarmScene {
     this.currentSpeakingPartner = null;
 
     this.init();
+  }
+
+  /**
+   * Update translation function (called when language changes)
+   */
+  setTranslation(translateFn) {
+    this.t = translateFn || ((key) => key);
+    // Update translation for all partners
+    for (const partner of this.partners.values()) {
+      partner.setTranslation(this.t);
+    }
   }
 
   /**
@@ -149,17 +161,17 @@ export class FarmScene {
     if (partner && partner.data) {
       this.currentSpeakingPartner = partner;
 
-      // Generate speech text based on state
+      // Generate speech text based on state (using translation)
       const state = partner.data.state;
       const priceChange = partner.data.priceChange24h;
       let speechText;
 
       if (state === 'increasing' && priceChange > 0) {
-        speechText = `漲 ${priceChange.toFixed(1)}% 的感覺真是太棒了！`;
+        speechText = this.t('speech.increasing', { percent: priceChange.toFixed(1) });
       } else if (state === 'decreasing' && priceChange < 0) {
-        speechText = `跌 ${Math.abs(priceChange).toFixed(1)}% 之後遊戲才要開始。`;
+        speechText = this.t('speech.decreasing', { percent: Math.abs(priceChange).toFixed(1) });
       } else {
-        speechText = '持續觀察，以靜制動。';
+        speechText = this.t('speech.stable');
       }
 
       partner.showSpeechBubble(speechText, () => {
@@ -583,7 +595,7 @@ export class FarmScene {
   async addPartner(data, index) {
     // First token (index 0) uses Adventurer with state-based animations
     const isFirstToken = (index === 0);
-    const partner = new PartnerCharacter(data, this.assetManifest, isFirstToken);
+    const partner = new PartnerCharacter(data, this.assetManifest, isFirstToken, this.t);
     await partner.init();
     this.partners.set(data.tokenAddress, partner);
     this.scene.add(partner.group);
@@ -718,10 +730,11 @@ export class FarmScene {
  * Available skins: villager, villager2, villagerGirl, villagerGirl2, adventurer, mage, knight
  */
 class PartnerCharacter {
-  constructor(data, assetManifest, isFirstToken = false) {
+  constructor(data, assetManifest, isFirstToken = false, translateFn = null) {
     this.data = data;
     this.assetManifest = assetManifest;
     this.isFirstToken = isFirstToken;  // Legacy flag, all tokens now use animated characters
+    this.t = translateFn || ((key) => key);  // Translation function
     this.group = new THREE.Group();
     this.basePosition = new THREE.Vector3();  // Center position for wandering
     this.targetPosition = new THREE.Vector3();
@@ -775,6 +788,13 @@ class PartnerCharacter {
   }
 
   /**
+   * Update translation function (called when language changes)
+   */
+  setTranslation(translateFn) {
+    this.t = translateFn || ((key) => key);
+  }
+
+  /**
    * Adjust HP bar and name label positions based on current animation
    */
   adjustPositionsForAnimation() {
@@ -823,17 +843,8 @@ class PartnerCharacter {
 
     // Preload token logo for speech bubble
     this.tokenLogoImage = null;
-    if (this.data.logoUrl) {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      img.onload = () => {
-        this.tokenLogoImage = img;
-      };
-      img.onerror = () => {
-        console.warn('Failed to load token logo:', this.data.logoUrl);
-      };
-      img.src = this.data.logoUrl;
-    }
+    this.logoLoadAttempts = 0;
+    this.loadTokenLogo();
 
     // Create texture and sprite
     const texture = new THREE.CanvasTexture(canvas);
@@ -852,6 +863,35 @@ class PartnerCharacter {
     this.speechBubble.visible = false;
 
     this.group.add(this.speechBubble);
+  }
+
+  /**
+   * Load the token logo with retry mechanism
+   */
+  loadTokenLogo() {
+    if (!this.data.logoUrl || this.tokenLogoImage) return;
+
+    const logoUrl = this.data.logoUrl;
+    this.logoLoadAttempts++;
+
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      this.tokenLogoImage = img;
+      // If bubble is currently visible, redraw it with the logo
+      if (this.speechBubble?.visible && this.currentSpeechText) {
+        this.drawSpeechBubble(this.currentSpeechText);
+      }
+    };
+    img.onerror = () => {
+      // Retry up to 3 times with delay
+      if (this.logoLoadAttempts < 3) {
+        setTimeout(() => this.loadTokenLogo(), 1000 * this.logoLoadAttempts);
+      } else {
+        console.warn('Failed to load token logo after retries:', logoUrl);
+      }
+    };
+    img.src = logoUrl;
   }
 
   /**
@@ -969,6 +1009,15 @@ class PartnerCharacter {
     if (this.speechTimeout) clearTimeout(this.speechTimeout);
     if (this.fadeTimeout) clearTimeout(this.fadeTimeout);
 
+    // Store text for potential redraw when logo loads
+    this.currentSpeechText = text;
+
+    // Try to load logo if not yet loaded
+    if (!this.tokenLogoImage && this.data.logoUrl) {
+      this.logoLoadAttempts = 0;
+      this.loadTokenLogo();
+    }
+
     // Draw the bubble
     this.drawSpeechBubble(text);
 
@@ -985,6 +1034,7 @@ class PartnerCharacter {
 
     // After 5 seconds, start fade out
     this.speechTimeout = setTimeout(() => {
+      this.currentSpeechText = null;
       this.fadeSpeechBubble(onComplete);
     }, 5000);
   }
@@ -1751,11 +1801,21 @@ class PartnerCharacter {
   setTargetPosition(x, y, z) {
     this.basePosition.set(x, y, z);
 
-    // Spawn at random position within farm area (characters can roam entire farm)
-    const spawnAngle = Math.random() * Math.PI * 2;
-    const spawnRadius = Math.random() * this.moveState.farmRadius * 0.8;  // Start within 80% of farm radius
-    const spawnX = Math.cos(spawnAngle) * spawnRadius;
-    const spawnZ = Math.sin(spawnAngle) * spawnRadius;
+    // Determine spawn position based on animation state
+    const state = this.data.state;
+    let spawnX, spawnZ;
+
+    if (state === 'decreasing') {
+      // Situps (stationary) - spawn at grid position to maintain spacing
+      spawnX = x;
+      spawnZ = z;
+    } else {
+      // Moving characters - spawn at random position within farm, but offset from base
+      const spawnAngle = Math.random() * Math.PI * 2;
+      const spawnRadius = Math.random() * this.moveState.farmRadius * 0.6;
+      spawnX = Math.cos(spawnAngle) * spawnRadius;
+      spawnZ = Math.sin(spawnAngle) * spawnRadius;
+    }
 
     this.group.position.set(spawnX, y, spawnZ);
     this.targetPosition.set(spawnX, y, spawnZ);

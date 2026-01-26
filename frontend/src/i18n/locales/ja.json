@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "title": "設定",
+    "language": "言語",
+    "walletLogout": "ウォレットログアウト",
+    "languageChanged": "言語を{{language}}に変更しました"
+  },
+  "app": {
+    "loading": "idleTrencherを読み込み中...",
+    "retry": "再試行",
+    "unlockSlots": "{{amount}} $idle トークンを保有してパートナースロットを解除",
+    "demoMode": "デモモード - Solanaウォレットを接続してパートナーを確認"
+  },
+  "header": {
+    "updating": "更新中...",
+    "refresh": "更新",
+    "updated": "更新時刻: {{time}}",
+    "disconnect": "切断",
+    "connectWallet": "ウォレット接続",
+    "toggleAutoRefresh": "自動更新を切り替え",
+    "refreshPortfolio": "ポートフォリオデータを更新"
+  },
+  "partnerList": {
+    "title": "あなたのパートナー",
+    "connectPrompt": "ウォレットを接続してパートナーを確認",
+    "unlockSlots": "{{count}} スロットを解除",
+    "getIdleForSlot": "{{amount}} $idle で次のスロットを解除",
+    "unlockAutoRefresh": "自動更新を解除",
+    "holdMoreIdle": "あと {{amount}} $idle を保有",
+    "max": "MAX",
+    "exp": "EXP"
+  },
+  "featureMenu": {
+    "home": "ホーム",
+    "explore": "探索",
+    "skin": "スキン",
+    "skinSoon": "スキン (近日公開)",
+    "leaderboard": "ランキング",
+    "leaderboardTodo": "ランキング (開発中)"
+  },
+  "explore": {
+    "dialogTitle": "探索",
+    "dialogMessage": "誰の村を訪問しますか？下にウォレットアドレスを入力してください...",
+    "placeholder": "Solanaウォレットアドレスを入力...",
+    "cancel": "キャンセル",
+    "visitVillage": "村を訪問",
+    "loading": "読み込み中...",
+    "errorEmpty": "ウォレットアドレスを入力してください",
+    "errorInvalid": "無効なウォレットアドレス",
+    "errorFailed": "ウォレットの探索に失敗",
+    "backHome": "ホーム",
+    "villageLabel": "村",
+    "refreshedNow": "データを更新しました",
+    "cached": "キャッシュ: {{time}}",
+    "partnersTitle": "パートナー",
+    "noPartners": "表示するパートナーがいません"
+  },
+  "scene": {
+    "emptyVillage": "空の村",
+    "welcome": "idleTrencherへようこそ",
+    "noPartners": "このウォレットにはトークンパートナーがいません",
+    "connectPrompt": "ウォレットを接続して農場でトークンパートナーを確認"
+  },
+  "speech": {
+    "increasing": "{{percent}}%上昇！最高の気分だよ！",
+    "decreasing": "{{percent}}%下落...ここからが本番だ。",
+    "stable": "静観して、冷静に待つよ。"
+  },
+  "dialog": {
+    "demo": {
+      "greeting": "こんにちは、idleTrencherへようこそ！",
+      "intro": "私は{{symbol}}、Solanaブロックチェーンのメイントークンで、基軸通貨として使われています。",
+      "description": "これはウォレット資産をRPGゲーム化したスクリーンセーバーです！トークン投資と価値変動をもっとリラックスして見てほしいと思っています。",
+      "companion": "すべてのトークンはあなたの仲間になれます。市場の上げ下げを一緒に経験しましょう。",
+      "upAction": "トークンが上がると、パートナーは嬉しそうに踊ってお祝いします！",
+      "downAction": "トークンが下がると、パートナーは一生懸命腹筋運動をします...",
+      "stableAction": "価格が安定していると、パートナーはのんびり農場を散歩します。",
+      "levelUp": "トークンを長く保有するほどレベルが上がり、将来は衣装も変えられますよ！",
+      "cta": "Solanaウォレットを接続して、トークンをパートナーにしましょう！"
+    },
+    "greeting": "やあ、パートナー！",
+    "intro": "私は{{symbol}}、あなたのLv{{level}}の仲間です。",
+    "daysHeld": "あなたは私を{{days}}日間保有しています。",
+    "daysHeldFirst": "今日が一緒の初日です！",
+    "needRefresh": "24時間のパフォーマンスデータを更新する必要があります！上の更新ボタンをクリックしてください。",
+    "statusUp": "私がどれだけ嬉しそうに踊っているか見て！24時間で{{change}}上昇！",
+    "statusDown": "パフォーマンスが悪いので（24h: {{change}}）、一生懸命腹筋運動中...",
+    "statusStable": "今は価格に大きな変化がないので（24h: {{change}}）、のんびり散歩しています。",
+    "hpUpBig": "基準価値から見ると、{{percent}}%上昇しました！すごい！HPが{{blocks}}ブロックに増えました！",
+    "hpUp": "基準価値から見ると、{{percent}}%上昇しています。HPが{{blocks}}ブロックに増えました！",
+    "hpDown": "基準価値から見ると、{{percent}}%下落しています。HPは{{blocks}}ブロックになりました...",
+    "baseValue": "基準価値: ${{value}}",
+    "currentValue": "現在価値: ${{value}}",
+    "adjustBase": "基準価値を調整しますか？",
+    "errorPositive": "0より大きい値を入力してください",
+    "errorUpdate": "更新に失敗しました。もう一度お試しください"
+  }
+}

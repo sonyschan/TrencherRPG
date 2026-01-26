@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "walletLogout": "Logout Wallet",
+    "languageChanged": "Language changed to {{language}}"
+  },
+  "app": {
+    "loading": "Loading idleTrencher...",
+    "retry": "Retry",
+    "unlockSlots": "Hold {{amount}} $idle tokens to unlock more partner slots",
+    "demoMode": "Demo Mode - Connect your Solana wallet to see your own partners"
+  },
+  "header": {
+    "updating": "Updating...",
+    "refresh": "Refresh",
+    "updated": "Updated: {{time}}",
+    "disconnect": "Disconnect",
+    "connectWallet": "Connect Wallet",
+    "toggleAutoRefresh": "Toggle auto-refresh",
+    "refreshPortfolio": "Refresh portfolio data"
+  },
+  "partnerList": {
+    "title": "Your Partners",
+    "connectPrompt": "Connect your wallet to see your partners",
+    "unlockSlots": "Unlock {{count}} more slots",
+    "getIdleForSlot": "Get {{amount}} $idle for next slot",
+    "unlockAutoRefresh": "Unlock Auto-Refresh",
+    "holdMoreIdle": "Hold {{amount}} more $idle",
+    "max": "MAX",
+    "exp": "EXP"
+  },
+  "featureMenu": {
+    "home": "Home",
+    "explore": "Explore",
+    "skin": "Skin",
+    "skinSoon": "Skin (Soon)",
+    "leaderboard": "Leaderboard",
+    "leaderboardTodo": "Leaderboard (TODO)"
+  },
+  "explore": {
+    "dialogTitle": "Explore",
+    "dialogMessage": "Whose village would you like to visit? Enter their wallet address below...",
+    "placeholder": "Enter Solana wallet address...",
+    "cancel": "Cancel",
+    "visitVillage": "Visit Village",
+    "loading": "Loading...",
+    "errorEmpty": "Please enter a wallet address",
+    "errorInvalid": "Invalid wallet address",
+    "errorFailed": "Failed to explore wallet",
+    "backHome": "Home",
+    "villageLabel": "Village",
+    "refreshedNow": "Data refreshed just now",
+    "cached": "Cached: {{time}}",
+    "partnersTitle": "Partners",
+    "noPartners": "No partners to display"
+  },
+  "scene": {
+    "emptyVillage": "Empty Village",
+    "welcome": "Welcome to idleTrencher",
+    "noPartners": "This wallet has no token partners yet",
+    "connectPrompt": "Connect your wallet to see your token partners on the farm"
+  },
+  "speech": {
+    "increasing": "Up {{percent}}%! Feeling absolutely fantastic!",
+    "decreasing": "Down {{percent}}%... The game is just getting started.",
+    "stable": "Watching and waiting, staying calm."
+  },
+  "dialog": {
+    "demo": {
+      "greeting": "Hi, welcome to idleTrencher!",
+      "intro": "I'm {{symbol}}, the main token on the Solana blockchain, used as the base currency.",
+      "description": "This is a screensaver that gamifies your wallet assets into an RPG! We hope you can view token investments and value changes from a more relaxed perspective.",
+      "companion": "Every token can be your companion, accompanying you through the ups and downs of the market.",
+      "upAction": "When tokens go up, your companion will happily dance and celebrate!",
+      "downAction": "When tokens go down, your companion will work hard doing sit-ups...",
+      "stableAction": "When prices are stable, your companion will leisurely stroll around the farm.",
+      "levelUp": "The longer you hold tokens, the higher their level will be. In the future, you can even change their outfits!",
+      "cta": "Connect your Solana wallet and let your tokens become your companions!"
+    },
+    "greeting": "Hey, partner!",
+    "intro": "I'm {{symbol}}, your Lv{{level}} companion.",
+    "daysHeld": "You've held me for {{days}} days now.",
+    "daysHeldFirst": "This is our first day together!",
+    "needRefresh": "My 24-hour performance data needs to be refreshed! Please click the refresh button above.",
+    "statusUp": "Look how joyfully I'm dancing! Up {{change}} in 24 hours!",
+    "statusDown": "Due to poor performance (24h: {{change}}), I'm working hard doing sit-ups...",
+    "statusStable": "No significant price change right now (24h: {{change}}), so I'm just taking a leisurely stroll.",
+    "hpUpBig": "From base value, we're up {{percent}}%! Amazing! HP increased to {{blocks}} blocks!",
+    "hpUp": "From base value, we're up {{percent}}%. HP increased to {{blocks}} blocks!",
+    "hpDown": "From base value, we're down {{percent}}%. So HP is now at {{blocks}} blocks...",
+    "baseValue": "Base Value: ${{value}}",
+    "currentValue": "Current Value: ${{value}}",
+    "adjustBase": "Want to adjust the base value?",
+    "errorPositive": "Please enter a value greater than 0",
+    "errorUpdate": "Update failed, please try again"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "title": "설정",
+    "language": "언어",
+    "walletLogout": "지갑 로그아웃",
+    "languageChanged": "언어가 {{language}}로 변경되었습니다"
+  },
+  "app": {
+    "loading": "idleTrencher 로딩 중...",
+    "retry": "재시도",
+    "unlockSlots": "{{amount}} $idle 토큰을 보유하여 더 많은 파트너 슬롯 잠금 해제",
+    "demoMode": "데모 모드 - Solana 지갑을 연결하여 파트너 확인"
+  },
+  "header": {
+    "updating": "업데이트 중...",
+    "refresh": "새로고침",
+    "updated": "업데이트: {{time}}",
+    "disconnect": "연결 해제",
+    "connectWallet": "지갑 연결",
+    "toggleAutoRefresh": "자동 새로고침 전환",
+    "refreshPortfolio": "포트폴리오 데이터 새로고침"
+  },
+  "partnerList": {
+    "title": "내 파트너",
+    "connectPrompt": "지갑을 연결하여 파트너를 확인하세요",
+    "unlockSlots": "{{count}}개 슬롯 잠금 해제",
+    "getIdleForSlot": "{{amount}} $idle로 다음 슬롯 잠금 해제",
+    "unlockAutoRefresh": "자동 새로고침 잠금 해제",
+    "holdMoreIdle": "{{amount}} $idle 더 보유",
+    "max": "MAX",
+    "exp": "EXP"
+  },
+  "featureMenu": {
+    "home": "홈",
+    "explore": "탐색",
+    "skin": "스킨",
+    "skinSoon": "스킨 (곧 출시)",
+    "leaderboard": "리더보드",
+    "leaderboardTodo": "리더보드 (개발 중)"
+  },
+  "explore": {
+    "dialogTitle": "탐색",
+    "dialogMessage": "누구의 마을을 방문하시겠습니까? 아래에 지갑 주소를 입력하세요...",
+    "placeholder": "Solana 지갑 주소 입력...",
+    "cancel": "취소",
+    "visitVillage": "마을 방문",
+    "loading": "로딩 중...",
+    "errorEmpty": "지갑 주소를 입력하세요",
+    "errorInvalid": "잘못된 지갑 주소",
+    "errorFailed": "지갑 탐색 실패",
+    "backHome": "홈",
+    "villageLabel": "마을",
+    "refreshedNow": "데이터가 방금 업데이트됨",
+    "cached": "캐시: {{time}}",
+    "partnersTitle": "파트너",
+    "noPartners": "표시할 파트너가 없습니다"
+  },
+  "scene": {
+    "emptyVillage": "빈 마을",
+    "welcome": "idleTrencher에 오신 것을 환영합니다",
+    "noPartners": "이 지갑에는 토큰 파트너가 없습니다",
+    "connectPrompt": "지갑을 연결하여 농장에서 토큰 파트너를 확인하세요"
+  },
+  "speech": {
+    "increasing": "{{percent}}% 상승! 기분이 정말 좋아!",
+    "decreasing": "{{percent}}% 하락... 이제부터가 진짜야.",
+    "stable": "관망하며 침착하게 기다리는 중."
+  },
+  "dialog": {
+    "demo": {
+      "greeting": "안녕하세요, idleTrencher에 오신 것을 환영합니다!",
+      "intro": "저는 {{symbol}}입니다. Solana 블록체인의 메인 토큰으로 기축 통화로 사용됩니다.",
+      "description": "이것은 지갑 자산을 RPG 게임화한 화면 보호기입니다! 토큰 투자와 가치 변화를 더 편안하게 바라볼 수 있기를 바랍니다.",
+      "companion": "모든 토큰은 당신의 동반자가 될 수 있습니다. 시장의 오르내림을 함께 경험해요.",
+      "upAction": "토큰이 오르면 파트너가 기뻐하며 춤을 춥니다!",
+      "downAction": "토큰이 내리면 파트너가 열심히 윗몸일으키기를 합니다...",
+      "stableAction": "가격이 안정되면 파트너가 농장을 여유롭게 산책합니다.",
+      "levelUp": "토큰을 오래 보유할수록 레벨이 올라가고, 나중에는 의상도 바꿀 수 있어요!",
+      "cta": "Solana 지갑을 연결하고 토큰을 파트너로 만드세요!"
+    },
+    "greeting": "안녕, 파트너!",
+    "intro": "저는 {{symbol}}, 당신의 Lv{{level}} 동반자입니다.",
+    "daysHeld": "당신은 저를 {{days}}일 동안 보유하고 있습니다.",
+    "daysHeldFirst": "오늘이 함께한 첫날이에요!",
+    "needRefresh": "24시간 성과 데이터를 새로고침해야 합니다! 위의 새로고침 버튼을 클릭하세요.",
+    "statusUp": "제가 얼마나 기뻐하며 춤추는지 보세요! 24시간 동안 {{change}} 상승!",
+    "statusDown": "성과가 좋지 않아서 (24h: {{change}}), 열심히 윗몸일으키기 중...",
+    "statusStable": "지금은 가격 변화가 크지 않아서 (24h: {{change}}), 여유롭게 산책 중입니다.",
+    "hpUpBig": "기준 가치에서 {{percent}}% 상승했습니다! 대단해요! HP가 {{blocks}}칸으로 증가했습니다!",
+    "hpUp": "기준 가치에서 {{percent}}% 상승했습니다. HP가 {{blocks}}칸으로 증가했습니다!",
+    "hpDown": "기준 가치에서 {{percent}}% 하락했습니다. HP가 {{blocks}}칸이 되었습니다...",
+    "baseValue": "기준 가치: ${{value}}",
+    "currentValue": "현재 가치: ${{value}}",
+    "adjustBase": "기준 가치를 조정하시겠습니까?",
+    "errorPositive": "0보다 큰 값을 입력하세요",
+    "errorUpdate": "업데이트 실패, 다시 시도하세요"
+  }
+}

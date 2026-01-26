@@ -1,0 +1,98 @@
+{
+  "settings": {
+    "title": "设置",
+    "language": "语言",
+    "walletLogout": "钱包登出",
+    "languageChanged": "语言已切换至 {{language}}"
+  },
+  "app": {
+    "loading": "正在加载 idleTrencher...",
+    "retry": "重试",
+    "unlockSlots": "持有 {{amount}} $idle 代币以解锁更多伙伴槽位",
+    "demoMode": "演示模式 - 连接你的 Solana 钱包以查看你的伙伴"
+  },
+  "header": {
+    "updating": "更新中...",
+    "refresh": "刷新",
+    "updated": "更新时间: {{time}}",
+    "disconnect": "断开连接",
+    "connectWallet": "连接钱包",
+    "toggleAutoRefresh": "切换自动刷新",
+    "refreshPortfolio": "刷新投资组合数据"
+  },
+  "partnerList": {
+    "title": "你的伙伴",
+    "connectPrompt": "连接你的钱包以查看你的伙伴",
+    "unlockSlots": "解锁 {{count}} 个槽位",
+    "getIdleForSlot": "持有 {{amount}} $idle 解锁下一个槽位",
+    "unlockAutoRefresh": "解锁自动刷新",
+    "holdMoreIdle": "再持有 {{amount}} $idle",
+    "max": "MAX",
+    "exp": "EXP"
+  },
+  "featureMenu": {
+    "home": "首页",
+    "explore": "探索",
+    "skin": "外观",
+    "skinSoon": "外观 (即将推出)",
+    "leaderboard": "排行榜",
+    "leaderboardTodo": "排行榜 (开发中)"
+  },
+  "explore": {
+    "dialogTitle": "探索",
+    "dialogMessage": "你想拜访谁的村庄呢？请在下方输入他们的钱包地址...",
+    "placeholder": "输入 Solana 钱包地址...",
+    "cancel": "取消",
+    "visitVillage": "拜访村庄",
+    "loading": "加载中...",
+    "errorEmpty": "请输入钱包地址",
+    "errorInvalid": "无效的钱包地址",
+    "errorFailed": "探索钱包失败",
+    "backHome": "首页",
+    "villageLabel": "村庄",
+    "refreshedNow": "数据刚刚更新",
+    "cached": "缓存: {{time}}",
+    "partnersTitle": "伙伴",
+    "noPartners": "没有可显示的伙伴"
+  },
+  "scene": {
+    "emptyVillage": "空的村庄",
+    "welcome": "欢迎来到 idleTrencher",
+    "noPartners": "这个钱包还没有代币伙伴",
+    "connectPrompt": "连接你的钱包以在农场上查看你的代币伙伴"
+  },
+  "speech": {
+    "increasing": "涨 {{percent}}% 的感觉真是太棒了！",
+    "decreasing": "跌 {{percent}}% 之后游戏才要开始。",
+    "stable": "持续观察，以静制动。"
+  },
+  "dialog": {
+    "demo": {
+      "greeting": "嗨，欢迎来到 idleTrencher！",
+      "intro": "我是 {{symbol}}，Solana 区块链的主要代币，被当作基础货币使用。",
+      "description": "这是一个将钱包资产 RPG 游戏化的屏幕保护程序！我们希望你能用更轻松的角度来看待代币投资与价值变化。",
+      "companion": "每个代币都可以是你的好伙伴，陪伴你经历市场的起起落落。",
+      "upAction": "当代币上涨时，你的伙伴会开心地跳舞庆祝！",
+      "downAction": "当代币下跌时，伙伴会努力做仰卧起坐锻炼...",
+      "stableAction": "价格稳定时，伙伴就悠闲地在农场散步。",
+      "levelUp": "代币持有越久，等级会越高，未来还可以更换不同的服装哦！",
+      "cta": "连接你的 Solana 钱包，让你的代币们成为你的伙伴吧！"
+    },
+    "greeting": "嘿，伙伴！",
+    "intro": "我是 {{symbol}}，你的 Lv{{level}} 同伴。",
+    "daysHeld": "你已经持有我 {{days}} 天了。",
+    "daysHeldFirst": "这是我们在一起的第一天！",
+    "needRefresh": "我的 24 小时表现数据需要刷新才能看到哦！请点击上方的刷新按钮。",
+    "statusUp": "看我多么欢欣鼓舞地雀跃呀！24 小时涨了 {{change}}！",
+    "statusDown": "因为表现不佳（24h: {{change}}），我正在努力地做仰卧起坐呢...",
+    "statusStable": "目前价格没有明显变化（24h: {{change}}），我就悠闲地散散步吧。",
+    "hpUpBig": "从基准价值来看，我们已经涨了 {{percent}}%！太棒了！HP上升现在有 {{blocks}} 格了！",
+    "hpUp": "从基准价值来看，我们上涨了 {{percent}}%。HP上升现在有 {{blocks}} 格了！",
+    "hpDown": "从基准价值来看，我们下跌了 {{percent}}%。所以HP剩下了 {{blocks}} 格了...",
+    "baseValue": "基准价值: ${{value}}",
+    "currentValue": "当前价值: ${{value}}",
+    "adjustBase": "要调整基准价值吗？",
+    "errorPositive": "请输入大于 0 的数值",
+    "errorUpdate": "更新失败，请再试一次"
+  }
+}
