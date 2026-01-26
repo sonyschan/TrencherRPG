@@ -2,7 +2,7 @@
  * idleTrencher - Main App Component
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
 import { Header } from './components/Header';
 import { Scene3D } from './components/Scene3D';
@@ -15,8 +15,16 @@ import { updateDesignatedValue, exploreWallet } from './services/api';
 import './App.css';
 
 function App() {
-  const { ready } = usePrivy();
+  const { ready, authenticated, user } = usePrivy();
   const { walletAddress, wallet, partners, access, loading, isLoading, isUpdating, error, refresh, lastUpdated, isConnected, isDemo } = useWalletData();
+
+  // Debug: Log Privy state changes
+  useEffect(() => {
+    console.log('[Privy Debug] State:', { ready, authenticated, user: user?.id });
+    if (user) {
+      console.log('[Privy Debug] User linked accounts:', user.linkedAccounts);
+    }
+  }, [ready, authenticated, user]);
 
   // Modal state
   const [selectedPartner, setSelectedPartner] = useState(null);
