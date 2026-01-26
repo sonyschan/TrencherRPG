@@ -186,17 +186,29 @@ export class FarmScene {
     this.scene.background = new THREE.Color(0x87ceeb); // Sky blue
     this.scene.fog = new THREE.Fog(0x87ceeb, 20, 60);
 
+    // Get container dimensions with fallback
+    let width = this.container.clientWidth || window.innerWidth;
+    let height = this.container.clientHeight || window.innerHeight;
+
+    // Safety check: if dimensions are still 0, wait a frame and retry
+    if (width === 0 || height === 0) {
+      console.warn('FarmScene: Container has 0 dimensions, using window size');
+      width = window.innerWidth;
+      height = window.innerHeight - 120; // Account for header
+    }
+
     // Camera setup - lower angle, closer zoom for farm view
-    const aspect = this.container.clientWidth / this.container.clientHeight;
+    const aspect = width / height || 1;
     this.camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
     this.camera.position.set(0, 8, 18); // Y=8 height, Z=18 distance
 
     // Renderer setup
     this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true
+      antialias: window.devicePixelRatio < 2, // Disable antialiasing on high DPI mobile
+      alpha: true,
+      powerPreference: 'high-performance' // Request GPU for mobile
     });
-    this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
+    this.renderer.setSize(width, height);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -224,6 +236,11 @@ export class FarmScene {
 
     // Start animation loop
     this.animate();
+
+    // Delayed resize check for mobile (layout may not be complete at init time)
+    setTimeout(() => {
+      this.onResize();
+    }, 100);
   }
 
   /**
@@ -669,8 +686,14 @@ export class FarmScene {
   }
 
   onResize() {
-    const width = this.container.clientWidth;
-    const height = this.container.clientHeight;
+    // Get actual dimensions with fallback
+    let width = this.container.clientWidth;
+    let height = this.container.clientHeight;
+
+    // Skip if dimensions are 0 (container not visible)
+    if (width === 0 || height === 0) {
+      return;
+    }
 
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
