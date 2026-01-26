@@ -1454,8 +1454,8 @@ class PartnerCharacter {
     const scaleFactor = characterScales[characterType] || 1.0;
     this.group.scale.setScalar(scaleFactor);
 
-    // Set initial animation
-    this.updateAdventurerAnimation();
+    // Set initial animation (must await to ensure currentAnimationType is set before adjustPositionsForAnimation)
+    await this.updateAdventurerAnimation();
   }
 
   /**
