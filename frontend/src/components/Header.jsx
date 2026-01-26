@@ -12,7 +12,7 @@ const COOLDOWN_DURATION = 60 * 60; // 1 hour in seconds
 const AUTO_REFRESH_INTERVAL = 10 * 60; // 10 minutes in seconds
 const PREMIUM_THRESHOLD = 100000; // 100,000 $idle tokens
 
-export function Header({ wallet, onRefresh, loading, lastUpdated, access, isConnected }) {
+export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, lastUpdated, access, isConnected }) {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { t } = useTranslation();
 
@@ -151,11 +151,22 @@ export function Header({ wallet, onRefresh, loading, lastUpdated, access, isConn
 
     // Basic user with cooldown
     const onCooldown = cooldownRemaining > 0;
+
+    // Determine button text based on loading state
+    let buttonText = t('header.refresh');
+    if (isLoading) {
+      buttonText = t('header.loading');
+    } else if (isUpdating) {
+      buttonText = t('header.updating');
+    } else if (onCooldown) {
+      buttonText = formatCooldown(cooldownRemaining);
+    }
+
     return {
       show: true,
       disabled: loading || onCooldown,
       isAuto: false,
-      text: loading ? t('header.updating') : (onCooldown ? formatCooldown(cooldownRemaining) : t('header.refresh')),
+      text: buttonText,
       className: `btn-refresh ${onCooldown ? 'cooldown' : ''}`
     };
   };

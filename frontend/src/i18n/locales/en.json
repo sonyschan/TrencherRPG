@@ -12,6 +12,7 @@
     "demoMode": "Demo Mode - Connect your Solana wallet to see your own partners"
   },
   "header": {
+    "loading": "Loading...",
     "updating": "Updating...",
     "refresh": "Refresh",
     "updated": "Updated: {{time}}",

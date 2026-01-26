@@ -12,6 +12,7 @@
     "demoMode": "데모 모드 - Solana 지갑을 연결하여 파트너 확인"
   },
   "header": {
+    "loading": "로딩 중...",
     "updating": "업데이트 중...",
     "refresh": "새로고침",
     "updated": "업데이트: {{time}}",

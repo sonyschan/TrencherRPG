@@ -12,6 +12,7 @@
     "demoMode": "デモモード - Solanaウォレットを接続してパートナーを確認"
   },
   "header": {
+    "loading": "読み込み中...",
     "updating": "更新中...",
     "refresh": "更新",
     "updated": "更新時刻: {{time}}",

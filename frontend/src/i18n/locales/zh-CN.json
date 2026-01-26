@@ -12,6 +12,7 @@
     "demoMode": "演示模式 - 连接你的 Solana 钱包以查看你的伙伴"
   },
   "header": {
+    "loading": "加载中...",
     "updating": "更新中...",
     "refresh": "刷新",
     "updated": "更新时间: {{time}}",

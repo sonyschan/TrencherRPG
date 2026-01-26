@@ -16,7 +16,7 @@ import './App.css';
 
 function App() {
   const { ready } = usePrivy();
-  const { walletAddress, wallet, partners, access, loading, error, refresh, lastUpdated, isConnected, isDemo } = useWalletData();
+  const { walletAddress, wallet, partners, access, loading, isLoading, isUpdating, error, refresh, lastUpdated, isConnected, isDemo } = useWalletData();
 
   // Modal state
   const [selectedPartner, setSelectedPartner] = useState(null);
@@ -107,6 +107,8 @@ function App() {
         wallet={wallet}
         onRefresh={refresh}
         loading={loading}
+        isLoading={isLoading}
+        isUpdating={isUpdating}
         lastUpdated={lastUpdated}
         access={access}
         isConnected={isConnected}

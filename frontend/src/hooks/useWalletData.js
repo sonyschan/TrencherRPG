@@ -60,7 +60,8 @@ export function useWalletData() {
   }, [ready, getAccessToken]);
 
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);  // Reading from cache
+  const [isUpdating, setIsUpdating] = useState(false); // Calling API to refresh
   const [error, setError] = useState(null);
   const [isDemo, setIsDemo] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -108,11 +109,18 @@ export function useWalletData() {
     // Don't fetch API data when not logged in - use demo SOL instead
     if (!userWalletAddress) {
       setIsDemo(true);
-      setLoading(false);
+      setIsLoading(false);
+      setIsUpdating(false);
       return;
     }
 
-    setLoading(true);
+    // forceRefresh = true means calling API (Updating)
+    // forceRefresh = false means reading cache (Loading)
+    if (forceRefresh) {
+      setIsUpdating(true);
+    } else {
+      setIsLoading(true);
+    }
     setError(null);
 
     try {
@@ -126,7 +134,8 @@ export function useWalletData() {
       setError(err.message);
       console.error('Error fetching wallet data:', err);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
+      setIsUpdating(false);
     }
   }, [userWalletAddress]);
 
@@ -138,13 +147,14 @@ export function useWalletData() {
     if (!userWalletAddress) {
       // Demo mode - no API calls
       setIsDemo(true);
-      setLoading(false);
+      setIsLoading(false);
+      setIsUpdating(false);
       return;
     }
 
     // Always fetch cached data first (saves API calls)
     const initializeData = async () => {
-      setLoading(true);
+      setIsLoading(true);  // Reading from cache
       setError(null);
 
       try {
@@ -152,6 +162,7 @@ export function useWalletData() {
         const cachedResult = await getWalletData(userWalletAddress);
         setData(cachedResult);
         setIsDemo(false);
+        setIsLoading(false);  // Done reading cache
 
         // Step 2: Check if premium user (>=100K $idle)
         const isPremium = cachedResult?.access?.idleBalance >= PREMIUM_THRESHOLD;
@@ -167,9 +178,11 @@ export function useWalletData() {
         // - First time users (no cache): will get fresh data from backend anyway
         if (isPremium && isStale) {
           console.log(`Premium user - data stale (>${STALE_THRESHOLD / 60000} min), refreshing...`);
+          setIsUpdating(true);  // Now calling API
           const freshResult = await refreshWalletData(userWalletAddress);
           setData(freshResult);
           setLastUpdated(new Date());
+          setIsUpdating(false);
         } else {
           // Use cached data
           setLastUpdated(lastUpdatedStr ? new Date(lastUpdatedStr) : new Date());
@@ -183,7 +196,8 @@ export function useWalletData() {
         setError(err.message);
         console.error('Error fetching wallet data:', err);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
+        setIsUpdating(false);
       }
     };
 
@@ -223,7 +237,9 @@ export function useWalletData() {
     wallet,
     partners,
     access: data?.access,
-    loading,
+    loading: isLoading || isUpdating,  // Combined for backward compatibility
+    isLoading,   // Reading from cache (show "Loading")
+    isUpdating,  // Calling API (show "Updating")
     error,
     refresh,
     lastUpdated,
