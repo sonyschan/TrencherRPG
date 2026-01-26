@@ -99,5 +99,12 @@
     "adjustBase": "기준 가치를 조정하시겠습니까?",
     "errorPositive": "0보다 큰 값을 입력하세요",
     "errorUpdate": "업데이트 실패, 다시 시도하세요"
+  },
+  "mobileWallet": {
+    "title": "지갑 연결",
+    "description": "지갑을 선택하여 지갑 내장 브라우저에서 사이트를 엽니다",
+    "or": "또는",
+    "useEmail": "Email / Google로 로그인",
+    "note": "지갑이 설치되어 있지 않나요? 링크를 통해 앱스토어로 이동합니다."
   }
 }

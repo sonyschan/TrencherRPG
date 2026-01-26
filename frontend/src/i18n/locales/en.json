@@ -99,5 +99,12 @@
     "adjustBase": "Want to adjust the base value?",
     "errorPositive": "Please enter a value greater than 0",
     "errorUpdate": "Update failed, please try again"
+  },
+  "mobileWallet": {
+    "title": "Connect Wallet",
+    "description": "Select your wallet to open this site in the wallet browser",
+    "or": "or",
+    "useEmail": "Continue with Email / Google",
+    "note": "Wallet not installed? The link will take you to the app store."
   }
 }

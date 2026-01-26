@@ -6,7 +6,17 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
 import { useTranslation } from 'react-i18next';
 import SettingsMenu from './SettingsMenu';
+import { MobileWalletSelector } from './MobileWalletSelector';
 import './Header.css';
+
+// Detect mobile browser (not in-app wallet browser)
+const isMobileBrowser = () => {
+  const ua = navigator.userAgent;
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+  // Check if we're NOT in a wallet's in-app browser
+  const isInWalletBrowser = /Phantom|OKApp|Solflare/i.test(ua);
+  return isMobile && !isInWalletBrowser;
+};
 
 const COOLDOWN_DURATION = 60 * 60; // 1 hour in seconds
 const AUTO_REFRESH_INTERVAL = 10 * 60; // 10 minutes in seconds
@@ -15,6 +25,9 @@ const PREMIUM_THRESHOLD = 100000; // 100,000 $idle tokens
 export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, lastUpdated, access, isConnected }) {
   const { ready, authenticated, login, logout, user } = usePrivy();
   const { t } = useTranslation();
+
+  // Mobile wallet selector state
+  const [showMobileWalletSelector, setShowMobileWalletSelector] = useState(false);
 
   // Cooldown state for basic users
   const [cooldownRemaining, setCooldownRemaining] = useState(0);
@@ -173,7 +186,25 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
 
   const refreshState = getRefreshButtonState();
 
+  // Handle connect button click
+  const handleConnectClick = useCallback(() => {
+    if (isMobileBrowser()) {
+      // Show mobile wallet selector on mobile browsers
+      setShowMobileWalletSelector(true);
+    } else {
+      // Use Privy's default login on desktop or wallet in-app browsers
+      login();
+    }
+  }, [login]);
+
+  // Handle email/social login from mobile wallet selector
+  const handleEmailLogin = useCallback(() => {
+    setShowMobileWalletSelector(false);
+    login();
+  }, [login]);
+
   return (
+  <>
     <header className="header">
       <div className="header-left">
         <h1 className="logo">
@@ -229,7 +260,7 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
                 {formatAddress(user?.wallet?.address)}
               </span>
             ) : (
-              <button className="btn-connect" onClick={login}>
+              <button className="btn-connect" onClick={handleConnectClick}>
                 {t('header.connectWallet')}
               </button>
             )}
@@ -244,5 +275,13 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
         )}
       </div>
     </header>
+
+    {/* Mobile Wallet Selector */}
+    <MobileWalletSelector
+      isOpen={showMobileWalletSelector}
+      onClose={() => setShowMobileWalletSelector(false)}
+      onEmailLogin={handleEmailLogin}
+    />
+  </>
   );
 }

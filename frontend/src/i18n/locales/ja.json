@@ -99,5 +99,12 @@
     "adjustBase": "基準価値を調整しますか？",
     "errorPositive": "0より大きい値を入力してください",
     "errorUpdate": "更新に失敗しました。もう一度お試しください"
+  },
+  "mobileWallet": {
+    "title": "ウォレット接続",
+    "description": "ウォレットを選択して、ウォレット内蔵ブラウザでサイトを開く",
+    "or": "または",
+    "useEmail": "Email / Google でログイン",
+    "note": "ウォレット未インストール？リンクからアプリストアへ移動します。"
   }
 }

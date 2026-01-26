@@ -99,5 +99,12 @@
     "adjustBase": "要调整基准价值吗？",
     "errorPositive": "请输入大于 0 的数值",
     "errorUpdate": "更新失败，请再试一次"
+  },
+  "mobileWallet": {
+    "title": "连接钱包",
+    "description": "选择你的钱包，在钱包内置浏览器中打开本网站",
+    "or": "或",
+    "useEmail": "使用 Email / Google 登录",
+    "note": "尚未安装钱包？链接会带你前往应用商店。"
   }
 }

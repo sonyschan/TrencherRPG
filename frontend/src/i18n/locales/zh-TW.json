@@ -99,5 +99,12 @@
     "adjustBase": "要調整基準價值嗎？",
     "errorPositive": "請輸入大於 0 的數值",
     "errorUpdate": "更新失敗，請再試一次"
+  },
+  "mobileWallet": {
+    "title": "連接錢包",
+    "description": "選擇你的錢包，在錢包內建瀏覽器中開啟本網站",
+    "or": "或",
+    "useEmail": "使用 Email / Google 登入",
+    "note": "尚未安裝錢包？連結會帶你前往應用商店。"
   }
 }
