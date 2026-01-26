@@ -835,18 +835,18 @@ class PartnerCharacter {
     if (anim === 'situps') {
       // Situps: lower positions, but still account for number of HP bars
       if (showBar3) {
-        if (this.hpBarGroup) this.hpBarGroup.position.y = 1.3;
+        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.3;
         if (this.nameLabel) this.nameLabel.position.y = 1.9;
       } else if (showBar2) {
-        if (this.hpBarGroup) this.hpBarGroup.position.y = 1.2;
+        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.2;
         if (this.nameLabel) this.nameLabel.position.y = 1.6;
       } else {
-        if (this.hpBarGroup) this.hpBarGroup.position.y = 1.2;
+        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.2;
         if (this.nameLabel) this.nameLabel.position.y = 1.45;
       }
     } else {
       // Default positions
-      if (this.hpBarGroup) this.hpBarGroup.position.y = 2.2;
+      if (this.hpBarSprite) this.hpBarSprite.position.y = 2.2;
       if (this.nameLabel) {
         if (showBar3) {
           this.nameLabel.position.y = 2.7;
@@ -1584,133 +1584,133 @@ class PartnerCharacter {
   }
 
   createHPBar() {
-    const barGroup = new THREE.Group();
-    barGroup.position.y = 2.2;
+    // Create canvas for HP bar rendering (Sprite-based for proper billboard)
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 96; // Height for up to 3 bars
+    this.hpCanvas = canvas;
+    this.hpContext = canvas.getContext('2d');
 
-    // HP bar configuration
-    const barWidth = 1.2;
-    const barHeight = 0.12;
-    const segmentCount = 10;
-    const segmentGap = 0.02;
-    const segmentWidth = (barWidth - segmentGap * (segmentCount - 1)) / segmentCount;
-    const barSpacing = 0.16; // Vertical spacing between bars
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.needsUpdate = true;
 
-    // Store segment meshes for each bar
-    this.hpSegments = { bar1: [], bar2: [], bar3: [] };
+    const material = new THREE.SpriteMaterial({
+      map: texture,
+      transparent: true
+    });
 
-    // Create 3 bars (bar1 at bottom, bar3 at top)
-    for (let barIndex = 0; barIndex < 3; barIndex++) {
-      const barKey = `bar${barIndex + 1}`;
-      const barY = barIndex * barSpacing;
+    this.hpBarSprite = new THREE.Sprite(material);
+    this.hpBarSprite.scale.set(2, 0.75, 1);
+    this.hpBarSprite.position.y = 2.2;
+    this.group.add(this.hpBarSprite);
 
-      // Background for this bar
-      const bgGeometry = new THREE.PlaneGeometry(barWidth, barHeight);
-      const bgMaterial = new THREE.MeshBasicMaterial({
-        color: 0x1a1a1a,
-        transparent: true,
-        opacity: barIndex === 0 ? 0.9 : 0.6
-      });
-      const bg = new THREE.Mesh(bgGeometry, bgMaterial);
-      bg.position.y = barY;
-      bg.visible = barIndex === 0; // Only bar1 visible by default
-      barGroup.add(bg);
-
-      // Store background reference for visibility control
-      if (barIndex === 1) this.hpBar2Bg = bg;
-      if (barIndex === 2) this.hpBar3Bg = bg;
-
-      // Create 10 segments for this bar
-      for (let i = 0; i < segmentCount; i++) {
-        const segGeometry = new THREE.PlaneGeometry(segmentWidth - 0.01, barHeight - 0.02);
-        const segMaterial = new THREE.MeshBasicMaterial({
-          color: 0x22c55e, // Default green
-          transparent: true,
-          opacity: 0.95
-        });
-        const segment = new THREE.Mesh(segGeometry, segMaterial);
-
-        // Position segment (left to right)
-        const xPos = -barWidth / 2 + segmentWidth / 2 + i * (segmentWidth + segmentGap);
-        segment.position.set(xPos, barY, 0.01);
-        segment.visible = barIndex === 0; // Only bar1 visible by default
-
-        barGroup.add(segment);
-        this.hpSegments[barKey].push(segment);
-      }
-    }
-
-    this.hpBarGroup = barGroup;
-    this.group.add(barGroup);
-
-    // Initial update
+    // Initial render
     this.updateHPBars();
   }
 
   /**
-   * Update HP bars based on hpBars data from backend
+   * Render HP bars to canvas texture
    */
-  updateHPBars() {
+  renderHPBarsToCanvas() {
+    const ctx = this.hpContext;
+    const canvas = this.hpCanvas;
     const hpBars = this.data.hpBars;
 
-    if (!hpBars || !this.hpSegments) {
-      // Fallback: show full green bar1
-      this.hpSegments?.bar1?.forEach(seg => {
-        seg.visible = true;
-        seg.material.color.setHex(0x22c55e);
-      });
-      return;
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!hpBars) return;
+
+    const barWidth = 220;
+    const barHeight = 20;
+    const segmentCount = 10;
+    const segmentGap = 3;
+    const segmentWidth = (barWidth - segmentGap * (segmentCount - 1)) / segmentCount;
+    const barSpacing = 26;
+    const startX = (canvas.width - barWidth) / 2;
+
+    // Determine which bars to show
+    const showBar2 = hpBars.bar2?.show && hpBars.bar2?.green > 0;
+    const showBar3 = hpBars.bar3?.show && hpBars.bar3?.green > 0;
+
+    // Calculate vertical offset to center visible bars
+    let barsToShow = 1;
+    if (showBar3) barsToShow = 3;
+    else if (showBar2) barsToShow = 2;
+    const totalHeight = barsToShow * barHeight + (barsToShow - 1) * (barSpacing - barHeight);
+    const startY = (canvas.height - totalHeight) / 2;
+
+    // Bar data array (bottom to top: bar1, bar2, bar3)
+    const bars = [
+      { data: hpBars.bar1 || { green: 10, red: 0 }, visible: true },
+      { data: hpBars.bar2 || { green: 0 }, visible: showBar2 },
+      { data: hpBars.bar3 || { green: 0 }, visible: showBar3 }
+    ];
+
+    let currentY = startY + totalHeight - barHeight; // Start from bottom
+
+    for (let barIndex = 0; barIndex < bars.length; barIndex++) {
+      const bar = bars[barIndex];
+      if (!bar.visible) continue;
+
+      const y = currentY;
+      currentY -= barSpacing;
+
+      // Draw background
+      ctx.fillStyle = 'rgba(26, 26, 26, 0.9)';
+      ctx.beginPath();
+      ctx.roundRect(startX - 2, y - 2, barWidth + 4, barHeight + 4, 4);
+      ctx.fill();
+
+      // Draw segments
+      const greenCount = bar.data.green || 0;
+      const redCount = bar.data.red || 0;
+
+      for (let i = 0; i < segmentCount; i++) {
+        const segX = startX + i * (segmentWidth + segmentGap);
+
+        // Determine segment color
+        let color;
+        if (barIndex === 0) {
+          // Bar1: green from left, red from right
+          if (i < greenCount) {
+            color = '#22c55e'; // Green
+          } else if (i >= segmentCount - redCount) {
+            color = '#ef4444'; // Red
+          } else {
+            color = 'rgba(50, 50, 50, 0.5)'; // Empty
+          }
+        } else {
+          // Bar2/Bar3: green from left
+          color = i < greenCount ? '#22c55e' : 'rgba(50, 50, 50, 0.5)';
+        }
+
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.roundRect(segX, y, segmentWidth - 1, barHeight, 2);
+        ctx.fill();
+      }
     }
 
-    const greenColor = 0x22c55e;
-    const redColor = 0xef4444;
-
-    // Update Bar 1 (always visible)
-    const bar1Data = hpBars.bar1 || { green: 10, red: 0 };
-    this.hpSegments.bar1.forEach((seg, i) => {
-      seg.visible = true;
-      // Green segments from left, red segments from right
-      if (i < bar1Data.green) {
-        seg.material.color.setHex(greenColor);
-      } else {
-        seg.material.color.setHex(redColor);
-      }
-    });
-
-    // Update Bar 2 (shows when multiplier > 1)
-    const bar2Data = hpBars.bar2 || { green: 0, show: false };
-    const showBar2 = bar2Data.show && bar2Data.green > 0;
-
-    if (this.hpBar2Bg) {
-      this.hpBar2Bg.visible = showBar2; // Show dark background when bar2 is active
+    // Update texture
+    if (this.hpBarSprite?.material?.map) {
+      this.hpBarSprite.material.map.needsUpdate = true;
     }
-    this.hpSegments.bar2.forEach((seg, i) => {
-      // Only show filled green blocks, hide empty ones
-      const isFilled = i < bar2Data.green;
-      seg.visible = showBar2 && isFilled;
-      if (seg.visible) {
-        seg.material.color.setHex(greenColor);
-        seg.material.opacity = 0.95;
-      }
-    });
+  }
 
-    // Update Bar 3 (shows when multiplier >= 10)
-    const bar3Data = hpBars.bar3 || { green: 0, show: false };
-    const showBar3 = bar3Data.show && bar3Data.green > 0;
-
-    if (this.hpBar3Bg) {
-      this.hpBar3Bg.visible = showBar3; // Show dark background when bar3 is active
-    }
-    this.hpSegments.bar3.forEach((seg, i) => {
-      // Only show filled green blocks, hide empty ones
-      const isFilled = i < bar3Data.green;
-      seg.visible = showBar3 && isFilled;
-      if (seg.visible) {
-        seg.material.color.setHex(greenColor);
-        seg.material.opacity = 0.95;
-      }
-    });
+  /**
+   * Update HP bars based on hpBars data from backend
+   * Uses Sprite-based rendering for proper billboard behavior
+   */
+  updateHPBars() {
+    // Re-render HP bars to canvas texture
+    this.renderHPBarsToCanvas();
 
     // Adjust name label position based on number of visible bars
+    const hpBars = this.data.hpBars;
+    const showBar2 = hpBars?.bar2?.show && hpBars?.bar2?.green > 0;
+    const showBar3 = hpBars?.bar3?.show && hpBars?.bar3?.green > 0;
+
     if (this.nameLabel) {
       if (showBar3) {
         this.nameLabel.position.y = 2.7; // Move up when 3 bars visible
@@ -1894,10 +1894,7 @@ class PartnerCharacter {
         this.headBone.rotation.x = this.speakingHeadTilt;
       }
 
-      // Still update HP bar billboard (face camera)
-      if (this.hpBarGroup && this.camera) {
-        this.hpBarGroup.lookAt(this.camera.position);
-      }
+      // Sprites automatically face camera (billboard), no manual lookAt needed
       return;
     }
 
@@ -1972,10 +1969,7 @@ class PartnerCharacter {
 
     this.group.rotation.y += rotDiff * 0.08;
 
-    // HP bar always faces camera (billboard)
-    if (this.hpBarGroup && this.camera) {
-      this.hpBarGroup.lookAt(this.camera.position);
-    }
+    // HP bar Sprite automatically faces camera (billboard behavior built-in)
 
     // HP animation
     if (this.hpAnimationProgress < 1) {
@@ -2061,30 +2055,17 @@ class PartnerCharacter {
       this.group.remove(this.model);
     }
 
-    // Dispose HP bar segments
-    if (this.hpSegments) {
-      Object.values(this.hpSegments).forEach(barSegments => {
-        barSegments.forEach(seg => {
-          seg.geometry?.dispose();
-          seg.material?.dispose();
-        });
-      });
+    // Dispose HP bar Sprite and canvas
+    if (this.hpBarSprite) {
+      if (this.hpBarSprite.material.map) {
+        this.hpBarSprite.material.map.dispose();
+      }
+      this.hpBarSprite.material.dispose();
+      this.group.remove(this.hpBarSprite);
+      this.hpBarSprite = null;
     }
-
-    // Dispose HP bar group
-    if (this.hpBarGroup) {
-      this.group.remove(this.hpBarGroup);
-    }
-
-    // Dispose HP bar backgrounds
-    if (this.hpBar2Bg) {
-      this.hpBar2Bg.geometry?.dispose();
-      this.hpBar2Bg.material?.dispose();
-    }
-    if (this.hpBar3Bg) {
-      this.hpBar3Bg.geometry?.dispose();
-      this.hpBar3Bg.material?.dispose();
-    }
+    this.hpCanvas = null;
+    this.hpContext = null;
 
     if (this.levelBadge) {
       this.levelBadge.material.map.dispose();
