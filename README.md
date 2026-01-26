@@ -44,6 +44,7 @@ npm run dev
 
 - **Wardrobe** - Customize your partners with different skins (Knight, Mage, Adventurer...)
 - **Leaderboard** - Compare partner levels and holdings with other players
+- **Liquidity Pool Checking** - Verify token liquidity health and detect potential rug pulls
 - **AI Integration** - Coming soon...
 
 ## License
