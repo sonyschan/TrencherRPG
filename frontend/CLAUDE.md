@@ -9,3 +9,19 @@
 |----|------|---|-------|------|
 | #1489 | 11:22 AM | ⚖️ | TrencherRPG Hybrid GCP + Vercel Deployment Architecture | ~811 |
 </claude-mem-context>
+
+# Frontend Context
+
+## Deployment (IMPORTANT)
+
+**Vercel 部署通過 GitHub 自動觸發，不要使用 CLI！**
+
+```bash
+# 正確方式：推送到 GitHub
+git push origin <branch>
+
+# 錯誤方式：不要這樣做
+# npx vercel --prod  ← 這是錯的！
+```
+
+詳細說明見 `DEPLOY.md`
