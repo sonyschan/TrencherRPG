@@ -81,12 +81,17 @@ ${t('dialog.demo.cta')}`;
 
     // Base value comparison text with HP info
     let baseValueText = '';
+    const changePercent = parseFloat(baseChangePercent);
     if (multiplier >= 2) {
       baseValueText = t('dialog.hpUpBig', { percent: baseChangePercent, blocks: totalHPBlocks });
-    } else if (multiplier >= 1) {
+    } else if (changePercent > 0.5) {
+      // Only say "up" if actually increased by more than 0.5%
       baseValueText = t('dialog.hpUp', { percent: baseChangePercent, blocks: totalHPBlocks });
+    } else if (changePercent >= -0.5) {
+      // Between -0.5% and +0.5% is considered stable
+      baseValueText = t('dialog.hpStable', { blocks: totalHPBlocks });
     } else {
-      baseValueText = t('dialog.hpDown', { percent: Math.abs(parseFloat(baseChangePercent)).toFixed(2), blocks: totalHPBlocks });
+      baseValueText = t('dialog.hpDown', { percent: Math.abs(changePercent).toFixed(2), blocks: totalHPBlocks });
     }
 
     // Days held text

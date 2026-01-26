@@ -924,26 +924,27 @@ class PartnerCharacter {
 
     if (anim === 'situps') {
       // Situps: lower positions, but still account for number of HP bars
+      // Raised heights to avoid overlapping with character model
       if (showBar3) {
-        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.3;
-        if (this.nameLabel) this.nameLabel.position.y = 1.9;
+        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.6;
+        if (this.nameLabel) this.nameLabel.position.y = 2.15;
       } else if (showBar2) {
-        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.2;
-        if (this.nameLabel) this.nameLabel.position.y = 1.6;
+        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.5;
+        if (this.nameLabel) this.nameLabel.position.y = 1.95;
       } else {
-        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.2;
-        if (this.nameLabel) this.nameLabel.position.y = 1.45;
+        if (this.hpBarSprite) this.hpBarSprite.position.y = 1.3;
+        if (this.nameLabel) this.nameLabel.position.y = 1.6;
       }
     } else {
       // Default positions
-      if (this.hpBarSprite) this.hpBarSprite.position.y = 2.2;
+      if (this.hpBarSprite) this.hpBarSprite.position.y = 2.1;
       if (this.nameLabel) {
         if (showBar3) {
           this.nameLabel.position.y = 2.7;
         } else if (showBar2) {
-          this.nameLabel.position.y = 2.65;
+          this.nameLabel.position.y = 2.55;
         } else {
-          this.nameLabel.position.y = 2.45;
+          this.nameLabel.position.y = 2.4;
         }
       }
     }

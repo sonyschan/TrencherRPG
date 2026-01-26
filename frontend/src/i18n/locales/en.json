@@ -94,6 +94,7 @@
     "hpUpBig": "From base value, we're up {{percent}}%! Amazing! HP increased to {{blocks}} blocks!",
     "hpUp": "From base value, we're up {{percent}}%. HP increased to {{blocks}} blocks!",
     "hpDown": "From base value, we're down {{percent}}%. So HP is now at {{blocks}} blocks...",
+    "hpStable": "From base value, we're holding steady. HP is at {{blocks}} blocks.",
     "baseValue": "Base Value: ${{value}}",
     "currentValue": "Current Value: ${{value}}",
     "adjustBase": "Want to adjust the base value?",

@@ -94,6 +94,7 @@
     "hpUpBig": "从基准价值来看，我们已经涨了 {{percent}}%！太棒了！HP上升现在有 {{blocks}} 格了！",
     "hpUp": "从基准价值来看，我们上涨了 {{percent}}%。HP上升现在有 {{blocks}} 格了！",
     "hpDown": "从基准价值来看，我们下跌了 {{percent}}%。所以HP剩下了 {{blocks}} 格了...",
+    "hpStable": "从基准价值来看，我们维持在初始状态。HP现在有 {{blocks}} 格。",
     "baseValue": "基准价值: ${{value}}",
     "currentValue": "当前价值: ${{value}}",
     "adjustBase": "要调整基准价值吗？",
