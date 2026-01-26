@@ -110,6 +110,10 @@ export class FarmScene {
     // Disposed flag to prevent operations after cleanup
     this.disposed = false;
 
+    // Lock to prevent concurrent updatePartners calls
+    this.updateInProgress = false;
+    this.pendingUpdate = null;
+
     this.init();
   }
 
@@ -599,46 +603,96 @@ export class FarmScene {
       return;
     }
 
-    const currentAddresses = new Set(partnerData.map(p => p.tokenAddress));
-
-    // Remove partners that are no longer in top 10
-    for (const [address, partner] of this.partners) {
-      if (!currentAddresses.has(address)) {
-        this.removePartner(address);
-      }
+    // Prevent concurrent updates - queue the latest request
+    if (this.updateInProgress) {
+      console.log('[FarmScene] Update in progress, queueing new data');
+      this.pendingUpdate = partnerData;
+      return;
     }
 
-    // Add or update partners
-    for (let i = 0; i < partnerData.length; i++) {
-      const data = partnerData[i];
-      if (this.partners.has(data.tokenAddress)) {
-        this.updatePartner(data);
-      } else {
-        await this.addPartner(data, i);
+    this.updateInProgress = true;
+
+    try {
+      console.log(`[FarmScene] updatePartners called with ${partnerData.length} partners`);
+      console.log('[FarmScene] Current partners in Map:', Array.from(this.partners.keys()));
+
+      const currentAddresses = new Set(partnerData.map(p => p.tokenAddress));
+
+      // Remove partners that are no longer in top 10
+      for (const [address, partner] of this.partners) {
+        if (!currentAddresses.has(address)) {
+          console.log(`[FarmScene] Removing partner: ${address}`);
+          this.removePartner(address);
+        }
+      }
+
+      // Add or update partners
+      for (let i = 0; i < partnerData.length; i++) {
+        const data = partnerData[i];
+        if (this.partners.has(data.tokenAddress)) {
+          console.log(`[FarmScene] Updating existing partner: ${data.tokenSymbol} (${data.tokenAddress})`);
+          this.updatePartner(data);
+        } else {
+          console.log(`[FarmScene] Adding new partner: ${data.tokenSymbol} (${data.tokenAddress})`);
+          await this.addPartner(data, i);
+        }
+      }
+
+      // Arrange partners in a semi-circle
+      this.arrangePartners(partnerData.length);
+      console.log('[FarmScene] Update complete. Partners in Map:', Array.from(this.partners.keys()));
+
+    } finally {
+      this.updateInProgress = false;
+
+      // Process any pending update that arrived during this one
+      if (this.pendingUpdate && !this.disposed) {
+        const pending = this.pendingUpdate;
+        this.pendingUpdate = null;
+        console.log('[FarmScene] Processing queued update');
+        await this.updatePartners(pending);
       }
     }
-
-    // Arrange partners in a semi-circle
-    this.arrangePartners(partnerData.length);
   }
 
   /**
    * Add a new partner with character model
    */
   async addPartner(data, index) {
+    const tokenAddress = data.tokenAddress;
+    const tokenSymbol = data.tokenSymbol;
+
+    // Double-check: if partner was added by a concurrent call, skip
+    if (this.partners.has(tokenAddress)) {
+      console.log(`[FarmScene] Partner ${tokenSymbol} already exists, skipping duplicate add`);
+      return;
+    }
+
     // First token (index 0) uses Adventurer with state-based animations
     const isFirstToken = (index === 0);
     const partner = new PartnerCharacter(data, this.assetManifest, isFirstToken, this.t);
+
+    console.log(`[FarmScene] Initializing partner ${tokenSymbol}...`);
     await partner.init();
+    console.log(`[FarmScene] Partner ${tokenSymbol} init complete`);
 
     // Check if scene was disposed during async init
     if (this.disposed) {
+      console.log(`[FarmScene] Scene disposed, cleaning up ${tokenSymbol}`);
       partner.dispose();
       return;
     }
 
-    this.partners.set(data.tokenAddress, partner);
+    // Final check: another call might have added this partner during our async init
+    if (this.partners.has(tokenAddress)) {
+      console.log(`[FarmScene] Partner ${tokenSymbol} was added by another call during init, disposing duplicate`);
+      partner.dispose();
+      return;
+    }
+
+    this.partners.set(tokenAddress, partner);
     this.scene.add(partner.group);
+    console.log(`[FarmScene] Partner ${tokenSymbol} added to scene. Map size: ${this.partners.size}`);
   }
 
   /**
@@ -657,9 +711,13 @@ export class FarmScene {
   removePartner(address) {
     const partner = this.partners.get(address);
     if (partner) {
+      console.log(`[FarmScene] removePartner: Disposing ${partner.data?.tokenSymbol || address}`);
       partner.dispose();
       this.scene.remove(partner.group);
       this.partners.delete(address);
+      console.log(`[FarmScene] removePartner complete. Map size: ${this.partners.size}`);
+    } else {
+      console.log(`[FarmScene] removePartner: Partner ${address} not found in Map`);
     }
   }
 
@@ -732,6 +790,8 @@ export class FarmScene {
   }
 
   dispose() {
+    console.log(`[FarmScene] dispose() called. Current partners: ${this.partners.size}`);
+
     // Mark as disposed to prevent async operations from adding objects
     this.disposed = true;
 
@@ -744,11 +804,14 @@ export class FarmScene {
     }
 
     // Dispose and remove all partners from scene
-    for (const partner of this.partners.values()) {
+    console.log('[FarmScene] Disposing all partners:', Array.from(this.partners.keys()));
+    for (const [address, partner] of this.partners) {
+      console.log(`[FarmScene] Disposing partner: ${partner.data?.tokenSymbol || address}`);
       partner.dispose();
       this.scene.remove(partner.group);
     }
     this.partners.clear();
+    console.log('[FarmScene] All partners cleared');
 
     // Dispose and remove environment objects from scene
     for (const obj of this.environmentObjects) {
