@@ -716,10 +716,14 @@ export class FarmScene {
       cancelAnimationFrame(this.animationId);
     }
 
+    // Dispose and remove all partners from scene
     for (const partner of this.partners.values()) {
       partner.dispose();
+      this.scene.remove(partner.group);
     }
+    this.partners.clear();
 
+    // Dispose and remove environment objects from scene
     for (const obj of this.environmentObjects) {
       obj.traverse((child) => {
         if (child.isMesh) {
@@ -727,7 +731,9 @@ export class FarmScene {
           child.material?.dispose();
         }
       });
+      this.scene.remove(obj);
     }
+    this.environmentObjects = [];
 
     if (this.controls) {
       this.controls.dispose();
@@ -2017,6 +2023,7 @@ class PartnerCharacter {
         this.speechBubble.material.map.dispose();
       }
       this.speechBubble.material.dispose();
+      this.group.remove(this.speechBubble);
     }
 
     // Dispose animated character models
@@ -2036,8 +2043,10 @@ class PartnerCharacter {
               }
             }
           });
+          this.group.remove(data.root);
         }
       }
+      this.animationModels = {};
     } else if (this.model) {
       // Dispose single model (fallback characters)
       this.model.traverse((child) => {
@@ -2049,6 +2058,7 @@ class PartnerCharacter {
           }
         }
       });
+      this.group.remove(this.model);
     }
 
     // Dispose HP bar segments
@@ -2059,6 +2069,11 @@ class PartnerCharacter {
           seg.material?.dispose();
         });
       });
+    }
+
+    // Dispose HP bar group
+    if (this.hpBarGroup) {
+      this.group.remove(this.hpBarGroup);
     }
 
     // Dispose HP bar backgrounds
@@ -2074,13 +2089,20 @@ class PartnerCharacter {
     if (this.levelBadge) {
       this.levelBadge.material.map.dispose();
       this.levelBadge.material.dispose();
+      this.group.remove(this.levelBadge);
     }
     if (this.nameLabel) {
       this.nameLabel.material.map.dispose();
       this.nameLabel.material.dispose();
+      this.group.remove(this.nameLabel);
     }
     if (this.mixer) {
       this.mixer.stopAllAction();
+    }
+
+    // Clear all remaining children from group
+    while (this.group.children.length > 0) {
+      this.group.remove(this.group.children[0]);
     }
   }
 }
