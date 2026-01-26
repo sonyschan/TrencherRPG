@@ -1,12 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { usePrivy } from '@privy-io/react-auth';
 import { languages } from '../i18n';
 
 export default function SettingsMenu({ authenticated, onLogout, walletAddress }) {
   const { t, i18n } = useTranslation();
+  const { exportWallet, user } = usePrivy();
   const [isOpen, setIsOpen] = useState(false);
   const [toast, setToast] = useState(null);
+  const [showWalletInfo, setShowWalletInfo] = useState(false);
   const menuRef = useRef(null);
+
+  // Check if user has an embedded wallet
+  const hasEmbeddedWallet = user?.linkedAccounts?.some(
+    a => a.type === 'wallet' && a.walletClientType === 'privy'
+  );
 
   const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
 
@@ -44,9 +52,32 @@ export default function SettingsMenu({ authenticated, onLogout, walletAddress })
     onLogout();
   };
 
+  const handleCopyAddress = async () => {
+    if (!walletAddress) return;
+    try {
+      await navigator.clipboard.writeText(walletAddress);
+      setToast(t('settings.addressCopied'));
+    } catch (err) {
+      console.error('Failed to copy address:', err);
+    }
+  };
+
+  const handleExportWallet = async () => {
+    try {
+      await exportWallet();
+    } catch (err) {
+      console.error('Failed to export wallet:', err);
+    }
+  };
+
   const formatAddress = (address) => {
     if (!address) return '';
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
+  };
+
+  const formatAddressMedium = (address) => {
+    if (!address) return '';
+    return `${address.slice(0, 8)}...${address.slice(-8)}`;
   };
 
   return (
@@ -85,9 +116,29 @@ export default function SettingsMenu({ authenticated, onLogout, walletAddress })
             <>
               <div className="settings-divider"></div>
               <div className="settings-section">
-                <div className="wallet-info">
-                  <span className="wallet-label">{formatAddress(walletAddress)}</span>
-                </div>
+                <div className="settings-label">{t('settings.wallet')}</div>
+
+                {/* Wallet address with copy button */}
+                <button className="wallet-address-row" onClick={handleCopyAddress}>
+                  <span className="wallet-address-text">{formatAddressMedium(walletAddress)}</span>
+                  <span className="copy-icon">📋</span>
+                </button>
+
+                {/* Export wallet (only for embedded wallets) */}
+                {hasEmbeddedWallet && (
+                  <button className="settings-option" onClick={handleExportWallet}>
+                    <span>🔑</span>
+                    <span>{t('settings.exportWallet')}</span>
+                  </button>
+                )}
+
+                {/* Embedded wallet info */}
+                {hasEmbeddedWallet && (
+                  <div className="wallet-info-note">
+                    {t('settings.embeddedWalletNote')}
+                  </div>
+                )}
+
                 <button className="logout-option" onClick={handleLogout}>
                   {t('settings.walletLogout')}
                 </button>

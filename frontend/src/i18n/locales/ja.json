@@ -2,8 +2,12 @@
   "settings": {
     "title": "設定",
     "language": "言語",
+    "wallet": "ウォレット",
     "walletLogout": "ウォレットログアウト",
-    "languageChanged": "言語を{{language}}に変更しました"
+    "languageChanged": "言語を{{language}}に変更しました",
+    "addressCopied": "アドレスをコピーしました！",
+    "exportWallet": "秘密鍵をエクスポート",
+    "embeddedWalletNote": "これはPrivy埋め込みウォレットです。秘密鍵をエクスポートして他のアプリで使用できます。"
   },
   "app": {
     "loading": "idleTrencherを読み込み中...",

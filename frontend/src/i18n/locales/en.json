@@ -2,8 +2,12 @@
   "settings": {
     "title": "Settings",
     "language": "Language",
+    "wallet": "Wallet",
     "walletLogout": "Logout Wallet",
-    "languageChanged": "Language changed to {{language}}"
+    "languageChanged": "Language changed to {{language}}",
+    "addressCopied": "Address copied!",
+    "exportWallet": "Export Private Key",
+    "embeddedWalletNote": "This is a Privy embedded wallet. You can export the private key to use in other apps."
   },
   "app": {
     "loading": "Loading idleTrencher...",

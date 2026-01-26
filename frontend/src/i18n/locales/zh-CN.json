@@ -2,8 +2,12 @@
   "settings": {
     "title": "设置",
     "language": "语言",
+    "wallet": "钱包",
     "walletLogout": "钱包登出",
-    "languageChanged": "语言已切换至 {{language}}"
+    "languageChanged": "语言已切换至 {{language}}",
+    "addressCopied": "地址已复制！",
+    "exportWallet": "导出私钥",
+    "embeddedWalletNote": "这是 Privy 嵌入式钱包。你可以导出私钥到其他钱包应用使用。"
   },
   "app": {
     "loading": "正在加载 idleTrencher...",

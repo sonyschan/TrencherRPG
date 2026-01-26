@@ -202,6 +202,69 @@ button {
   background: rgba(239, 68, 68, 0.15);
 }
 
+/* Wallet address row - clickable to copy */
+.wallet-address-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text);
+  font-size: 12px;
+  font-family: monospace;
+  text-align: left;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  margin-bottom: 8px;
+}
+
+.wallet-address-row:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.wallet-address-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.copy-icon {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Settings option button */
+.settings-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 14px;
+  text-align: left;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  margin-bottom: 8px;
+}
+
+.settings-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Embedded wallet info note */
+.wallet-info-note {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  padding: 8px 12px;
+  background: rgba(99, 102, 241, 0.1);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
 /* Language change toast */
 .language-toast {
   position: fixed;
