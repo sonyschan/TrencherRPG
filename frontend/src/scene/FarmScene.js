@@ -1888,13 +1888,9 @@ class PartnerCharacter {
         this.headBone.rotation.x = this.speakingHeadTilt;
       }
 
-      // Still update HP bar billboard
-      if (this.hpBarGroup) {
-        this.hpBarGroup.lookAt(
-          this.group.position.x,
-          this.hpBarGroup.position.y + this.group.position.y,
-          this.group.position.z + 10
-        );
+      // Still update HP bar billboard (face camera)
+      if (this.hpBarGroup && this.camera) {
+        this.hpBarGroup.lookAt(this.camera.position);
       }
       return;
     }
@@ -1971,12 +1967,8 @@ class PartnerCharacter {
     this.group.rotation.y += rotDiff * 0.08;
 
     // HP bar always faces camera (billboard)
-    if (this.hpBarGroup) {
-      this.hpBarGroup.lookAt(
-        this.group.position.x,
-        this.hpBarGroup.position.y + this.group.position.y,
-        this.group.position.z + 10
-      );
+    if (this.hpBarGroup && this.camera) {
+      this.hpBarGroup.lookAt(this.camera.position);
     }
 
     // HP animation
