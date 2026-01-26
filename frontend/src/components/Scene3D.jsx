@@ -3,17 +3,32 @@
  * Low-poly farm visualization for token partners
  */
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FarmScene } from '../scene/FarmScene';
 import { FeatureMenu } from './FeatureMenu';
 import './Scene3D.css';
+
+/**
+ * Check if WebGL is available
+ */
+function checkWebGLSupport() {
+  try {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    return !!gl;
+  } catch (e) {
+    return false;
+  }
+}
 
 export function Scene3D({ partners, isExploreMode = false, onPartnerClick, currentView, onViewChange, idleBalance }) {
   const containerRef = useRef(null);
   const sceneRef = useRef(null);
   const onPartnerClickRef = useRef(onPartnerClick);
   const { t, i18n } = useTranslation();
+  const [webglSupported, setWebglSupported] = useState(true);
+  const [sceneError, setSceneError] = useState(null);
 
   // Keep callback ref up to date
   useEffect(() => {
@@ -27,11 +42,25 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
     }
   }, []);
 
+  // Check WebGL support on mount
+  useEffect(() => {
+    const supported = checkWebGLSupport();
+    setWebglSupported(supported);
+    if (!supported) {
+      console.warn('WebGL is not supported on this device');
+    }
+  }, []);
+
   // Initialize Three.js scene (only once)
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !webglSupported) return;
 
-    sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick, t);
+    try {
+      sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick, t);
+    } catch (error) {
+      console.error('Failed to initialize 3D scene:', error);
+      setSceneError(error.message);
+    }
 
     return () => {
       if (sceneRef.current) {
@@ -40,7 +69,7 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handlePartnerClick]); // Don't include t - use setTranslation instead
+  }, [handlePartnerClick, webglSupported]); // Don't include t - use setTranslation instead
 
   // Update translation function when language changes
   useEffect(() => {
@@ -56,9 +85,29 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
     }
   }, [partners]);
 
+  // Show WebGL error or scene error
+  const showError = !webglSupported || sceneError;
+
   return (
     <div className="scene-container" ref={containerRef}>
-      {(!partners || partners.length === 0) && (
+      {/* WebGL / Scene error fallback */}
+      {showError && (
+        <div className="webgl-error">
+          <div className="webgl-error-content">
+            <span className="placeholder-icon">⚠️</span>
+            <h2>{!webglSupported ? 'WebGL Not Supported' : '3D Scene Error'}</h2>
+            <p>
+              {!webglSupported
+                ? 'Your browser or device does not support WebGL. Please try a different browser or device.'
+                : `Failed to load 3D scene: ${sceneError}`
+              }
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Placeholder when no partners */}
+      {!showError && (!partners || partners.length === 0) && (
         <div className="scene-placeholder">
           <div className="placeholder-content">
             <span className="placeholder-icon">{isExploreMode ? '🔍' : '🌾'}</span>

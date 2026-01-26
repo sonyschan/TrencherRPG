@@ -8,6 +8,10 @@
 
 .scene-container canvas {
   display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .scene-placeholder {
@@ -20,6 +24,7 @@
   align-items: center;
   justify-content: center;
   background: linear-gradient(to bottom, #87ceeb 0%, #87ceeb 60%, #4a7c4e 60%, #3d6b40 100%);
+  z-index: 2; /* Above canvas when visible */
 }
 
 .placeholder-content {
@@ -48,4 +53,55 @@
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+/* WebGL Error Fallback */
+.webgl-error {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #87ceeb 0%, #87ceeb 60%, #4a7c4e 60%, #3d6b40 100%);
+  z-index: 3;
+}
+
+.webgl-error-content {
+  text-align: center;
+  padding: 20px;
+  max-width: 90%;
+}
+
+.webgl-error-content h2 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.webgl-error-content p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Mobile responsive for placeholder */
+@media (max-width: 768px) {
+  .placeholder-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .placeholder-content h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    padding: 0 16px;
+  }
+
+  .placeholder-content p {
+    font-size: 14px;
+    padding: 0 24px;
+  }
 }
