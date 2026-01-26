@@ -33,7 +33,7 @@ export function WalletContextProvider({ children }) {
         appearance: {
           theme: 'dark',
           accentColor: '#6366f1',
-          logo: '/idle.svg',
+          logo: '/assets/idleTrencherLogo.png',
           walletChainType: 'solana-only',
           // On mobile, show email login first for better UX
           loginMessage: isMobile
@@ -41,9 +41,10 @@ export function WalletContextProvider({ children }) {
             : undefined
         },
         // Login methods - email for embedded wallet, wallet for external
-        // Email first on mobile for better PWA experience
+        // On mobile: only email/google (we use MobileWalletSelector for external wallets)
+        // On desktop: wallet first, then email/google
         loginMethods: isMobile
-          ? ['email', 'google', 'wallet']
+          ? ['email', 'google']
           : ['wallet', 'email', 'google'],
         // Solana embedded wallet configuration
         embeddedWallets: {
