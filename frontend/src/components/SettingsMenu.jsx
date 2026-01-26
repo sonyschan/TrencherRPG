@@ -1,19 +1,24 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePrivy } from '@privy-io/react-auth';
+import { useSolanaWallets } from '@privy-io/react-auth/solana';
 import { languages } from '../i18n';
 
 export default function SettingsMenu({ authenticated, onLogout, walletAddress }) {
   const { t, i18n } = useTranslation();
-  const { exportWallet, user } = usePrivy();
+  const { user } = usePrivy();
+  // Use Solana-specific export for Solana embedded wallets
+  const { exportWallet } = useSolanaWallets();
   const [isOpen, setIsOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const [showWalletInfo, setShowWalletInfo] = useState(false);
   const menuRef = useRef(null);
 
-  // Check if user has an embedded wallet
+  // Check if user has a Solana embedded wallet
   const hasEmbeddedWallet = user?.linkedAccounts?.some(
-    a => a.type === 'wallet' && a.walletClientType === 'privy'
+    a => a.type === 'wallet' &&
+         a.walletClientType === 'privy' &&
+         a.chainType === 'solana'
   );
 
   const currentLang = languages.find(l => l.code === i18n.language) || languages[0];
@@ -63,10 +68,12 @@ export default function SettingsMenu({ authenticated, onLogout, walletAddress })
   };
 
   const handleExportWallet = async () => {
+    if (!walletAddress) return;
     try {
-      await exportWallet();
+      // Export the specific Solana wallet by address
+      await exportWallet({ address: walletAddress });
     } catch (err) {
-      console.error('Failed to export wallet:', err);
+      console.error('Failed to export Solana wallet:', err);
     }
   };
 
