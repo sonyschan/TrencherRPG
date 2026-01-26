@@ -107,6 +107,9 @@ export class FarmScene {
     this.speechTimer = null;
     this.currentSpeakingPartner = null;
 
+    // Disposed flag to prevent operations after cleanup
+    this.disposed = false;
+
     this.init();
   }
 
@@ -432,6 +435,9 @@ export class FarmScene {
 
       this.assetsLoaded = true;
 
+      // Check if disposed during asset loading
+      if (this.disposed) return;
+
       // Process any pending partner data that arrived before assets were loaded
       if (this.pendingPartnerData) {
         await this.updatePartners(this.pendingPartnerData);
@@ -439,10 +445,15 @@ export class FarmScene {
       }
 
       // Start the speech timer after assets are loaded
-      this.startSpeechTimer();
+      if (!this.disposed) {
+        this.startSpeechTimer();
+      }
     } catch (error) {
       console.error('Failed to load assets:', error);
       this.assetsLoaded = true; // Continue without environment
+
+      // Check if disposed during asset loading
+      if (this.disposed) return;
 
       // Still try to process pending partners with fallback models
       if (this.pendingPartnerData) {
@@ -451,7 +462,9 @@ export class FarmScene {
       }
 
       // Start the speech timer even on error
-      this.startSpeechTimer();
+      if (!this.disposed) {
+        this.startSpeechTimer();
+      }
     }
   }
 
@@ -577,6 +590,9 @@ export class FarmScene {
    * @param {Array} partnerData - Array of partner objects from API
    */
   async updatePartners(partnerData) {
+    // Abort if scene has been disposed
+    if (this.disposed) return;
+
     // If assets aren't loaded yet, save the data for later processing
     if (!this.assetsLoaded) {
       this.pendingPartnerData = partnerData;
@@ -614,6 +630,13 @@ export class FarmScene {
     const isFirstToken = (index === 0);
     const partner = new PartnerCharacter(data, this.assetManifest, isFirstToken, this.t);
     await partner.init();
+
+    // Check if scene was disposed during async init
+    if (this.disposed) {
+      partner.dispose();
+      return;
+    }
+
     this.partners.set(data.tokenAddress, partner);
     this.scene.add(partner.group);
   }
@@ -709,11 +732,15 @@ export class FarmScene {
   }
 
   dispose() {
+    // Mark as disposed to prevent async operations from adding objects
+    this.disposed = true;
+
     // Stop speech timer
     this.stopSpeechTimer();
 
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
+      this.animationId = null;
     }
 
     // Dispose and remove all partners from scene
