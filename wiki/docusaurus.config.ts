@@ -21,7 +21,14 @@ const config: Config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'zh-Hant', 'zh-Hans', 'ja', 'ko'],
+    localeConfigs: {
+      en: { label: 'English', htmlLang: 'en-US' },
+      'zh-Hant': { label: '繁體中文', htmlLang: 'zh-TW' },
+      'zh-Hans': { label: '简体中文', htmlLang: 'zh-CN' },
+      ja: { label: '日本語', htmlLang: 'ja-JP' },
+      ko: { label: '한국어', htmlLang: 'ko-KR' },
+    },
   },
 
   presets: [
@@ -64,6 +71,10 @@ const config: Config = {
           href: 'https://idletrencher.vercel.app',
           label: '🎮 Play',
           position: 'left',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
         {
           href: 'https://x.com/h2crypto_eth',
