@@ -13,38 +13,15 @@ import Admonition from '@theme/Admonition';
 
 ## The Ultimate Flex
 
-Sure, anyone can buy a token. But can you **hold** it? The leaderboard will showcase the most dedicated holders in the IdleTrencher community.
-
-## Planned Categories
-
-### 💎 Diamond Hands
-Rankings based on **total holding time** across all your partners. The longer you've held, the higher you climb.
-
-### ⭐ Level Masters
-Who has the highest-level partners? Show off your legendary companions that have been with you through thick and thin.
-
-### 📈 Profit Kings
-Track performance while holding. Not just who made gains, but who made gains **while actively holding** in IdleTrencher.
-
-### 🎯 Diversification Award
-Recognition for well-balanced portfolios. Because putting all your eggs in one basket is so 2021.
+Sure, anyone can buy a token. But trading skills, sharp vision, and the ability to hold — it takes all three to be a true master. The leaderboard will showcase the most skilled Trenchers in the IdleTrencher community.
 
 ## How Rankings Work
 
-We're designing the leaderboard to reward **genuine holders**, not just people who connect once and forget:
+We're designing the leaderboard to filter for the strongest Trenchers:
 
-- Regular activity in IdleTrencher will be factored in
-- Partner levels matter more than raw holdings
-- Anti-gaming measures to keep it fair
-
-## Prizes & Recognition
-
-We're exploring ways to reward top leaderboard participants:
-
-- 🏅 Special profile badges
-- 🎨 Exclusive skins
-- 🪙 $IDLE token rewards
-- 🎉 Community shoutouts
+- Hold $IDLE to gain EXP boost advantages
+- More partners + higher levels = higher total score
+- Different asset tiers compete separately — small and big holders in their own leagues
 
 ---
 
@@ -52,7 +29,7 @@ We're exploring ways to reward top leaderboard participants:
 
 Let's be real — crypto can be competitive. Instead of competing on who can trade the fastest or who got the earliest insider info, we want to celebrate a different kind of success:
 
-**The ability to hold with conviction.**
+**The ability to balance holding and active trading.**
 
 It sounds simple, but in a world of 100x memecoins and daily rugs, being a consistent holder is its own achievement.
 
