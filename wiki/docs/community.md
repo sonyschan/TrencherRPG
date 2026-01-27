@@ -5,7 +5,7 @@ title: 🌐 Community
 
 # Join the Community
 
-IdleTrencher is more than just an app — it's a growing community of chill crypto enthusiasts who believe watching your portfolio should be fun, not stressful.
+IdleTrencher is more than just an app — it's a growing community of crypto enthusiasts who believe watching your portfolio should be fun, not stressful.
 
 ## Connect With Us
 
@@ -15,7 +15,6 @@ IdleTrencher is more than just an app — it's a growing community of chill cryp
 |----------|------|
 | **Creator** | [@h2crypto_eth](https://x.com/h2crypto_eth) |
 | **Official 𝕏** | TBD |
-| **Discord** | TBD |
 
 ### 💻 Open Source
 
