@@ -6,7 +6,7 @@ title: Welcome to IdleTrencher
 
 # Welcome to IdleTrencher ✨
 
-**Your crypto portfolio just got a whole lot more fun.**
+**Make your token wallet fun and cute!**
 
 ![IdleTrencher Banner](/img/banner.png)
 
@@ -16,7 +16,7 @@ Let's be honest — watching crypto charts can be stressful. The constant price 
 
 **What if checking your portfolio could actually be... relaxing?**
 
-That's exactly why we built **IdleTrencher**. Instead of staring at boring numbers and anxiety-inducing charts, your tokens come to life as adorable 3D characters that react to the market in real-time.
+**IdleTrencher** brings visual, gamified creativity to crypto. Instead of staring at boring numbers and anxiety-inducing charts, your tokens come to life as adorable 3D characters that react to the market in real-time.
 
 - 📈 **Token going up?** Your character celebrates with a happy dance!
 - 📉 **Having a rough day?** They're doing sit-ups, working hard to recover.
@@ -26,9 +26,9 @@ That's exactly why we built **IdleTrencher**. Instead of staring at boring numbe
 
 IdleTrencher is designed for **crypto enjoyers**. Whether you're a diamond-handed holder or just curious about your friend's portfolio, we want to make the experience:
 
-- 🎮 **Fun** — It's basically a game where your tokens are the characters
+- 🎮 **Fun** — An idle game where your tokens become characters
 - 😊 **Relaxing** — No more chart anxiety, just cute characters vibing
-- 🎮 **Gamified** — The longer you hold, the more your characters level up
+- 🎮 **Engaging** — Gamified leveling, skins, and leaderboards
 
 > "I used to check my portfolio 50 times a day out of stress. Now I check it 50 times a day because I want to see my little guys dance." — *Probably someone*
 

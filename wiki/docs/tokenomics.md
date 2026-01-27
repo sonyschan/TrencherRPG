@@ -58,7 +58,7 @@ Future $IDLE utilities may include:
 
 ## Fair Launch
 
-IdleTrencher was built during a hackathon with the goal of making crypto more fun for everyone. We're launching $IDLE through PumpFun to ensure a fair, transparent distribution.
+IdleTrencher was built during a 2026 hackathon with the goal of making crypto more fun for everyone. We're launching $IDLE through PumpFun to ensure a fair, transparent distribution.
 
 **No presale. No insider deals. Just vibes.**
 
