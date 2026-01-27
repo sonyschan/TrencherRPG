@@ -24,11 +24,11 @@ That's exactly why we built **IdleTrencher**. Instead of staring at boring numbe
 
 ## The Vibe
 
-IdleTrencher is designed for the **chill crypto enjoyer**. Whether you're a diamond-handed holder or just curious about your friend's portfolio, we want to make the experience:
+IdleTrencher is designed for **crypto enjoyers**. Whether you're a diamond-handed holder or just curious about your friend's portfolio, we want to make the experience:
 
 - 🎮 **Fun** — It's basically a game where your tokens are the characters
 - 😊 **Relaxing** — No more chart anxiety, just cute characters vibing
-- 🏆 **Rewarding** — The longer you hold, the more your characters level up
+- 🎮 **Gamified** — The longer you hold, the more your characters level up
 
 > "I used to check my portfolio 50 times a day out of stress. Now I check it 50 times a day because I want to see my little guys dance." — *Probably someone*
 

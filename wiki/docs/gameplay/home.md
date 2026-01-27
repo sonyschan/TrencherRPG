@@ -5,7 +5,7 @@ title: 🏠 Home
 
 # Your Home Base
 
-When you connect your wallet, your top token holdings transform into **Partners** — cute 3D characters that live in your personal arena.
+When you connect your wallet, your top token holdings transform into **Partners** — cute 3D characters that live in your personal plaza.
 
 ![Home Interface](/img/interface.jpg)
 
@@ -23,6 +23,8 @@ Click on any partner to chat with them. They'll tell you:
 - How they're doing today (24h price change)
 - Their HP status (based on your entry point)
 - How long you've been together
+
+*Who knows? Maybe in the future, they'll have even more stories to share with you... 💭*
 
 ![Partner Dialog](/img/dialog.jpg)
 
@@ -49,17 +51,9 @@ Your partners gain **experience points (EXP)** just by being in your portfolio. 
 - **Bonus EXP**: When your token is pumping (price increasing), you gain bonus hours toward EXP
 - **Max Level**: 60 (achieved after about 1 year of holding)
 
-### Level Titles
-
-| Level | Title |
-|-------|-------|
-| 1-9 | Novice Partner |
-| 10-19 | Junior Partner |
-| 20-29 | Intermediate Partner |
-| 30-39 | Senior Partner |
-| 40-49 | Veteran Partner |
-| 50-59 | Elite Partner |
-| 60 | Legendary Partner 👑 |
+:::warning EXP Reset
+If a partner is removed from your portfolio — whether you sold the token or its value dropped below other holdings — their EXP will be reset to zero.
+:::
 
 > The journey of a thousand miles begins with a single day of holding. Or something like that. 🧘
 
@@ -67,7 +61,7 @@ Your partners gain **experience points (EXP)** just by being in your portfolio. 
 
 Here's what you'll see on your home screen:
 
-- **3D Arena** — Your partners walking, dancing, or exercising
+- **3D Plaza** — Your partners walking, dancing, or exercising
 - **Wallet Value** — Your total portfolio value at a glance
 - **Partner Count** — How many tokens you're tracking
 - **Refresh Button** — Update your portfolio data
