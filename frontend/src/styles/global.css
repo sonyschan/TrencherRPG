@@ -202,6 +202,15 @@ button {
   background: rgba(239, 68, 68, 0.15);
 }
 
+/* App version display */
+.settings-version {
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+}
+
 /* Wallet address row - clickable to copy */
 .wallet-address-row {
   display: flex;

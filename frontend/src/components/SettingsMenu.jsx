@@ -4,6 +4,9 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useSolanaWallets } from '@privy-io/react-auth/solana';
 import { languages } from '../i18n';
 
+// App version from package.json (injected by Vite)
+const APP_VERSION = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : '0.0.0';
+
 export default function SettingsMenu({ authenticated, onLogout, walletAddress }) {
   const { t, i18n } = useTranslation();
   const { user } = usePrivy();
@@ -152,6 +155,12 @@ export default function SettingsMenu({ authenticated, onLogout, walletAddress })
               </div>
             </>
           )}
+
+          {/* App Version */}
+          <div className="settings-divider"></div>
+          <div className="settings-version">
+            idleTrencher v{APP_VERSION}
+          </div>
         </div>
       )}
 

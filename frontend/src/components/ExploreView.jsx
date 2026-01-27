@@ -4,14 +4,21 @@
  * - Back button (top-left) to return home
  * - No feature menu (bottom-right)
  * - Shows cached timestamp
+ * - Handles unregistered wallets with join prompt
  */
 
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Scene3D } from './Scene3D';
 import './ExploreView.css';
 
 export function ExploreView({ walletAddress, data, onBack }) {
+  const { t } = useTranslation();
   const [showCacheInfo, setShowCacheInfo] = useState(true);
+
+  // Get tokens from API response (renamed from partners)
+  const tokens = data?.tokens || data?.partners || [];
+  const isRegistered = data?.isRegistered !== false;
 
   // Format cached time
   const formatCachedTime = (isoString) => {
@@ -45,12 +52,15 @@ export function ExploreView({ walletAddress, data, onBack }) {
         <div className="explore-wallet-info">
           <span className="explore-icon">🔍</span>
           <span className="explore-address">{formatAddress(walletAddress)}</span>
-          <span className="explore-label">Village</span>
+          <span className="explore-label">{isRegistered ? 'Village' : 'Wallet'}</span>
         </div>
         {data?.totalValue && (
           <div className="explore-value">
             ${data.totalValue.toLocaleString(undefined, { maximumFractionDigits: 2 })}
           </div>
+        )}
+        {!isRegistered && (
+          <div className="explore-unregistered-badge">Not a player</div>
         )}
       </div>
 
@@ -65,20 +75,32 @@ export function ExploreView({ walletAddress, data, onBack }) {
         </div>
       )}
 
+      {/* Join Prompt for unregistered wallets */}
+      {!isRegistered && data?.joinPrompt && (
+        <div className="explore-join-prompt">
+          <span className="join-icon">👋</span>
+          <span className="join-text">{data.joinPrompt}</span>
+        </div>
+      )}
+
       {/* 3D Scene */}
       <div className="explore-scene-container">
-        <Scene3D partners={data?.partners || []} isExploreMode={true} />
+        <Scene3D partners={tokens} isExploreMode={true} />
       </div>
 
       {/* Partner List (simplified, read-only) */}
       <div className="explore-partner-list">
-        <h3 className="list-title">Partners</h3>
+        <h3 className="list-title">{isRegistered ? 'Partners' : 'Holdings'}</h3>
         <div className="partners-container">
-          {data?.partners?.map((partner) => (
-            <ExplorePartnerCard key={partner.tokenAddress} partner={partner} />
+          {tokens.map((token) => (
+            <ExplorePartnerCard
+              key={token.tokenAddress}
+              partner={token}
+              isRegistered={isRegistered}
+            />
           ))}
-          {(!data?.partners || data.partners.length === 0) && (
-            <p className="no-partners">No partners to display</p>
+          {tokens.length === 0 && (
+            <p className="no-partners">No tokens to display</p>
           )}
         </div>
       </div>
@@ -86,13 +108,16 @@ export function ExploreView({ walletAddress, data, onBack }) {
   );
 }
 
-function ExplorePartnerCard({ partner }) {
-  const { tokenSymbol, logoUrl, currentValue, hpBars, level, rank } = partner;
+function ExplorePartnerCard({ partner, isRegistered }) {
+  const { tokenSymbol, logoUrl, currentValue, hpBars, level, rank, priceChange24h, state: partnerState } = partner;
 
-  const changePercent = hpBars?.changePercent ?? 0;
-  const multiplier = hpBars?.multiplier ?? 1;
+  // Use priceChange24h from API for change percent display
+  const changePercent = priceChange24h ?? hpBars?.changePercent ?? 0;
 
+  // Use state from API if available, otherwise calculate from hpBars
   const getState = () => {
+    if (partnerState) return partnerState;
+    const multiplier = hpBars?.multiplier ?? 1;
     if (multiplier > 1.01) return 'increasing';
     if (multiplier < 0.99) return 'decreasing';
     return 'stable';
@@ -104,6 +129,9 @@ function ExplorePartnerCard({ partner }) {
     if (value >= 1000) return `$${(value / 1000).toFixed(1)}K`;
     return `$${value.toFixed(2)}`;
   };
+
+  // Only show level badge if registered and level is not null
+  const showLevel = isRegistered && level !== null && level !== undefined;
 
   return (
     <div className={`explore-partner-card ${state}`}>
@@ -120,7 +148,7 @@ function ExplorePartnerCard({ partner }) {
       <div className="partner-info">
         <div className="partner-header">
           <span className="partner-symbol">{tokenSymbol}</span>
-          <span className="level-badge">Lv{level}</span>
+          {showLevel && <span className="level-badge">Lv{level}</span>}
         </div>
         <div className="partner-value">
           <span className="value">{formatValue(currentValue)}</span>

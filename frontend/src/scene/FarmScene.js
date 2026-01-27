@@ -114,6 +114,13 @@ export class FarmScene {
     this.updateInProgress = false;
     this.pendingUpdate = null;
 
+    // Bound event handlers (stored for proper cleanup)
+    this._boundOnResize = this.onResize.bind(this);
+    this._boundOnClick = this.onClick.bind(this);
+    this._boundOnTouchEnd = this.onTouchEnd.bind(this);
+    this._boundOnKeyDown = this._onKeyDown.bind(this);
+    this._boundOnKeyUp = this._onKeyUp.bind(this);
+
     this.init();
   }
 
@@ -235,11 +242,11 @@ export class FarmScene {
     await this.loadAssets();
 
     // Handle resize
-    window.addEventListener('resize', this.onResize.bind(this));
+    window.addEventListener('resize', this._boundOnResize);
 
     // Handle click for partner selection
-    this.renderer.domElement.addEventListener('click', this.onClick.bind(this));
-    this.renderer.domElement.addEventListener('touchend', this.onTouchEnd.bind(this));
+    this.renderer.domElement.addEventListener('click', this._boundOnClick);
+    this.renderer.domElement.addEventListener('touchend', this._boundOnTouchEnd);
 
     // Start animation loop
     this.animate();
@@ -329,19 +336,28 @@ export class FarmScene {
     this.keysPressed = { w: false, a: false, s: false, d: false };
     this.panSpeed = 0.3;
 
-    window.addEventListener('keydown', (e) => {
-      const key = e.key.toLowerCase();
-      if (this.keysPressed.hasOwnProperty(key)) {
-        this.keysPressed[key] = true;
-      }
-    });
+    window.addEventListener('keydown', this._boundOnKeyDown);
+    window.addEventListener('keyup', this._boundOnKeyUp);
+  }
 
-    window.addEventListener('keyup', (e) => {
-      const key = e.key.toLowerCase();
-      if (this.keysPressed.hasOwnProperty(key)) {
-        this.keysPressed[key] = false;
-      }
-    });
+  /**
+   * Handle keydown for WASD controls
+   */
+  _onKeyDown(e) {
+    const key = e.key.toLowerCase();
+    if (this.keysPressed && this.keysPressed.hasOwnProperty(key)) {
+      this.keysPressed[key] = true;
+    }
+  }
+
+  /**
+   * Handle keyup for WASD controls
+   */
+  _onKeyUp(e) {
+    const key = e.key.toLowerCase();
+    if (this.keysPressed && this.keysPressed.hasOwnProperty(key)) {
+      this.keysPressed[key] = false;
+    }
   }
 
   handleKeyboardPan() {
@@ -829,16 +845,27 @@ export class FarmScene {
       this.controls.dispose();
     }
 
-    // Remove event listeners
-    this.renderer.domElement.removeEventListener('click', this.onClick.bind(this));
-    this.renderer.domElement.removeEventListener('touchend', this.onTouchEnd.bind(this));
+    // Remove event listeners (using stored bound references)
+    this.renderer.domElement.removeEventListener('click', this._boundOnClick);
+    this.renderer.domElement.removeEventListener('touchend', this._boundOnTouchEnd);
+    window.removeEventListener('resize', this._boundOnResize);
+    window.removeEventListener('keydown', this._boundOnKeyDown);
+    window.removeEventListener('keyup', this._boundOnKeyUp);
 
     this.renderer.dispose();
-    window.removeEventListener('resize', this.onResize.bind(this));
 
     if (this.renderer.domElement.parentNode) {
       this.renderer.domElement.parentNode.removeChild(this.renderer.domElement);
     }
+
+    // Clear bound references
+    this._boundOnResize = null;
+    this._boundOnClick = null;
+    this._boundOnTouchEnd = null;
+    this._boundOnKeyDown = null;
+    this._boundOnKeyUp = null;
+
+    console.log('[FarmScene] dispose() complete');
   }
 }
 

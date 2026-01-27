@@ -97,6 +97,57 @@
   color: #fff;
 }
 
+.explore-unregistered-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: rgba(251, 191, 36, 0.2);
+  color: #fbbf24;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+/* Join Prompt for unregistered wallets */
+.explore-join-prompt {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.9), rgba(139, 92, 246, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+  animation: join-prompt-slide-up 0.4s ease;
+}
+
+.explore-join-prompt .join-icon {
+  font-size: 20px;
+}
+
+.explore-join-prompt .join-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+}
+
+@keyframes join-prompt-slide-up {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
 /* Cache Info Toast */
 .cache-info {
   position: fixed;
@@ -155,6 +206,7 @@
   padding: 16px;
   overflow-y: auto;
   backdrop-filter: blur(10px);
+  z-index: 90;
 }
 
 .explore-partner-list .list-title {

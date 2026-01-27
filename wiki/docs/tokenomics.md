@@ -40,12 +40,12 @@ The more $IDLE you hold, the more token partners you can have:
 
 | $IDLE Held | Partner Slots |
 |------------|---------------|
-| 0 | 1 partner (free tier) |
-| 10,000 | 2 partners |
-| 20,000 | 3 partners |
-| 30,000 | 4 partners |
+| 0 | 3 partners (free tier) |
+| 10,000 | 4 partners |
+| 20,000 | 5 partners |
+| 30,000 | 6 partners |
 | ... | +1 per 10k |
-| 90,000+ | 10 partners (max) |
+| 70,000+ | 10 partners (max) |
 
 ### 🎨 Premium Features
 
