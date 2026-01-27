@@ -12,7 +12,7 @@ const config: Config = {
   },
 
   url: 'https://idletrencher.vercel.app',
-  baseUrl: '/',  // Served at root since frontend rewrites /wiki/* here
+  baseUrl: '/wiki/',  // Must match the path users access (rewrite doesn't change browser URL)
 
   organizationName: 'h2crypto',
   projectName: 'idletrencher',
