@@ -1,0 +1,112 @@
+/**
+ * IdleTrencher Wiki Theme
+ * Dark mode gaming aesthetic with purple/cyan accents
+ */
+
+:root {
+  --ifm-color-primary: #a855f7;
+  --ifm-color-primary-dark: #9333ea;
+  --ifm-color-primary-darker: #7c3aed;
+  --ifm-color-primary-darkest: #6d28d9;
+  --ifm-color-primary-light: #c084fc;
+  --ifm-color-primary-lighter: #d8b4fe;
+  --ifm-color-primary-lightest: #e9d5ff;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(168, 85, 247, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #c084fc;
+  --ifm-color-primary-dark: #a855f7;
+  --ifm-color-primary-darker: #9333ea;
+  --ifm-color-primary-darkest: #7c3aed;
+  --ifm-color-primary-light: #d8b4fe;
+  --ifm-color-primary-lighter: #e9d5ff;
+  --ifm-color-primary-lightest: #f3e8ff;
+  --docusaurus-highlighted-code-line-bg: rgba(192, 132, 252, 0.2);
+
+  /* Darker background for gaming feel */
+  --ifm-background-color: #0f0f1a;
+  --ifm-background-surface-color: #1a1a2e;
+  --ifm-navbar-background-color: #16162a;
+  --ifm-footer-background-color: #0a0a14;
+}
+
+/* Fun gradient headings */
+.markdown h1 {
+  background: linear-gradient(90deg, #c084fc, #22d3ee);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Sidebar styling */
+.theme-doc-sidebar-container {
+  border-right: 1px solid rgba(192, 132, 252, 0.2);
+}
+
+/* Emoji support in sidebar */
+.menu__link {
+  font-size: 0.95rem;
+}
+
+/* Image styling */
+.markdown img {
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin: 1rem 0;
+}
+
+/* Blockquote styling for tips */
+blockquote {
+  border-left: 4px solid var(--ifm-color-primary);
+  background: rgba(192, 132, 252, 0.1);
+  border-radius: 0 8px 8px 0;
+}
+
+/* Coming soon badge */
+.badge--secondary {
+  background: linear-gradient(90deg, #f59e0b, #f97316) !important;
+  border: none !important;
+}
+
+/* Hero section */
+.hero--primary {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16162a 50%, #0f0f1a 100%);
+}
+
+.hero__title {
+  background: linear-gradient(90deg, #c084fc, #22d3ee, #c084fc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Admonition styling */
+.alert--info {
+  --ifm-alert-background-color: rgba(34, 211, 238, 0.1);
+  --ifm-alert-border-color: #22d3ee;
+}
+
+.alert--tip {
+  --ifm-alert-background-color: rgba(192, 132, 252, 0.1);
+  --ifm-alert-border-color: #c084fc;
+}
+
+/* Table styling */
+table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: rgba(192, 132, 252, 0.2) !important;
+}
