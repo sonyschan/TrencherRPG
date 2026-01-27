@@ -12,7 +12,7 @@ const config: Config = {
   },
 
   url: 'https://idletrencher.vercel.app',
-  baseUrl: '/wiki/',  // Must match the path users access (rewrite doesn't change browser URL)
+  baseUrl: '/',  // Served on its own domain
 
   organizationName: 'h2crypto',
   projectName: 'idletrencher',
