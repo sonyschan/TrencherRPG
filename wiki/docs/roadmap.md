@@ -7,6 +7,27 @@ title: 🗺️ Roadmap
 
 IdleTrencher development milestones for the 2026 Solana Hackathon and beyond.
 
+## Development Log
+
+Daily progress during the 2026 Solana Hackathon:
+
+| Date | Features Completed | Status |
+|------|-------------------|--------|
+| Jan 17 | Project initialization, basic React setup | ✅ |
+| Jan 18 | Three.js 3D scene setup, basic character rendering | ✅ |
+| Jan 19 | Wallet connection (Privy integration) | ✅ |
+| Jan 20 | Token data fetching from Helius API | ✅ |
+| Jan 21 | Partner character system, token-to-character mapping | ✅ |
+| Jan 22 | HP bar system, profit/loss visualization | ✅ |
+| Jan 23 | Partner dialog UI, 24h price change display | ✅ |
+| Jan 24 | State-based animations (dance/situps/walk based on price) | ✅ |
+| Jan 25 | EXP & Leveling system (hour-based progression) | ✅ |
+| Jan 26 | Explore mode (view other wallets) | ✅ |
+| Jan 27 | $IDLE token integration, partner slots | ✅ |
+| Jan 28 | Multi-language Wiki (EN, zh-Hant, zh-Hans, JA, KO) | ✅ |
+| Jan 29 - Feb 17 | Skin System & Leaderboard | 🔄 In Progress |
+| Feb 18 | Hackathon Submission | 🎯 Target |
+
 ## Current Status: Phase 1 Complete ✅
 
 ### What's Live Now
