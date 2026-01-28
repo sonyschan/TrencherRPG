@@ -3,22 +3,25 @@
   "outputDirectory": "frontend/dist",
   "installCommand": "cd frontend && npm install",
   "framework": "vite",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/api/:path*",
-      "destination": "https://trencherrpg-836651762884.asia-southeast1.run.app/api/:path*"
+      "src": "/api/(.*)",
+      "dest": "https://trencherrpg-836651762884.asia-southeast1.run.app/api/$1"
     },
     {
-      "source": "/wiki",
-      "destination": "https://wiki-five-lime.vercel.app/"
+      "src": "/wiki$",
+      "dest": "https://wiki-five-lime.vercel.app/"
     },
     {
-      "source": "/wiki/",
-      "destination": "https://wiki-five-lime.vercel.app/"
+      "src": "/wiki/(.*)",
+      "dest": "https://wiki-five-lime.vercel.app/$1"
     },
     {
-      "source": "/wiki/:path+",
-      "destination": "https://wiki-five-lime.vercel.app/:path+"
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "headers": [
