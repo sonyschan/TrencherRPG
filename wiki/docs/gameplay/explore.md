@@ -7,7 +7,7 @@ title: 🔍 Explore
 
 Ever wondered what your favorite crypto influencer is actually holding? Or maybe you want to check out a friend's portfolio in a fun way?
 
-**Explore mode** lets you peek into any public Solana wallet and see their tokens as 3D characters!
+**Explore mode** lets you observe any public Solana wallet and see what 3D characters their tokens become!
 
 ![Explore Mode](/img/explore.jpg)
 

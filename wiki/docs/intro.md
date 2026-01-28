@@ -6,25 +6,22 @@ title: Welcome to IdleTrencher
 
 # Welcome to IdleTrencher ✨
 
-**Make your token wallet fun and cute!**
+**IdleTrencher** transforms your Solana wallet into an intuitive and dynamic 3D visual experience. Your token holdings become interactive partner characters that reflect market changes in real-time, making portfolio tracking more engaging and practical. It's a tool combining idle growth mechanics with portfolio visualization, designed for crypto investors who want to balance holding and market participation.
 
 ![IdleTrencher Banner](/img/banner.png)
 
-## Why IdleTrencher?
+## The Value of IdleTrencher
 
-Let's be honest — watching crypto charts can be stressful. The constant price swings, the FOMO, the red days that never seem to end... 😵‍💫
+Crypto market volatility often brings stress. **IdleTrencher** provides the following value:
 
-**What if checking your portfolio could actually be... relaxing?**
+- Transform tokens into 3D partners with animations reflecting price changes.
+- Passive growth system that rewards holding and active market performance.
+- Explore others' public wallets as a source of learning and inspiration.
+- Open community contributions for continuous content and feature enrichment.
 
-**IdleTrencher** brings visual, gamified creativity to crypto. Instead of staring at boring numbers and anxiety-inducing charts, your tokens come to life as adorable 3D characters that react to the market in real-time.
-
-- 📈 **Token going up?** Your character celebrates with a happy dance!
-- 📉 **Having a rough day?** They're doing sit-ups, working hard to recover.
-- 😌 **Market's chill?** They're just taking a peaceful stroll.
+The project originated from the 2026 Solana hackathon, using a fair PumpFun launch for **$IDLE** — no presale, no insider deals — committed to transparency and long-term sustainable development.
 
 ## The Vibe
-
-IdleTrencher is designed for **crypto enjoyers**. Whether you're a diamond-handed holder or just curious about your friend's portfolio, we want to make the experience:
 
 - 🎮 **Fun** — An idle game where your tokens become characters
 - 😊 **Relaxing** — No more chart anxiety, just cute characters vibing
