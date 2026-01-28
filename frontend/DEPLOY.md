@@ -26,7 +26,7 @@
 
 | Git Branch | Vercel Environment | URL |
 |------------|-------------------|-----|
-| `master` | Production | https://idletrencher.vercel.app |
+| `master` | Production | https://idletrencher.xyz |
 | `feature/pwa` | Preview | https://idletrencher-*-sonyschans-projects.vercel.app |
 
 ### 重要提醒

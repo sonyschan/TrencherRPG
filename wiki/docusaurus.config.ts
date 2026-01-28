@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://idletrencher.vercel.app',
-  baseUrl: '/',  // Served on its own domain
+  url: 'https://idletrencher.xyz',
+  baseUrl: '/wiki/',  // Served under /wiki/ path on main domain
 
   organizationName: 'h2crypto',
   projectName: 'idletrencher',
@@ -68,7 +68,7 @@ const config: Config = {
           label: '📖 Wiki',
         },
         {
-          href: 'https://idletrencher.vercel.app',
+          href: 'https://idletrencher.xyz',
           label: '🎮 Play',
           position: 'left',
         },

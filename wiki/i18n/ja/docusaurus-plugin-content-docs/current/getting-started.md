@@ -46,4 +46,4 @@ IdleTrencherは完全モバイル対応！スマホのブラウザで開いて�
 
 ---
 
-パートナーに会う準備はできましたか？[**アプリを起動 →**](https://idletrencher.vercel.app)
+パートナーに会う準備はできましたか？[**アプリを起動 →**](https://idletrencher.xyz)

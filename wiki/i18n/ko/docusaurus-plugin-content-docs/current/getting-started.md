@@ -46,4 +46,4 @@ IdleTrencher는 완전 모바일 지원! 스마트폰 브라우저에서 열고 
 
 ---
 
-파트너를 만날 준비가 되셨나요? [**앱 실행 →**](https://idletrencher.vercel.app)
+파트너를 만날 준비가 되셨나요? [**앱 실행 →**](https://idletrencher.xyz)

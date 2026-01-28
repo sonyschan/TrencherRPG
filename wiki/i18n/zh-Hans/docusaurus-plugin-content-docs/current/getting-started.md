@@ -46,4 +46,4 @@ IdleTrencher 完全支持手机！在手机浏览器中打开并连接你的手�
 
 ---
 
-准备好认识你的伙伴了吗？[**开始游戏 →**](https://idletrencher.vercel.app)
+准备好认识你的伙伴了吗？[**开始游戏 →**](https://idletrencher.xyz)

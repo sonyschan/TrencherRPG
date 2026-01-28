@@ -46,4 +46,4 @@ IdleTrencher is fully mobile-friendly! Open it in your phone's browser and conne
 
 ---
 
-Ready to meet your partners? [**Launch App →**](https://idletrencher.vercel.app)
+Ready to meet your partners? [**Launch App →**](https://idletrencher.xyz)

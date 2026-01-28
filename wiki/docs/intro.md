@@ -35,7 +35,7 @@ The project originated from the 2026 Solana hackathon, using a fair PumpFun laun
 2. **Watch your tokens come alive** — Your top holdings become 3D partners
 3. **Level them up** — Just by holding, your partners gain EXP and grow stronger
 
-Ready to meet your partners? [**Launch App →**](https://idletrencher.vercel.app)
+Ready to meet your partners? [**Launch App →**](https://idletrencher.xyz)
 
 ---
 

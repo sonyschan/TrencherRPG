@@ -216,7 +216,7 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
           <span className="app-version">v{APP_VERSION}</span>
         </h1>
         <a
-          href="https://wiki-five-lime.vercel.app"
+          href="https://idletrencher.xyz/wiki"
           target="_blank"
           rel="noopener noreferrer"
           className="wiki-link"

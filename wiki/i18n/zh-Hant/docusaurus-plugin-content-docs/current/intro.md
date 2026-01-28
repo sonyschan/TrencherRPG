@@ -35,7 +35,7 @@ title: 歡迎來到 IdleTrencher
 2. **看你的代幣活起來** — 你持有最多的代幣會變成 3D 夥伴
 3. **讓他們升級** — 只要持有，你的夥伴就會獲得經驗值並變得更強
 
-準備好認識你的夥伴了嗎？[**開始遊戲 →**](https://idletrencher.vercel.app)
+準備好認識你的夥伴了嗎？[**開始遊戲 →**](https://idletrencher.xyz)
 
 ---
 

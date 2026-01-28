@@ -34,7 +34,7 @@ IdleTrencher is designed for **crypto enjoyers**. Whether you're a diamond-hande
 2. **Watch your tokens come alive** — Your top holdings become 3D partners
 3. **Level them up** — Just by holding, your partners gain EXP and grow stronger
 
-Ready to meet your partners? **Launch App →** https://idletrencher.vercel.app
+Ready to meet your partners? **Launch App →** https://idletrencher.xyz
 
 ---
 

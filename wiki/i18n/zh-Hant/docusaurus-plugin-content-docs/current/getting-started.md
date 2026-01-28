@@ -46,4 +46,4 @@ IdleTrencher 完全支援手機！在手機瀏覽器中打開並連接你的手�
 
 ---
 
-準備好認識你的夥伴了嗎？[**開始遊戲 →**](https://idletrencher.vercel.app)
+準備好認識你的夥伴了嗎？[**開始遊戲 →**](https://idletrencher.xyz)
