@@ -13,6 +13,42 @@
       "dest": "https://wiki-five-lime.vercel.app/"
     },
     {
+      "src": "/wiki/$",
+      "dest": "https://wiki-five-lime.vercel.app/"
+    },
+    {
+      "src": "/wiki/zh-Hant/(.*)",
+      "dest": "https://wiki-five-lime.vercel.app/zh-Hant/$1"
+    },
+    {
+      "src": "/wiki/zh-Hant$",
+      "dest": "https://wiki-five-lime.vercel.app/zh-Hant/"
+    },
+    {
+      "src": "/wiki/zh-Hans/(.*)",
+      "dest": "https://wiki-five-lime.vercel.app/zh-Hans/$1"
+    },
+    {
+      "src": "/wiki/zh-Hans$",
+      "dest": "https://wiki-five-lime.vercel.app/zh-Hans/"
+    },
+    {
+      "src": "/wiki/ja/(.*)",
+      "dest": "https://wiki-five-lime.vercel.app/ja/$1"
+    },
+    {
+      "src": "/wiki/ja$",
+      "dest": "https://wiki-five-lime.vercel.app/ja/"
+    },
+    {
+      "src": "/wiki/ko/(.*)",
+      "dest": "https://wiki-five-lime.vercel.app/ko/$1"
+    },
+    {
+      "src": "/wiki/ko$",
+      "dest": "https://wiki-five-lime.vercel.app/ko/"
+    },
+    {
       "src": "/wiki/(.*)",
       "dest": "https://wiki-five-lime.vercel.app/$1"
     },
