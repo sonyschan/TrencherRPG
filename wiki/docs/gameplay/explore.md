@@ -48,5 +48,6 @@ We're working on letting users create **public profiles** where you can:
 - Add a display name
 - Show off your highest-level partners
 - Track your all-time holding achievements
+- Share your profile and flaunt your high-level characters
 
 Stay tuned! 🔮
