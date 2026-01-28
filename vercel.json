@@ -2,61 +2,26 @@
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/dist",
   "installCommand": "cd frontend && npm install",
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "https://trencherrpg-836651762884.asia-southeast1.run.app/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://trencherrpg-836651762884.asia-southeast1.run.app/api/:path*"
     },
     {
-      "src": "/wiki$",
-      "dest": "https://wiki-five-lime.vercel.app/"
+      "source": "/wiki",
+      "destination": "https://wiki-five-lime.vercel.app/"
     },
     {
-      "src": "/wiki/$",
-      "dest": "https://wiki-five-lime.vercel.app/"
+      "source": "/wiki/",
+      "destination": "https://wiki-five-lime.vercel.app/"
     },
     {
-      "src": "/wiki/zh-Hant/(.*)",
-      "dest": "https://wiki-five-lime.vercel.app/zh-Hant/$1"
+      "source": "/wiki/:path*",
+      "destination": "https://wiki-five-lime.vercel.app/:path*"
     },
     {
-      "src": "/wiki/zh-Hant$",
-      "dest": "https://wiki-five-lime.vercel.app/zh-Hant/"
-    },
-    {
-      "src": "/wiki/zh-Hans/(.*)",
-      "dest": "https://wiki-five-lime.vercel.app/zh-Hans/$1"
-    },
-    {
-      "src": "/wiki/zh-Hans$",
-      "dest": "https://wiki-five-lime.vercel.app/zh-Hans/"
-    },
-    {
-      "src": "/wiki/ja/(.*)",
-      "dest": "https://wiki-five-lime.vercel.app/ja/$1"
-    },
-    {
-      "src": "/wiki/ja$",
-      "dest": "https://wiki-five-lime.vercel.app/ja/"
-    },
-    {
-      "src": "/wiki/ko/(.*)",
-      "dest": "https://wiki-five-lime.vercel.app/ko/$1"
-    },
-    {
-      "src": "/wiki/ko$",
-      "dest": "https://wiki-five-lime.vercel.app/ko/"
-    },
-    {
-      "src": "/wiki/(.*)",
-      "dest": "https://wiki-five-lime.vercel.app/$1"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ],
   "headers": [
