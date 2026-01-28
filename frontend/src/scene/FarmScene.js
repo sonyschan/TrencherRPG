@@ -1999,7 +1999,10 @@ class PartnerCharacter {
   }
 
   animate() {
-    const delta = this.clock.getDelta();
+    // Cap delta to prevent large jumps when returning from inactive tab
+    // Browser pauses requestAnimationFrame when tab is inactive, causing large delta accumulation
+    const rawDelta = this.clock.getDelta();
+    const delta = Math.min(rawDelta, 0.1); // Max 100ms per frame
 
     // When speaking, only update the talk animation mixer
     if (this.isSpeaking) {
