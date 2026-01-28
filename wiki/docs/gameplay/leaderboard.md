@@ -1,27 +1,57 @@
 ---
 sidebar_position: 4
-title: 🏆 Leaderboard
+title: 🏆 Leaderboard & Rankings
 ---
 
-# Global Leaderboard
+# Leaderboard & Rankings
 
 import Admonition from '@theme/Admonition';
 
 <Admonition type="caution" title="Coming Soon">
-  This feature is currently in development. Get ready to compete!
+  Leaderboard feature is scheduled for release before February 18, 2026!
 </Admonition>
 
 ## The Ultimate Flex
 
-Sure, anyone can buy a token. But trading skills, sharp vision, and the ability to hold — it takes all three to be a true master. The leaderboard will showcase the most skilled Trenchers in the IdleTrencher community.
+Sure, anyone can buy a token. But trading skills, sharp vision, and the ability to hold — it takes all three to be a true master. The leaderboard will showcase the most skilled Trenchers in the community.
 
 ## How Rankings Work
 
-We're designing the leaderboard to filter for the strongest Trenchers:
+Your **total score** is calculated by summing the levels of all your partner characters:
 
-- Hold $IDLE to gain EXP boost advantages
-- More partners + higher levels = higher total score
-- Different asset tiers compete separately — small and big holders in their own leagues
+```
+Total Score = Sum of All Partner Levels
+```
+
+For example:
+- Partner 1: Lv15
+- Partner 2: Lv12
+- Partner 3: Lv8
+- **Total Score: 35**
+
+### Bonus Mechanics (In Design)
+
+We're designing additional scoring bonuses to reward various achievements:
+
+- 🎯 **Diversity Bonus** — Balanced portfolio across multiple tokens
+- 💎 **Diamond Hands** — Extra points for long-term consistent holding
+- 🚀 **Growth Bonus** — Rewards for partners that leveled up recently
+- 🎨 **Skin Collection** — Bonus for unlocking rare skins
+
+*Exact bonus formulas will be announced before launch.*
+
+## League System
+
+Different asset tiers compete in their own leagues — ensuring fair competition:
+
+| League | Portfolio Value |
+|--------|----------------|
+| Bronze | < $1,000 |
+| Silver | $1,000 - $10,000 |
+| Gold | $10,000 - $100,000 |
+| Diamond | $100,000+ |
+
+This way, small and large holders each have their own competition space.
 
 ---
 

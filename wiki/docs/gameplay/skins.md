@@ -1,32 +1,41 @@
 ---
 sidebar_position: 3
-title: 🎨 Skins
+title: 🎨 Skin System
 ---
 
-# Character Skins
+# Skin System
 
-import Admonition from '@theme/Admonition';
+Customize your partners with unique character skins! Different tiers unlock different visual styles.
 
-<Admonition type="caution" title="Coming Soon">
-  This feature is currently in development. Stay tuned for updates!
-</Admonition>
+## Skins in Development
 
-## What Are Skins?
+We're actively developing new 3D character models. Here's a preview of upcoming **Gold tier** skins:
 
-Right now, your partners are assigned random villager-style characters. But soon, you'll be able to **customize their appearance** with unique skins!
+<div style={{display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap'}}>
+  <img src="/img/knight.png" alt="Knight" style={{width: '300px', borderRadius: '8px'}} />
+  <img src="/img/mage.png" alt="Mage" style={{width: '300px', borderRadius: '8px'}} />
+</div>
+
+*Knight and Mage — Gold tier skins coming soon!*
+
+## Skin Tiers
+
+| Tier | Characters | How to Unlock |
+|------|------------|---------------|
+| 🥉 **Copper** | Villager Boy, Villager Girl, Villager Girl 2, Villager Boy 2 | Default (free) |
+| 🥈 **Silver** | Lady, Adventurer | Hold $IDLE or reach certain levels |
+| 🥇 **Gold** | Knight, Mage | Premium unlock (coming soon) |
+| 💎 **Diamond** | ??? | Ultra-rare (TBD) |
+
+## Current Characters
 
 ![Character Arts](/img/characters.png)
 
+All players start with access to the **Copper tier** villager characters. As you progress and hold $IDLE, you'll unlock higher tier skins.
+
 ## Planned Features
 
-### 🎭 Skin Collection
-- **Basic Skins** — Free for everyone (villagers, adventurers)
-- **Premium Skins** — Knights, mages, archers, and more
-- **Legendary Skins** — Ultra-rare designs for dedicated holders
-
-### 🔓 How to Unlock
-
-We're exploring different ways to unlock skins:
+### 🔓 Unlock Methods
 
 | Method | Skins |
 |--------|-------|
@@ -51,7 +60,7 @@ If you're a **3D artist**, you can create character skins that get added to the 
 - Multiple animation states (walk, run, celebrate, exercise)
 - Family-friendly design
 
-Interested? Check out the [Community](/community#contribute-3d-characters) page for more details on how to contribute.
+Interested? Reach out on [𝕏 (Twitter)](https://x.com/h2crypto_eth) to learn more about contributing.
 
 ---
 

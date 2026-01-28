@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 title: 💰 Tokenomics
 ---
 
@@ -7,13 +7,28 @@ title: 💰 Tokenomics
 
 The **$IDLE** token powers the IdleTrencher ecosystem. Hold it to unlock more features and support the project!
 
+## Commitment to Openness
+
+IdleTrencher was built during the **2026 Solana Hackathon** with a clear philosophy:
+
+:::tip Trust Through Transparency
+**No presale. No team allocation. No insider deals.**
+
+We launched $IDLE through PumpFun to ensure a completely fair, transparent distribution. Every token entered circulation through the same public process — no special treatment for anyone.
+:::
+
+This approach builds trust with the Solana community by ensuring:
+- Equal opportunity for all participants
+- No hidden token unlocks or vesting schedules
+- Complete transparency in token distribution
+
 ## Token Info
 
 | Property | Value |
 |----------|-------|
 | **Name** | IDLE |
 | **Chain** | Solana |
-| **Launch** | PumpFun |
+| **Launch** | PumpFun (Fair Launch) |
 | **Contract** | TBD |
 
 ## Distribution
@@ -21,16 +36,14 @@ The **$IDLE** token powers the IdleTrencher ecosystem. Hold it to unlock more fe
 ```
 ┌─────────────────────────────────────┐
 │                                     │
-│         90% Public                  │
-│     (Circulating Supply)            │
+│           100% Public               │
+│       (Fair Launch on PumpFun)      │
 │                                     │
-├─────────────────────────────────────┤
-│ 10% Team (Hackathon Reserve)        │
 └─────────────────────────────────────┘
 ```
 
-- **90%** — Public circulation via PumpFun
-- **10%** — Team allocation for hackathon and development
+- **100%** — Public circulation via PumpFun fair launch
+- **0%** — No presale, no team allocation
 
 ## Utility
 
@@ -52,15 +65,8 @@ The more $IDLE you hold, the more token partners you can have:
 Future $IDLE utilities may include:
 - Exclusive skin unlocks
 - Priority access to new features
+- Leaderboard bonuses
 - Governance voting rights
-
----
-
-## Fair Launch
-
-IdleTrencher was built during a 2026 hackathon with the goal of making crypto more fun for everyone. We're launching $IDLE through PumpFun to ensure a fair, transparent distribution.
-
-**No presale. No insider deals. Just vibes.**
 
 ---
 
