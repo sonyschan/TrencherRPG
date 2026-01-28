@@ -245,3 +245,10 @@
     box-shadow: 0 0 16px rgba(16, 185, 129, 0.7);
   }
 }
+
+/* Mobile: Hide version in header (already shown in settings menu) */
+@media (max-width: 768px) {
+  .app-version {
+    display: none;
+  }
+}
