@@ -100,7 +100,7 @@ const config: Config = {
             },
             {
               label: 'Gameplay',
-              to: '/gameplay/home',
+              to: '/gameplay/partners',
             },
             {
               label: 'Tokenomics',
@@ -126,7 +126,7 @@ const config: Config = {
           items: [
             {
               label: '3D Character Artists',
-              to: '/community#contribute-3d-characters',
+              to: '/gameplay/skins#for-artists-create-your-own-skin',
             },
             {
               label: 'Report Issues',
