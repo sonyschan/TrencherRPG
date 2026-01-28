@@ -8,19 +8,11 @@
       "destination": "https://trencherrpg-836651762884.asia-southeast1.run.app/api/:path*"
     },
     {
-      "source": "/wiki",
-      "destination": "https://wiki-five-lime.vercel.app/"
+      "source": "/wiki/:path(.*)",
+      "destination": "https://wiki-five-lime.vercel.app/:path"
     },
     {
-      "source": "/wiki/",
-      "destination": "https://wiki-five-lime.vercel.app/"
-    },
-    {
-      "source": "/wiki/:path*",
-      "destination": "https://wiki-five-lime.vercel.app/:path*"
-    },
-    {
-      "source": "/:path*",
+      "source": "/((?!wiki).*)",
       "destination": "/index.html"
     }
   ],
