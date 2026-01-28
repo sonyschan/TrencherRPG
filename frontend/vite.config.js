@@ -27,6 +27,9 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,glb,gltf,json}'],
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB for 3D assets
+        skipWaiting: true,      // Force new SW to activate immediately
+        clientsClaim: true,     // Take control of all clients immediately
+        cleanupOutdatedCaches: true, // Remove old caches
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/api\.helius\.xyz\/.*/i,
