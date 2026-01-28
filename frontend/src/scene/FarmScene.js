@@ -1023,6 +1023,7 @@ class PartnerCharacter {
 
     const img = new Image();
     img.crossOrigin = 'anonymous';
+    img.referrerPolicy = 'no-referrer';
     img.onload = () => {
       this.tokenLogoImage = img;
       // If bubble is currently visible, redraw it with the logo

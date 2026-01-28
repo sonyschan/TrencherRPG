@@ -139,7 +139,7 @@ function ExplorePartnerCard({ partner, isRegistered }) {
 
       <div className="partner-avatar">
         {logoUrl ? (
-          <img src={logoUrl} alt={tokenSymbol} />
+          <img src={logoUrl} alt={tokenSymbol} referrerPolicy="no-referrer" />
         ) : (
           <div className="avatar-placeholder">{tokenSymbol?.[0] || '?'}</div>
         )}

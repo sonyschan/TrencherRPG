@@ -273,7 +273,7 @@ ${t('dialog.adjustBase')}`;
           {/* Token avatar */}
           <div className="token-avatar-large">
             {partner.logoUrl ? (
-              <img src={partner.logoUrl} alt={partner.tokenSymbol} />
+              <img src={partner.logoUrl} alt={partner.tokenSymbol} referrerPolicy="no-referrer" />
             ) : (
               <div className="avatar-placeholder-large">
                 {partner.tokenSymbol?.[0] || '?'}
