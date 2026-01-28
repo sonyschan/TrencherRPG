@@ -47,12 +47,22 @@ Your partners gain **experience points (EXP)** just by being in your portfolio. 
 
 ### How EXP Works
 
-- **1 day holding** = 1 EXP (roughly)
-- **Bonus EXP**: When your token is pumping (price increasing), you gain bonus hours toward EXP
-- **Max Level**: 60 (achieved after about 1 year of holding)
+- **Base Growth**: 1 EXP per hour (from holding time)
+- **Bonus Growth**: Price increases grant extra EXP, rewarding active market participation
+- **Max Level**: 60 (about 1 year of holding + moderate market activity)
+
+### Level Milestones
+
+| Level | Time Required |
+|-------|---------------|
+| Lv2 | ~10 hours |
+| Lv10 | ~10 days |
+| Lv20 | ~40 days |
+| Lv30 | ~3 months |
+| Lv60 | ~1 year (max) |
 
 :::warning EXP Reset
-If a partner is removed from your portfolio — whether you sold the token or its value dropped below other holdings — their EXP will be reset to zero.
+If a partner drops out of your top holdings, their EXP resets. This design encourages a balanced strategy: steady holding for base growth, seizing price pumps for accelerated progress.
 :::
 
 > The journey of a thousand miles begins with a single day of holding. Or something like that. 🧘
