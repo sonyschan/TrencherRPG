@@ -39,6 +39,7 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
   const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(false);
   const [autoRefreshCountdown, setAutoRefreshCountdown] = useState(AUTO_REFRESH_INTERVAL);
   const autoRefreshRef = useRef(null);
+  const nextRefreshTimeRef = useRef(null); // Store next refresh timestamp
 
   const isPremium = access && access.idleBalance >= PREMIUM_THRESHOLD;
 
@@ -70,21 +71,56 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
     }
   }, [cooldownRemaining]);
 
-  // Auto-refresh timer for premium users
+  // Auto-refresh timer for premium users (with visibility API support)
   useEffect(() => {
     if (autoRefreshEnabled && isPremium) {
+      // Initialize next refresh time if not set
+      if (!nextRefreshTimeRef.current) {
+        nextRefreshTimeRef.current = Date.now() + AUTO_REFRESH_INTERVAL * 1000;
+      }
+
+      // Timer that checks based on timestamp (resilient to background throttling)
       autoRefreshRef.current = setInterval(() => {
-        setAutoRefreshCountdown(prev => {
-          if (prev <= 1) {
-            onRefresh();
-            return AUTO_REFRESH_INTERVAL;
-          }
-          return prev - 1;
-        });
+        const now = Date.now();
+        const remaining = Math.max(0, Math.ceil((nextRefreshTimeRef.current - now) / 1000));
+
+        if (remaining <= 0) {
+          onRefresh();
+          nextRefreshTimeRef.current = Date.now() + AUTO_REFRESH_INTERVAL * 1000;
+          setAutoRefreshCountdown(AUTO_REFRESH_INTERVAL);
+        } else {
+          setAutoRefreshCountdown(remaining);
+        }
       }, 1000);
-      return () => clearInterval(autoRefreshRef.current);
+
+      // Handle visibility change - check if refresh is due when tab becomes visible
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible' && nextRefreshTimeRef.current) {
+          const now = Date.now();
+          const remaining = Math.ceil((nextRefreshTimeRef.current - now) / 1000);
+
+          if (remaining <= 0) {
+            // Refresh was due while tab was hidden - trigger immediately
+            console.log('Tab became visible, triggering missed auto-refresh');
+            onRefresh();
+            nextRefreshTimeRef.current = Date.now() + AUTO_REFRESH_INTERVAL * 1000;
+            setAutoRefreshCountdown(AUTO_REFRESH_INTERVAL);
+          } else {
+            // Update countdown to correct value
+            setAutoRefreshCountdown(remaining);
+          }
+        }
+      };
+
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+
+      return () => {
+        clearInterval(autoRefreshRef.current);
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
     } else {
       setAutoRefreshCountdown(AUTO_REFRESH_INTERVAL);
+      nextRefreshTimeRef.current = null;
     }
   }, [autoRefreshEnabled, isPremium, onRefresh]);
 
@@ -95,8 +131,9 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
       setAutoRefreshEnabled(prev => !prev);
       setAutoRefreshCountdown(AUTO_REFRESH_INTERVAL);
 
-      // When enabling auto-refresh, check if last refresh was more than 10 minutes ago
+      // When enabling auto-refresh, set next refresh time and check if stale
       if (!wasEnabled) {
+        nextRefreshTimeRef.current = Date.now() + AUTO_REFRESH_INTERVAL * 1000;
         const timeSinceLastUpdate = lastUpdated
           ? Math.floor((Date.now() - lastUpdated.getTime()) / 1000)
           : Infinity;
@@ -106,6 +143,9 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
           console.log(`Last refresh was ${timeSinceLastUpdate}s ago, triggering immediate refresh`);
           onRefresh();
         }
+      } else {
+        // Disabling - clear the next refresh time
+        nextRefreshTimeRef.current = null;
       }
     } else {
       // Manual refresh with cooldown for basic users
