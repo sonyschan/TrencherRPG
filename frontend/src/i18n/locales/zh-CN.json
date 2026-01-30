@@ -23,7 +23,8 @@
     "disconnect": "断开连接",
     "connectWallet": "连接钱包",
     "toggleAutoRefresh": "切换自动刷新",
-    "refreshPortfolio": "刷新投资组合数据"
+    "refreshPortfolio": "刷新投资组合数据",
+    "verifyIdlePurchase": "已购买 $IDLE？点击验证"
   },
   "partnerList": {
     "title": "你的伙伴",

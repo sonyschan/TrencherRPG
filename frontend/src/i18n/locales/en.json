@@ -23,7 +23,8 @@
     "disconnect": "Disconnect",
     "connectWallet": "Connect Wallet",
     "toggleAutoRefresh": "Toggle auto-refresh",
-    "refreshPortfolio": "Refresh portfolio data"
+    "refreshPortfolio": "Refresh portfolio data",
+    "verifyIdlePurchase": "Bought $IDLE? Click to verify"
   },
   "partnerList": {
     "title": "Your Partners",

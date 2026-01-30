@@ -23,7 +23,8 @@
     "disconnect": "切断",
     "connectWallet": "ウォレット接続",
     "toggleAutoRefresh": "自動更新を切り替え",
-    "refreshPortfolio": "ポートフォリオデータを更新"
+    "refreshPortfolio": "ポートフォリオデータを更新",
+    "verifyIdlePurchase": "$IDLEを購入した？クリックで確認"
   },
   "partnerList": {
     "title": "あなたのパートナー",

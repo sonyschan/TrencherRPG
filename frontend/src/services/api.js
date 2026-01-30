@@ -184,3 +184,20 @@ export async function exploreWallet(address) {
 
   return response.json();
 }
+
+/**
+ * Lightweight check for $IDLE balance only (uses Solana RPC, not Helius)
+ * Designed for users to verify token purchase without consuming API quota
+ * @param {string} address - Wallet address
+ * @returns {Promise<{idleBalance: number, hasIdle: boolean}>}
+ */
+export async function checkIdleBalance(address) {
+  const response = await fetch(`${API_BASE}/check-idle/${address}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to check IDLE balance');
+  }
+
+  return response.json();
+}

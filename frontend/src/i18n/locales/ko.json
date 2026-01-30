@@ -23,7 +23,8 @@
     "disconnect": "연결 해제",
     "connectWallet": "지갑 연결",
     "toggleAutoRefresh": "자동 새로고침 전환",
-    "refreshPortfolio": "포트폴리오 데이터 새로고침"
+    "refreshPortfolio": "포트폴리오 데이터 새로고침",
+    "verifyIdlePurchase": "$IDLE 구매했나요? 클릭하여 확인"
   },
   "partnerList": {
     "title": "내 파트너",

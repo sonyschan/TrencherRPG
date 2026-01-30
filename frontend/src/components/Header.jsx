@@ -7,6 +7,7 @@ import { usePrivy } from '@privy-io/react-auth';
 import { useTranslation } from 'react-i18next';
 import SettingsMenu from './SettingsMenu';
 import { MobileWalletSelector } from './MobileWalletSelector';
+import { checkIdleBalance } from '../services/api';
 import './Header.css';
 
 // App version from package.json
@@ -34,6 +35,9 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
 
   // Cooldown state for basic users
   const [cooldownRemaining, setCooldownRemaining] = useState(0);
+
+  // Verify IDLE purchase state
+  const [isVerifying, setIsVerifying] = useState(false);
 
   // Auto-refresh state for premium users
   const [autoRefreshEnabled, setAutoRefreshEnabled] = useState(false);
@@ -157,6 +161,36 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
       }
     }
   }, [isPremium, autoRefreshEnabled, cooldownRemaining, onRefresh, walletAddress, lastUpdated]);
+
+  // Verify $IDLE purchase - lightweight check without consuming Helius quota
+  const handleVerifyIdlePurchase = useCallback(async () => {
+    if (!walletAddress || isVerifying) return;
+
+    setIsVerifying(true);
+    try {
+      const result = await checkIdleBalance(walletAddress);
+
+      if (result.hasIdle) {
+        // User has $IDLE! Clear cooldown and trigger full refresh
+        const storageKey = `lastRefreshTime_${walletAddress}`;
+        localStorage.removeItem(storageKey);
+        setCooldownRemaining(0);
+
+        // Trigger full refresh to update access level
+        onRefresh();
+      } else {
+        // No $IDLE found - show feedback (could use toast, but keeping simple)
+        console.log('No $IDLE tokens found in wallet');
+      }
+    } catch (error) {
+      console.error('Error verifying IDLE purchase:', error);
+    } finally {
+      setIsVerifying(false);
+    }
+  }, [walletAddress, isVerifying, onRefresh]);
+
+  // Show verify button when: basic user (idleBalance === 0) AND on cooldown
+  const showVerifyButton = isConnected && !isPremium && access?.idleBalance === 0 && cooldownRemaining > 0;
 
   const formatTime = (date) => {
     if (!date) return '';
@@ -304,6 +338,17 @@ export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, last
                   </span>
                   <span className="refresh-text">{refreshState.text}</span>
                 </button>
+                {/* Verify $IDLE purchase button - shown when basic user on cooldown */}
+                {showVerifyButton && (
+                  <button
+                    className="btn-verify-idle"
+                    onClick={handleVerifyIdlePurchase}
+                    disabled={isVerifying}
+                    title={t('header.verifyIdlePurchase')}
+                  >
+                    {isVerifying ? '...' : '✓ $IDLE'}
+                  </button>
+                )}
               </div>
             )}
 
