@@ -29,7 +29,7 @@ IdleTrencher 是在 **2026 Solana 黑客松** 期間打造的，有著明確的�
 | **名稱** | IDLE |
 | **鏈** | Solana |
 | **發行** | PumpFun（公平發行）|
-| **合約** | 待公布 |
+| **合約** | `9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump` |
 
 ## 分配
 
@@ -70,6 +70,6 @@ IdleTrencher 是在 **2026 Solana 黑客松** 期間打造的，有著明確的�
 
 ---
 
-:::info 保持關注
-追蹤我們的 [𝕏 (Twitter)](https://x.com/h2crypto_eth) 以獲取官方合約地址公告和發行詳情。
+:::info 交易 $IDLE
+在 [PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump) 查看 | 追蹤我們的 [𝕏 (Twitter)](https://x.com/h2crypto_eth)
 :::

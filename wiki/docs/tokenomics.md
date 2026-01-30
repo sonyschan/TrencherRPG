@@ -29,7 +29,7 @@ This approach builds trust with the Solana community by ensuring:
 | **Name** | IDLE |
 | **Chain** | Solana |
 | **Launch** | PumpFun (Fair Launch) |
-| **Contract** | TBD |
+| **Contract** | `9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump` |
 
 ## Distribution
 
@@ -70,6 +70,6 @@ Future $IDLE utilities may include:
 
 ---
 
-:::info Stay Updated
-Follow us on [𝕏 (Twitter)](https://x.com/h2crypto_eth) for the official contract address announcement and launch details.
+:::info Trade $IDLE
+View on [PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump) | Follow us on [𝕏 (Twitter)](https://x.com/h2crypto_eth)
 :::

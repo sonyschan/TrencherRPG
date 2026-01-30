@@ -26,6 +26,7 @@ Daily progress during the 2026 Solana Hackathon:
 | Jan 27 | $IDLE token integration, partner slots | ✅ |
 | Jan 28 | Multi-language Wiki (EN, zh-Hant, zh-Hans, JA, KO) | ✅ |
 | Jan 29 - Feb 17 | Skin System & Leaderboard | 🔄 In Progress |
+| **Jan 30** | **Joined PumpFun Hackathon, $IDLE token launched** | ✅ |
 | Feb 18 | Hackathon Submission | 🎯 Target |
 
 ## Current Status: Phase 1 Complete ✅

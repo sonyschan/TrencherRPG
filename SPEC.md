@@ -161,7 +161,7 @@ Level = min(60, floor(sqrt(Exp × 10)))
 - 持有 100000 $idle = 顯示 10 個夥伴（目前上限）
 - 代幣門檻決定可視化層級
 
-**開發階段測試**：使用代幣 `8AinLThG8AHdcqQ5FhDTR7TZgxJhucBvTTxEQT6ppump` 替代 $idle 進行門檻測試。
+**正式 $IDLE CA**：`9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump`（已配置於 GCP 環境變數）
 
 ---
 
@@ -554,7 +554,7 @@ interface DailySnapshot {
 
 1. **開發優先順序**：先完成 Phase 1-A 本地開發，確認功能正常後再進行 Phase 1-B 上線部署
 2. **即時更新**：因免費 API 限制，優先實作輪詢/手動更新，即時推送為後續優化項目
-3. **$idle 代幣**：開發階段使用測試代幣 `8AinLThG8AHdcqQ5FhDTR7TZgxJhucBvTTxEQT6ppump`，正式版再替換
+3. **$IDLE 代幣**：正式 CA `9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump`（2026/1/30 上線）
 4. **代幣替換**：被擠出前 10 名的代幣經驗值歸 0，鼓勵維持高價值持倉
 5. **本地測試錢包**：`52VCnQPmGCYudemRr9m7geyuKd1pRjcAhpVUkhpPwz5G`
 

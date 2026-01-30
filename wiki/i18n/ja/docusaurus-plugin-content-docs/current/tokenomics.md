@@ -29,7 +29,7 @@ PumpFunを通じて$IDLEをローンチし、完全に公平で透明な配分�
 | **名前** | IDLE |
 | **チェーン** | Solana |
 | **ローンチ** | PumpFun（フェアローンチ）|
-| **コントラクト** | 近日公開 |
+| **コントラクト** | `9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump` |
 
 ## 配分
 
@@ -70,6 +70,6 @@ $IDLEを多く保有するほど、より多くのトークンパートナーを
 
 ---
 
-:::info 最新情報をチェック
-公式コントラクトアドレスの発表とローンチ詳細は [𝕏 (Twitter)](https://x.com/h2crypto_eth) をフォローしてください。
+:::info $IDLEを取引
+[PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump)で見る | [𝕏 (Twitter)](https://x.com/h2crypto_eth)をフォロー
 :::
