@@ -12,7 +12,7 @@
   "app": {
     "loading": "idleTrencherを読み込み中...",
     "retry": "再試行",
-    "unlockSlots": "{{amount}} $idle トークンを保有してパートナースロットを解除",
+    "unlockSlots": "{{amount}} $IDLE トークンを保有してパートナースロットを解除",
     "demoMode": "デモモード - Solanaウォレットを接続してパートナーを確認"
   },
   "header": {
@@ -29,9 +29,9 @@
     "title": "あなたのパートナー",
     "connectPrompt": "ウォレットを接続してパートナーを確認",
     "unlockSlots": "{{count}} スロットを解除",
-    "getIdleForSlot": "{{amount}} $idle で次のスロットを解除",
+    "getIdleForSlot": "{{amount}} $IDLE で次のスロットを解除",
     "unlockAutoRefresh": "自動更新を解除",
-    "holdMoreIdle": "あと {{amount}} $idle を保有",
+    "holdMoreIdle": "あと {{amount}} $IDLE を保有",
     "max": "MAX",
     "exp": "EXP"
   },

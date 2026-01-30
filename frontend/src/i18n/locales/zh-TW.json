@@ -12,7 +12,7 @@
   "app": {
     "loading": "正在載入 idleTrencher...",
     "retry": "重試",
-    "unlockSlots": "持有 {{amount}} $idle 代幣以解鎖更多夥伴欄位",
+    "unlockSlots": "持有 {{amount}} $IDLE 代幣以解鎖更多夥伴欄位",
     "demoMode": "示範模式 - 連接你的 Solana 錢包以查看你的夥伴"
   },
   "header": {
@@ -29,9 +29,9 @@
     "title": "你的夥伴",
     "connectPrompt": "連接你的錢包以查看你的夥伴",
     "unlockSlots": "解鎖 {{count}} 個欄位",
-    "getIdleForSlot": "持有 {{amount}} $idle 解鎖下一個欄位",
+    "getIdleForSlot": "持有 {{amount}} $IDLE 解鎖下一個欄位",
     "unlockAutoRefresh": "解鎖自動刷新",
-    "holdMoreIdle": "再持有 {{amount}} $idle",
+    "holdMoreIdle": "再持有 {{amount}} $IDLE",
     "max": "MAX",
     "exp": "EXP"
   },

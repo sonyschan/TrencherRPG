@@ -95,7 +95,7 @@ export async function getPartners(address) {
 }
 
 /**
- * Check access level based on $idle holdings
+ * Check access level based on $IDLE holdings
  * @param {string} address
  */
 export async function checkAccess(address) {

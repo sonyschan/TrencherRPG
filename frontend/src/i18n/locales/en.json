@@ -12,7 +12,7 @@
   "app": {
     "loading": "Loading idleTrencher...",
     "retry": "Retry",
-    "unlockSlots": "Hold {{amount}} $idle tokens to unlock more partner slots",
+    "unlockSlots": "Hold {{amount}} $IDLE tokens to unlock more partner slots",
     "demoMode": "Demo Mode - Connect your Solana wallet to see your own partners"
   },
   "header": {
@@ -29,9 +29,9 @@
     "title": "Your Partners",
     "connectPrompt": "Connect your wallet to see your partners",
     "unlockSlots": "Unlock {{count}} more slots",
-    "getIdleForSlot": "Get {{amount}} $idle for next slot",
+    "getIdleForSlot": "Get {{amount}} $IDLE for next slot",
     "unlockAutoRefresh": "Unlock Auto-Refresh",
-    "holdMoreIdle": "Hold {{amount}} more $idle",
+    "holdMoreIdle": "Hold {{amount}} more $IDLE",
     "max": "MAX",
     "exp": "EXP"
   },

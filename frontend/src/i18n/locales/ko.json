@@ -12,7 +12,7 @@
   "app": {
     "loading": "idleTrencher 로딩 중...",
     "retry": "재시도",
-    "unlockSlots": "{{amount}} $idle 토큰을 보유하여 더 많은 파트너 슬롯 잠금 해제",
+    "unlockSlots": "{{amount}} $IDLE 토큰을 보유하여 더 많은 파트너 슬롯 잠금 해제",
     "demoMode": "데모 모드 - Solana 지갑을 연결하여 파트너 확인"
   },
   "header": {
@@ -29,9 +29,9 @@
     "title": "내 파트너",
     "connectPrompt": "지갑을 연결하여 파트너를 확인하세요",
     "unlockSlots": "{{count}}개 슬롯 잠금 해제",
-    "getIdleForSlot": "{{amount}} $idle로 다음 슬롯 잠금 해제",
+    "getIdleForSlot": "{{amount}} $IDLE로 다음 슬롯 잠금 해제",
     "unlockAutoRefresh": "자동 새로고침 잠금 해제",
-    "holdMoreIdle": "{{amount}} $idle 더 보유",
+    "holdMoreIdle": "{{amount}} $IDLE 더 보유",
     "max": "MAX",
     "exp": "EXP"
   },

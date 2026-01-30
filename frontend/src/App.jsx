@@ -165,7 +165,7 @@ function App() {
       {isConnected && access && access.idleBalance === 0 && (
         <div className="access-warning">
           <p>
-            Hold {access.requiredForNext?.toLocaleString()} $idle tokens
+            Hold {access.requiredForNext?.toLocaleString()} $IDLE tokens
             to unlock more partner slots
           </p>
         </div>

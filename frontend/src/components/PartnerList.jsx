@@ -186,7 +186,7 @@ function UnlockCTA({ lockedSlots, requiredForNext }) {
       <div className="cta-content">
         <div className="cta-title">Unlock {lockedSlots} more slots</div>
         <div className="cta-subtitle">
-          Get {requiredForNext?.toLocaleString()} $idle for next slot
+          Get {requiredForNext?.toLocaleString()} $IDLE for next slot
         </div>
       </div>
       <div className="cta-arrow">→</div>
@@ -209,7 +209,7 @@ function AutoRefreshCTA({ idleBalance }) {
       <div className="cta-content">
         <div className="cta-title">Unlock Auto-Refresh</div>
         <div className="cta-subtitle">
-          Hold {remaining.toLocaleString()} more $idle
+          Hold {remaining.toLocaleString()} more $IDLE
         </div>
       </div>
       <div className="cta-arrow">→</div>

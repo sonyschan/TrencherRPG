@@ -23,7 +23,7 @@ const isMobileBrowser = () => {
 
 const COOLDOWN_DURATION = 60 * 60; // 1 hour in seconds
 const AUTO_REFRESH_INTERVAL = 10 * 60; // 10 minutes in seconds
-const PREMIUM_THRESHOLD = 100000; // 100,000 $idle tokens
+const PREMIUM_THRESHOLD = 100000; // 100,000 $IDLE tokens
 
 export function Header({ wallet, onRefresh, loading, isLoading, isUpdating, lastUpdated, access, isConnected }) {
   const { ready, authenticated, login, logout, user } = usePrivy();

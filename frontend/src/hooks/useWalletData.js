@@ -8,7 +8,7 @@ import { getWalletData, refreshWalletData, initApiAuth } from '../services/api';
 
 // Constants
 const SOL_ADDRESS = '11111111111111111111111111111111';
-const PREMIUM_THRESHOLD = 100000; // 100K $idle tokens
+const PREMIUM_THRESHOLD = 100000; // 100K $IDLE tokens
 const STALE_THRESHOLD = 10 * 60 * 1000; // 10 minutes in milliseconds
 const SOL_LOGO_URL = 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png';
 
@@ -140,7 +140,7 @@ export function useWalletData() {
   }, [userWalletAddress]);
 
   // Auto-fetch on mount and when wallet changes
-  // Only premium users (>=100K $idle) get auto-refresh, and only if data is stale (>10 min)
+  // Only premium users (>=100K $IDLE) get auto-refresh, and only if data is stale (>10 min)
   useEffect(() => {
     if (!ready) return;
 
@@ -164,7 +164,7 @@ export function useWalletData() {
         setIsDemo(false);
         setIsLoading(false);  // Done reading cache
 
-        // Step 2: Check if premium user (>=100K $idle)
+        // Step 2: Check if premium user (>=100K $IDLE)
         const isPremium = cachedResult?.access?.idleBalance >= PREMIUM_THRESHOLD;
 
         // Step 3: Check if data is stale (>10 minutes since last update)
