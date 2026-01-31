@@ -16,14 +16,6 @@ const SOL_LOGO_URL = 'https://raw.githubusercontent.com/solana-labs/token-list/m
 const FALLBACK_DEMO_WALLET = '52VCnQPmGCYudemRr9m7geyuKd1pRjcAhpVUkhpPwz5G';
 
 /**
- * Format wallet address for anonymous display (e.g., "52VC...Pz5G")
- */
-function formatAnonymousAddress(address) {
-  if (!address || address.length < 8) return address;
-  return `${address.slice(0, 4)}...${address.slice(-4)}`;
-}
-
-/**
  * Generate demo SOL token data for fallback (if explore API fails)
  */
 function generateFallbackDemoSOL() {
@@ -163,7 +155,7 @@ export function useWalletData() {
           if (partners && partners.length > 0) {
             setDemoData({
               wallet: {
-                address: formatAnonymousAddress(randomWallet),
+                address: randomWallet,
                 totalValue: exploreData.totalValue
               },
               partners
@@ -324,7 +316,7 @@ export function useWalletData() {
         if (partners && partners.length > 0) {
           setDemoData({
             wallet: {
-              address: formatAnonymousAddress(randomWallet),
+              address: randomWallet,
               totalValue: exploreData.totalValue
             },
             partners

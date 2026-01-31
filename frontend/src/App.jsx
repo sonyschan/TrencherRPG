@@ -173,7 +173,7 @@ function App() {
 
       {isDemo && (
         <div className="demo-banner">
-          <span>Demo Mode - Connect your Solana wallet to see your own partners</span>
+          <span>Demo Mode - Viewing wallet {wallet?.address ? `${wallet.address.slice(0, 4)}...${wallet.address.slice(-4)}` : ''} - Connect to see your own partners</span>
         </div>
       )}
     </div>
