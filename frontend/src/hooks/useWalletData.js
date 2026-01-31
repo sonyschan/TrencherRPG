@@ -78,6 +78,10 @@ function convertExploreToPartners(exploreData) {
       progress: 0,
       isMaxLevel: false
     },
+    // Social links from DexScreener (cached in explore)
+    socials: token.socials || [],
+    websites: token.websites || [],
+    dexscreenerUrl: token.dexscreenerUrl || `https://dexscreener.com/solana/${token.tokenAddress}`,
     isDemo: true
   }));
 }

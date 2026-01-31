@@ -283,13 +283,11 @@ ${t('dialog.adjustBase')}`;
           </div>
 
           {/* Social links bar */}
-          {!partner.isDemo && (
-            <SocialLinksBar
-              socials={partner.socials}
-              websites={partner.websites}
-              dexscreenerUrl={partner.dexscreenerUrl}
-            />
-          )}
+          <SocialLinksBar
+            socials={partner.socials}
+            websites={partner.websites}
+            dexscreenerUrl={partner.dexscreenerUrl}
+          />
 
           {/* Dialog box */}
           <div className="dialog-box">
