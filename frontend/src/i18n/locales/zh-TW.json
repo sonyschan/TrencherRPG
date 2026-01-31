@@ -13,7 +13,7 @@
     "loading": "正在載入 idleTrencher...",
     "retry": "重試",
     "unlockSlots": "持有 {{amount}} $IDLE 代幣以解鎖更多夥伴欄位",
-    "demoMode": "示範模式 - 連接你的 Solana 錢包以查看你的夥伴"
+    "demoMode": "拜訪村莊中 - 連接錢包以回到自己的村莊"
   },
   "header": {
     "loading": "載入中...",

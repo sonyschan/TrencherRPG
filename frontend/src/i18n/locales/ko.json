@@ -13,7 +13,7 @@
     "loading": "idleTrencher 로딩 중...",
     "retry": "재시도",
     "unlockSlots": "{{amount}} $IDLE 토큰을 보유하여 더 많은 파트너 슬롯 잠금 해제",
-    "demoMode": "데모 모드 - Solana 지갑을 연결하여 파트너 확인"
+    "demoMode": "마을 방문 중 - 지갑 연결하여 내 마을로"
   },
   "header": {
     "loading": "로딩 중...",

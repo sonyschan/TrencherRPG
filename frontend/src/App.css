@@ -119,6 +119,12 @@
   animation: slideDown 0.3s ease-out;
 }
 
+.village-address {
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-weight: 700;
+  color: #fcd34d;
+}
+
 @keyframes slideDown {
   from {
     transform: translateX(-50%) translateY(-20px);

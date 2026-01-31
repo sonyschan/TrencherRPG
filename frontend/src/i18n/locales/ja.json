@@ -13,7 +13,7 @@
     "loading": "idleTrencherを読み込み中...",
     "retry": "再試行",
     "unlockSlots": "{{amount}} $IDLE トークンを保有してパートナースロットを解除",
-    "demoMode": "デモモード - Solanaウォレットを接続してパートナーを確認"
+    "demoMode": "村を訪問中 - ウォレット接続で自分の村へ"
   },
   "header": {
     "loading": "読み込み中...",

@@ -13,7 +13,7 @@
     "loading": "Loading idleTrencher...",
     "retry": "Retry",
     "unlockSlots": "Hold {{amount}} $IDLE tokens to unlock more partner slots",
-    "demoMode": "Demo Mode - Connect your Solana wallet to see your own partners"
+    "demoMode": "Visiting Village - Connect wallet to see your own"
   },
   "header": {
     "loading": "Loading...",
