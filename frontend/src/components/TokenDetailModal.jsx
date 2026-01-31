@@ -94,9 +94,10 @@ ${t('dialog.demo.cta')}`;
       baseValueText = t('dialog.hpDown', { percent: Math.abs(changePercent).toFixed(2), blocks: totalHPBlocks });
     }
 
-    // Days held text
+    // Days held text (exp is in hours, convert to days)
+    const daysHeld = levelInfo?.exp ? Math.floor(levelInfo.exp / 24) : 0;
     const daysHeldText = levelInfo
-      ? (levelInfo.exp > 0 ? t('dialog.daysHeld', { days: levelInfo.exp }) : t('dialog.daysHeldFirst'))
+      ? (daysHeld > 0 ? t('dialog.daysHeld', { days: daysHeld }) : t('dialog.daysHeldFirst'))
       : '';
 
     return `${t('dialog.greeting')}
