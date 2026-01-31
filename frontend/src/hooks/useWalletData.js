@@ -4,7 +4,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
-import { getWalletData, refreshWalletData, initApiAuth, exploreWallet } from '../services/api';
+import { getWalletData, refreshWalletData, initApiAuth, exploreWallet, getDemoWallets } from '../services/api';
 
 // Constants
 const SOL_ADDRESS = '11111111111111111111111111111111';
@@ -12,11 +12,8 @@ const PREMIUM_THRESHOLD = 100000; // 100K $IDLE tokens
 const STALE_THRESHOLD = 10 * 60 * 1000; // 10 minutes in milliseconds
 const SOL_LOGO_URL = 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png';
 
-// Demo wallets - curated list of interesting portfolios for demo mode
-const DEMO_WALLETS = [
-  '52VCnQPmGCYudemRr9m7geyuKd1pRjcAhpVUkhpPwz5G', // H2Crypto - 10 tokens, active
-  // Add more demo wallets as they become available in explore_cache
-];
+// Fallback demo wallet if API fails
+const FALLBACK_DEMO_WALLET = '52VCnQPmGCYudemRr9m7geyuKd1pRjcAhpVUkhpPwz5G';
 
 /**
  * Generate demo SOL token data for fallback (if explore API fails)
@@ -134,8 +131,22 @@ export function useWalletData() {
     if (isDemoMode && !demoData) {
       const fetchDemoData = async () => {
         try {
-          // Pick a random demo wallet
-          const randomWallet = DEMO_WALLETS[Math.floor(Math.random() * DEMO_WALLETS.length)];
+          // Fetch random demo wallets from API
+          let randomWallet;
+          try {
+            const demoWalletsResponse = await getDemoWallets(5);
+            if (demoWalletsResponse.wallets && demoWalletsResponse.wallets.length > 0) {
+              // Pick a random one from the fetched list
+              const randomIndex = Math.floor(Math.random() * demoWalletsResponse.wallets.length);
+              randomWallet = demoWalletsResponse.wallets[randomIndex].address;
+            } else {
+              randomWallet = FALLBACK_DEMO_WALLET;
+            }
+          } catch (apiErr) {
+            console.warn('Failed to fetch demo wallets, using fallback:', apiErr);
+            randomWallet = FALLBACK_DEMO_WALLET;
+          }
+
           setDemoWalletAddress(randomWallet);
 
           const exploreData = await exploreWallet(randomWallet);
@@ -283,7 +294,20 @@ export function useWalletData() {
     if (!userWalletAddress) {
       // In demo mode, refetch from a (possibly different) demo wallet
       try {
-        const randomWallet = DEMO_WALLETS[Math.floor(Math.random() * DEMO_WALLETS.length)];
+        let randomWallet;
+        try {
+          const demoWalletsResponse = await getDemoWallets(5);
+          if (demoWalletsResponse.wallets && demoWalletsResponse.wallets.length > 0) {
+            const randomIndex = Math.floor(Math.random() * demoWalletsResponse.wallets.length);
+            randomWallet = demoWalletsResponse.wallets[randomIndex].address;
+          } else {
+            randomWallet = FALLBACK_DEMO_WALLET;
+          }
+        } catch (apiErr) {
+          console.warn('Failed to fetch demo wallets for refresh:', apiErr);
+          randomWallet = FALLBACK_DEMO_WALLET;
+        }
+
         setDemoWalletAddress(randomWallet);
 
         const exploreData = await exploreWallet(randomWallet);

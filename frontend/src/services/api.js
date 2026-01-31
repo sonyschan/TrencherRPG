@@ -186,6 +186,22 @@ export async function exploreWallet(address) {
 }
 
 /**
+ * Get random demo wallets from explore_cache
+ * @param {number} limit - Number of wallets to fetch (default 5, max 20)
+ * @returns {Promise<{wallets: Array<{address: string, totalValue: number, tokenCount: number}>}>}
+ */
+export async function getDemoWallets(limit = 5) {
+  const response = await fetch(`${API_BASE}/demo/wallets?limit=${limit}`);
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to get demo wallets');
+  }
+
+  return response.json();
+}
+
+/**
  * Lightweight check for $IDLE balance only (uses Solana RPC, not Helius)
  * Designed for users to verify token purchase without consuming API quota
  * @param {string} address - Wallet address
