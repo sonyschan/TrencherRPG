@@ -4,7 +4,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
-import { getWalletData, refreshWalletData, initApiAuth } from '../services/api';
+import { getWalletData, refreshWalletData, initApiAuth, exploreWallet } from '../services/api';
 
 // Constants
 const SOL_ADDRESS = '11111111111111111111111111111111';
@@ -12,13 +12,18 @@ const PREMIUM_THRESHOLD = 100000; // 100K $IDLE tokens
 const STALE_THRESHOLD = 10 * 60 * 1000; // 10 minutes in milliseconds
 const SOL_LOGO_URL = 'https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png';
 
+// Demo wallets - curated list of interesting portfolios for demo mode
+const DEMO_WALLETS = [
+  '52VCnQPmGCYudemRr9m7geyuKd1pRjcAhpVUkhpPwz5G', // H2Crypto - 10 tokens, active
+  // Add more demo wallets as they become available in explore_cache
+];
+
 /**
- * Generate demo SOL token data for logged-out users
- * Random value: $500-$1500, Random price change: -5% to +5%
+ * Generate demo SOL token data for fallback (if explore API fails)
  */
-function generateDemoSOL() {
-  const randomValue = 500 + Math.random() * 1000; // $500 - $1500
-  const randomChange = (Math.random() - 0.5) * 10; // -5% to +5%
+function generateFallbackDemoSOL() {
+  const randomValue = 500 + Math.random() * 1000;
+  const randomChange = (Math.random() - 0.5) * 10;
   const state = randomChange > 1 ? 'increasing' : randomChange < -1 ? 'decreasing' : 'stable';
 
   return {
@@ -27,7 +32,7 @@ function generateDemoSOL() {
     tokenName: 'Solana',
     logoUrl: SOL_LOGO_URL,
     currentValue: randomValue,
-    designatedValue: randomValue, // Same as current (no base value set)
+    designatedValue: randomValue,
     level: 1,
     rank: 1,
     state,
@@ -43,8 +48,41 @@ function generateDemoSOL() {
       progress: 0,
       isMaxLevel: false
     },
-    isDemo: true // Mark as demo token for special handling
+    isDemo: true
   };
+}
+
+/**
+ * Convert explore API response to partner format for demo mode
+ */
+function convertExploreToPartners(exploreData) {
+  if (!exploreData?.tokens) return null;
+
+  return exploreData.tokens.map(token => ({
+    tokenAddress: token.tokenAddress,
+    tokenSymbol: token.tokenSymbol,
+    tokenName: token.tokenSymbol,
+    logoUrl: token.logoUrl,
+    currentValue: token.currentValue,
+    designatedValue: token.currentValue, // Use current as base for demo
+    level: token.level || 1,
+    rank: token.rank,
+    state: token.state,
+    priceChange24h: token.priceChange24h,
+    skin: token.skin || 'villager',
+    hpBars: {
+      bar1: { green: 10, red: 0 },
+      bar2: { green: 0, show: false },
+      bar3: { green: 0, show: false }
+    },
+    levelInfo: token.levelInfo || {
+      level: token.level || 1,
+      exp: token.exp || 0,
+      progress: 0,
+      isMaxLevel: false
+    },
+    isDemo: true
+  }));
 }
 
 export function useWalletData() {
@@ -65,7 +103,8 @@ export function useWalletData() {
   const [error, setError] = useState(null);
   const [isDemo, setIsDemo] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
-  const [demoSOL, setDemoSOL] = useState(null);
+  const [demoData, setDemoData] = useState(null); // Demo mode data from explore API
+  const [demoWalletAddress, setDemoWalletAddress] = useState(null);
 
   // Get Solana wallet address from Privy user
   const getUserWalletAddress = () => {
@@ -90,17 +129,52 @@ export function useWalletData() {
   // Determine if we're in demo mode (no wallet connected)
   const isDemoMode = ready && !userWalletAddress;
 
-  // Generate demo SOL on first render when in demo mode
+  // Fetch demo data from explore API on first render when in demo mode
   useEffect(() => {
-    if (isDemoMode && !demoSOL) {
-      setDemoSOL(generateDemoSOL());
-    }
-  }, [isDemoMode, demoSOL]);
+    if (isDemoMode && !demoData) {
+      const fetchDemoData = async () => {
+        try {
+          // Pick a random demo wallet
+          const randomWallet = DEMO_WALLETS[Math.floor(Math.random() * DEMO_WALLETS.length)];
+          setDemoWalletAddress(randomWallet);
 
-  // Clear demo SOL when user connects wallet
+          const exploreData = await exploreWallet(randomWallet);
+          const partners = convertExploreToPartners(exploreData);
+
+          if (partners && partners.length > 0) {
+            setDemoData({
+              wallet: {
+                address: `demo-${randomWallet.slice(0, 6)}`,
+                totalValue: exploreData.totalValue
+              },
+              partners
+            });
+          } else {
+            // Fallback to single SOL token
+            setDemoData({
+              wallet: { address: 'demo', totalValue: 1000 },
+              partners: [generateFallbackDemoSOL()]
+            });
+          }
+        } catch (err) {
+          console.error('Failed to load demo data, using fallback:', err);
+          // Fallback to single SOL token
+          setDemoData({
+            wallet: { address: 'demo', totalValue: 1000 },
+            partners: [generateFallbackDemoSOL()]
+          });
+        }
+      };
+
+      fetchDemoData();
+    }
+  }, [isDemoMode, demoData]);
+
+  // Clear demo data when user connects wallet
   useEffect(() => {
     if (userWalletAddress) {
-      setDemoSOL(null);
+      setDemoData(null);
+      setDemoWalletAddress(null);
     }
   }, [userWalletAddress]);
 
@@ -204,33 +278,48 @@ export function useWalletData() {
     initializeData();
   }, [ready, userWalletAddress]);
 
-  // Refresh function - regenerates demo SOL in demo mode
-  const refresh = useCallback(() => {
+  // Refresh function - refetch demo data or real data
+  const refresh = useCallback(async () => {
     if (!userWalletAddress) {
-      // In demo mode, regenerate random SOL data
-      setDemoSOL(generateDemoSOL());
-      return Promise.resolve();
+      // In demo mode, refetch from a (possibly different) demo wallet
+      try {
+        const randomWallet = DEMO_WALLETS[Math.floor(Math.random() * DEMO_WALLETS.length)];
+        setDemoWalletAddress(randomWallet);
+
+        const exploreData = await exploreWallet(randomWallet);
+        const partners = convertExploreToPartners(exploreData);
+
+        if (partners && partners.length > 0) {
+          setDemoData({
+            wallet: {
+              address: `demo-${randomWallet.slice(0, 6)}`,
+              totalValue: exploreData.totalValue
+            },
+            partners
+          });
+        }
+      } catch (err) {
+        console.error('Failed to refresh demo data:', err);
+      }
+      return;
     }
     return fetchData(true);
   }, [fetchData, userWalletAddress]);
 
   // Compute wallet and partners based on demo mode
   const wallet = useMemo(() => {
-    if (isDemoMode && demoSOL) {
-      return {
-        address: 'demo',
-        totalValue: demoSOL.currentValue
-      };
+    if (isDemoMode && demoData) {
+      return demoData.wallet;
     }
     return data?.wallet;
-  }, [isDemoMode, demoSOL, data]);
+  }, [isDemoMode, demoData, data]);
 
   const partners = useMemo(() => {
-    if (isDemoMode && demoSOL) {
-      return [demoSOL];
+    if (isDemoMode && demoData) {
+      return demoData.partners;
     }
     return data?.partners || [];
-  }, [isDemoMode, demoSOL, data]);
+  }, [isDemoMode, demoData, data]);
 
   return {
     walletAddress: userWalletAddress || 'demo',
