@@ -2,7 +2,7 @@
  * idleTrencher - Main App Component
  */
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useMemo } from 'react';
 import { usePrivy } from '@privy-io/react-auth';
 import { Header } from './components/Header';
 import { Scene3D } from './components/Scene3D';
@@ -11,12 +11,32 @@ import { TokenDetailModal } from './components/TokenDetailModal';
 import { ExploreDialog } from './components/ExploreDialog';
 import { ExploreView } from './components/ExploreView';
 import { useWalletData } from './hooks/useWalletData';
+import { useSkinAssignment } from './hooks/useSkinAssignment';
 import { updateDesignatedValue, exploreWallet } from './services/api';
 import './App.css';
 
 function App() {
   const { ready, authenticated, user } = usePrivy();
   const { walletAddress, wallet, partners, access, loading, isLoading, isUpdating, error, refresh, lastUpdated, isConnected, isDemo } = useWalletData();
+
+  // Skin assignment management
+  const { getSkinForToken, assignSkin, getTokenUsingSkin } = useSkinAssignment(walletAddress);
+
+  // Handle skin change
+  const handleSkinChange = useCallback((tokenAddress, skinId) => {
+    const partner = partners.find(p => p.tokenAddress === tokenAddress);
+    if (partner) {
+      assignSkin(tokenAddress, skinId, partner.level);
+    }
+  }, [partners, assignSkin]);
+
+  // Merge skin info into partners for 3D rendering
+  const partnersWithSkins = useMemo(() => {
+    return partners.map(partner => ({
+      ...partner,
+      skin: getSkinForToken(partner.tokenAddress),
+    }));
+  }, [partners, getSkinForToken]);
 
   // Debug: Log Privy state changes
   useEffect(() => {
@@ -124,7 +144,7 @@ function App() {
 
       <main className="main-content">
         <Scene3D
-          partners={partners}
+          partners={partnersWithSkins}
           onPartnerClick={handlePartnerClick}
           currentView="home"
           onViewChange={handleViewChange}
@@ -152,6 +172,10 @@ function App() {
           walletAddress={walletAddress}
           onClose={handleModalClose}
           onUpdateDesignatedValue={handleUpdateDesignatedValue}
+          currentSkin={getSkinForToken(selectedPartner.tokenAddress)}
+          onSkinChange={handleSkinChange}
+          getTokenUsingSkin={getTokenUsingSkin}
+          partners={partners}
         />
       )}
 

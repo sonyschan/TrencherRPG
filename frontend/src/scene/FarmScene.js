@@ -647,7 +647,7 @@ export class FarmScene {
         const data = partnerData[i];
         if (this.partners.has(data.tokenAddress)) {
           console.log(`[FarmScene] Updating existing partner: ${data.tokenSymbol} (${data.tokenAddress})`);
-          this.updatePartner(data);
+          await this.updatePartner(data);
         } else {
           console.log(`[FarmScene] Adding new partner: ${data.tokenSymbol} (${data.tokenAddress})`);
           await this.addPartner(data, i);
@@ -713,11 +713,24 @@ export class FarmScene {
 
   /**
    * Update existing partner
+   * If skin changed, remove and re-add the partner to reload the model
    */
-  updatePartner(data) {
+  async updatePartner(data) {
     const partner = this.partners.get(data.tokenAddress);
     if (partner) {
-      partner.update(data);
+      // Check if skin changed - need to reload the character model
+      const currentSkin = partner.data.skin || 'villager';
+      const newSkin = data.skin || 'villager';
+
+      if (currentSkin !== newSkin) {
+        console.log(`[FarmScene] Skin changed for ${data.tokenSymbol}: ${currentSkin} -> ${newSkin}`);
+        // Remove and re-add to reload with new skin
+        this.removePartner(data.tokenAddress);
+        await this.addPartner(data, this.partners.size);
+        this.arrangePartners(this.partners.size);
+      } else {
+        partner.update(data);
+      }
     }
   }
 

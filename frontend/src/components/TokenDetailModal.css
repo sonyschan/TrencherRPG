@@ -208,6 +208,15 @@
   color: #818cf8;
 }
 
+.edit-btn.skin-btn {
+  color: #fbbf24;
+  margin-left: 0;
+}
+
+.edit-btn.skin-btn:hover {
+  color: #fcd34d;
+}
+
 /* Edit Form */
 .edit-form {
   margin-top: 16px;

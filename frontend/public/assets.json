@@ -57,6 +57,13 @@
     "situps": "assets/characters/Knight_Situps_withSkin.glb",
     "talk": "assets/characters/Knight_Talk_withSkin.glb"
   },
+  "ladyAnimations": {
+    "walking": "assets/characters/Lady_Walking_withSkin.glb",
+    "running": "assets/characters/Lady_Running_withSkin.glb",
+    "cheer": "assets/characters/Lady_Cheer_withSkin.glb",
+    "situps": "assets/characters/Lady_Situps_withSkin.glb",
+    "talk": "assets/characters/Lady_Talk_withSkin.glb"
+  },
   "animals": [
     { "key": "chick", "path": "assets/animals/Chick.gltf" },
     { "key": "chicken", "path": "assets/animals/Chicken.gltf" },

@@ -6,11 +6,23 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { getSkinById } from '../config/skins';
+import { SkinSelectionModal } from './SkinSelectionModal';
 import './TokenDetailModal.css';
 
 const TYPING_SPEED = 50; // ms per character
 
-export function TokenDetailModal({ partner, walletAddress, onClose, onUpdateDesignatedValue }) {
+export function TokenDetailModal({
+  partner,
+  walletAddress,
+  onClose,
+  onUpdateDesignatedValue,
+  // Skin-related props
+  currentSkin,
+  onSkinChange,
+  getTokenUsingSkin,
+  partners = [],
+}) {
   const { t } = useTranslation();
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -18,6 +30,10 @@ export function TokenDetailModal({ partner, walletAddress, onClose, onUpdateDesi
   const [editValue, setEditValue] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [editError, setEditError] = useState('');
+  const [showSkinModal, setShowSkinModal] = useState(false);
+
+  // Get current skin info
+  const skinInfo = getSkinById(currentSkin || 'villager');
 
   const audioContextRef = useRef(null);
   const typingIntervalRef = useRef(null);
@@ -307,7 +323,14 @@ ${t('dialog.adjustBase')}`;
                 {partner?.isDemo ? (
                   <span>Click to close</span>
                 ) : (
-                  <>Click to close or <button className="edit-btn" onClick={handleEditClick}>Edit Base Value</button></>
+                  <>
+                    Click to close or{' '}
+                    <button className="edit-btn" onClick={handleEditClick}>Edit Base Value</button>
+                    {' | '}
+                    <button className="edit-btn skin-btn" onClick={(e) => { e.stopPropagation(); setShowSkinModal(true); }}>
+                      Change Skin ({skinInfo.name})
+                    </button>
+                  </>
                 )}
               </div>
             )}
@@ -342,6 +365,20 @@ ${t('dialog.adjustBase')}`;
           </div>
         </div>
       </div>
+
+      {/* Skin Selection Modal */}
+      {showSkinModal && (
+        <SkinSelectionModal
+          partner={partner}
+          currentSkin={currentSkin || 'villager'}
+          onSelect={(skinId) => {
+            onSkinChange && onSkinChange(partner.tokenAddress, skinId);
+          }}
+          onClose={() => setShowSkinModal(false)}
+          getTokenUsingSkin={getTokenUsingSkin}
+          partners={partners}
+        />
+      )}
     </div>
   );
 }
