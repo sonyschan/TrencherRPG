@@ -5,47 +5,70 @@ title: 🎨 Skin System
 
 # Skin System
 
-Customize your partners with unique character skins! Different tiers unlock different visual styles.
+Customize your partners with unique character skins! As your partners level up, they unlock access to more powerful and exclusive appearances.
 
-## Skins in Development
+![Skin Selection Interface](/img/skin-system.jpeg)
 
-We're actively developing new 3D character models. Here's a preview of upcoming **Gold tier** skins:
+## How It Works
 
-<div style={{display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap'}}>
-  <img src="/img/knight.png" alt="Knight" style={{width: '300px', borderRadius: '8px'}} />
-  <img src="/img/mage.png" alt="Mage" style={{width: '300px', borderRadius: '8px'}} />
+1. **Click on any partner** to open the Token Detail dialog
+2. **Click "Change Skin"** button at the bottom
+3. **Select from available skins** based on your partner's level
+4. **Click Apply** to save your choice
+
+## Skin Categories
+
+### 🟤 Basic Skins (Level 1+)
+
+Basic skins are available to all partners from the start. There's no restriction on how many partners can use the same basic skin.
+
+| Skin | Description |
+|------|-------------|
+| **Villager** | A humble villager ready for adventure |
+| **Villager (Alt)** | Another hardworking villager |
+| **Village Girl** | A cheerful village girl |
+| **Village Girl (Alt)** | Another spirited village girl |
+
+### 🏆 Premium Skins (Level-Gated + Exclusive)
+
+Premium skins are **exclusive** — only **one partner per skin** within your wallet. When you assign a premium skin to a new partner, it will be automatically removed from the previous partner.
+
+| Skin | Required Level | Description |
+|------|----------------|-------------|
+| **Adventurer** | Level 3+ | A seasoned adventurer seeking treasure |
+| **Lady** | Level 5+ | A noble lady of refined taste |
+| **Mage** | Level 7+ | A powerful mage wielding arcane magic |
+| **Knight** | Level 10+ | A valiant knight in shining armor |
+
+## Rules & Restrictions
+
+### Level Requirements
+
+- Each skin has a **minimum level requirement**
+- Locked skins appear grayed out with a 🔒 icon
+- Once your partner reaches the required level, the skin unlocks
+
+### 1:1 Exclusive Allocation (Premium Skins)
+
+Premium skins follow a **1:1 rule**:
+
+- Each premium skin can only be worn by **one partner at a time**
+- If you assign a premium skin that's already in use, a confirmation dialog will appear
+- The previous partner will revert to the default Villager skin
+
+### What Happens When Tokens Are Sold?
+
+- If you sell a token and later buy it back, the **skin assignment is preserved**
+- However, if the token's level drops below the skin's requirement, it will fall back to a basic skin
+
+## Preview Gallery
+
+<div style={{display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '20px'}}>
+  <img src="/img/knight.png" alt="Knight" style={{width: '280px', borderRadius: '8px'}} />
+  <img src="/img/mage.png" alt="Mage" style={{width: '280px', borderRadius: '8px'}} />
 </div>
 
-*Knight and Mage — Gold tier skins coming soon!*
-
-## Skin Tiers
-
-| Tier | Characters | How to Unlock |
-|------|------------|---------------|
-| 🥉 **Copper** | Villager Boy, Villager Girl, Villager Girl 2, Villager Boy 2 | Default (free) |
-| 🥈 **Silver** | Lady, Adventurer | Hold $IDLE or reach certain levels |
-| 🥇 **Gold** | Knight, Mage | Premium unlock (coming soon) |
-| 💎 **Diamond** | ??? | Ultra-rare (TBD) |
-
-## Current Characters
-
-![Character Arts](/img/characters.png)
-
-All players start with access to the **Copper tier** villager characters. As you progress and hold $IDLE, you'll unlock higher tier skins.
-
-## Planned Features
-
-### 🔓 Unlock Methods
-
-| Method | Skins |
-|--------|-------|
-| Level Up | Reach certain levels to unlock skins |
-| Hold $IDLE | Exclusive skins for token holders |
-| Contribute | Artists who create skins get free access |
-
-### 🎯 Assign to Favorites
-
-Once unlocked, you can assign any skin to your favorite tokens. Imagine your main bag rocking a legendary knight skin while surrounded by a squad of mages!
+*Knight (Lv.10+) and Mage (Lv.7+) — Premium exclusive skins*
 
 ---
 
