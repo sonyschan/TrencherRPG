@@ -11,8 +11,8 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://wiki-five-lime.vercel.app',
-  baseUrl: '/wiki/',  // Served under /wiki/ path
+  url: 'https://idletrencher.xyz',
+  baseUrl: '/wiki/',  // Served under /wiki/ path on main domain
 
   organizationName: 'h2crypto',
   projectName: 'idletrencher',
