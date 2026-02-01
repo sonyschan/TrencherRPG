@@ -16,8 +16,12 @@
       "destination": "https://wiki-five-lime.vercel.app/wiki/"
     },
     {
-      "source": "/wiki/:path+",
-      "destination": "https://wiki-five-lime.vercel.app/wiki/:path+"
+      "source": "/wiki/:path*/",
+      "destination": "https://wiki-five-lime.vercel.app/wiki/:path*/"
+    },
+    {
+      "source": "/wiki/:path*",
+      "destination": "https://wiki-five-lime.vercel.app/wiki/:path*/"
     },
     {
       "source": "/((?!wiki).*)",
