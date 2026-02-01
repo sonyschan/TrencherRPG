@@ -91,5 +91,5 @@ IdleTrencher는 다음 원칙으로 구축되었습니다:
 ---
 
 :::info 진행 상황 팔로우
-[𝕏 (Twitter)](https://x.com/h2crypto_eth)에서 개발 업데이트를 팔로우하고 대화에 참여하세요!
+[𝕏 (Twitter)](https://x.com/idleTrencher)에서 개발 업데이트를 팔로우하고 대화에 참여하세요!
 :::

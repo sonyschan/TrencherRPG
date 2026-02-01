@@ -77,7 +77,7 @@ const config: Config = {
           position: 'right',
         },
         {
-          href: 'https://x.com/h2crypto_eth',
+          href: 'https://x.com/idleTrencher',
           label: '𝕏',
           position: 'right',
         },
@@ -113,7 +113,7 @@ const config: Config = {
           items: [
             {
               label: 'Creator: H2Crypto',
-              href: 'https://x.com/h2crypto_eth',
+              href: 'https://x.com/idleTrencher',
             },
             {
               label: 'GitHub',

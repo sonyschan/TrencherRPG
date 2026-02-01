@@ -71,5 +71,5 @@ IdleTrencher 是在 **2026 Solana 黑客松** 期间打造的，有着明确的�
 ---
 
 :::info 交易 $IDLE
-在 [PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump) 查看 | 关注我们的 [𝕏 (Twitter)](https://x.com/h2crypto_eth)
+在 [PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump) 查看 | 关注我们的 [𝕏 (Twitter)](https://x.com/idleTrencher)
 :::

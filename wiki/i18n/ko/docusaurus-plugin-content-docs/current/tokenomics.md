@@ -71,5 +71,5 @@ $IDLE을 더 많이 보유할수록, 더 많은 토큰 파트너를 가질 수 �
 ---
 
 :::info $IDLE 거래하기
-[PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump)에서 보기 | [𝕏 (Twitter)](https://x.com/h2crypto_eth) 팔로우
+[PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump)에서 보기 | [𝕏 (Twitter)](https://x.com/idleTrencher) 팔로우
 :::

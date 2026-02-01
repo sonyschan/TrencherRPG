@@ -71,5 +71,5 @@ Future $IDLE utilities may include:
 ---
 
 :::info Trade $IDLE
-View on [PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump) | Follow us on [𝕏 (Twitter)](https://x.com/h2crypto_eth)
+View on [PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump) | Follow us on [𝕏 (Twitter)](https://x.com/idleTrencher)
 :::

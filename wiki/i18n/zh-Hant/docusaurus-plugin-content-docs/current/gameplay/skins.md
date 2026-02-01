@@ -60,7 +60,7 @@ title: 🎨 造型系統
 - 多種動畫狀態（走路、跑步、慶祝、運動）
 - 適合全年齡的設計
 
-有興趣？在 [𝕏 (Twitter)](https://x.com/h2crypto_eth) 上聯繫我們了解更多貢獻方式。
+有興趣？在 [𝕏 (Twitter)](https://x.com/idleTrencher) 上聯繫我們了解更多貢獻方式。
 
 ---
 

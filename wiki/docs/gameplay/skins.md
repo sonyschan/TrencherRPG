@@ -83,7 +83,7 @@ If you're a **3D artist**, you can create character skins that get added to the 
 - Multiple animation states (walk, run, celebrate, exercise)
 - Family-friendly design
 
-Interested? Reach out on [𝕏 (Twitter)](https://x.com/h2crypto_eth) to learn more about contributing.
+Interested? Reach out on [𝕏 (Twitter)](https://x.com/idleTrencher) to learn more about contributing.
 
 ---
 

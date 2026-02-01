@@ -60,7 +60,7 @@ title: 🎨 皮肤系统
 - 多种动画状态（走路、跑步、庆祝、运动）
 - 适合全年龄的设计
 
-有兴趣？在 [𝕏 (Twitter)](https://x.com/h2crypto_eth) 上联系我们了解更多贡献方式。
+有兴趣？在 [𝕏 (Twitter)](https://x.com/idleTrencher) 上联系我们了解更多贡献方式。
 
 ---
 

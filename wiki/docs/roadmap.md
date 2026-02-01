@@ -91,5 +91,5 @@ IdleTrencher is built with these principles:
 ---
 
 :::info Follow Our Progress
-Track development updates on [𝕏 (Twitter)](https://x.com/h2crypto_eth) and join the conversation!
+Track development updates on [𝕏 (Twitter)](https://x.com/idleTrencher) and join the conversation!
 :::

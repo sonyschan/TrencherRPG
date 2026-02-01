@@ -71,5 +71,5 @@ $IDLEを多く保有するほど、より多くのトークンパートナーを
 ---
 
 :::info $IDLEを取引
-[PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump)で見る | [𝕏 (Twitter)](https://x.com/h2crypto_eth)をフォロー
+[PumpFun](https://pump.fun/coin/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump)で見る | [𝕏 (Twitter)](https://x.com/idleTrencher)をフォロー
 :::
