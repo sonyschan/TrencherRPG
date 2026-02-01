@@ -5,12 +5,8 @@
 import { useState } from 'react';
 import './FeatureMenu.css';
 
-export function FeatureMenu({ currentView, onViewChange, idleBalance = 0 }) {
+export function FeatureMenu({ currentView, onViewChange }) {
   const [hoveredItem, setHoveredItem] = useState(null);
-
-  const CLOTHES_REQUIRED_IDLE = 200000;
-  const CLOTHES_REQUIRED_LEVEL = 5;
-  const canAccessClothes = idleBalance >= CLOTHES_REQUIRED_IDLE;
 
   const menuItems = [
     {
@@ -24,16 +20,6 @@ export function FeatureMenu({ currentView, onViewChange, idleBalance = 0 }) {
       label: 'Explore',
       icon: <GateIcon />,
       enabled: true,
-    },
-    {
-      id: 'wardrobe',
-      label: 'Skin',
-      tooltip: 'Skin(Soon)',
-      icon: <ClothesIcon disabled={false} />,
-      enabled: false, // Disabled for now
-      showDisabledStyle: false, // Don't show grayed out style
-      requiresIdle: CLOTHES_REQUIRED_IDLE,
-      requiresLevel: CLOTHES_REQUIRED_LEVEL,
     },
     {
       id: 'leaderboard',
@@ -147,73 +133,6 @@ function GateIcon() {
       {/* Ground base */}
       <rect x="0" y="28" width="32" height="4" fill="#78716C" />
       <rect x="0" y="28" width="32" height="2" fill="#A8A29E" />
-    </svg>
-  );
-}
-
-// Pixel Art Coat/Jacket Icon
-function ClothesIcon({ disabled }) {
-  // Grayscale when disabled, colorful when enabled
-  const coatColor = disabled ? '#6B7280' : '#3B82F6';       // Gray / Blue coat
-  const coatDark = disabled ? '#4B5563' : '#1D4ED8';        // Dark gray / Dark blue
-  const coatLight = disabled ? '#9CA3AF' : '#60A5FA';       // Light gray / Light blue
-  const innerColor = disabled ? '#D1D5DB' : '#FEF3C7';      // White-ish / Cream inner
-  const buttonColor = disabled ? '#E5E7EB' : '#FCD34D';     // Bright gray / Gold buttons
-  const collarColor = disabled ? '#F3F4F6' : '#FFFFFF';     // Near white / White collar
-
-  return (
-    <svg className={`pixel-icon clothes ${disabled ? 'disabled' : ''}`} viewBox="0 0 32 32" width="72" height="72">
-      {/* Coat body - main */}
-      <rect x="6" y="8" width="20" height="24" fill={coatColor} />
-
-      {/* Coat left side highlight */}
-      <rect x="6" y="8" width="4" height="24" fill={coatLight} />
-
-      {/* Coat right side shadow */}
-      <rect x="22" y="8" width="4" height="24" fill={coatDark} />
-
-      {/* Inner lining (visible in front opening) */}
-      <rect x="13" y="12" width="6" height="20" fill={innerColor} />
-
-      {/* Left lapel */}
-      <rect x="10" y="8" width="4" height="10" fill={coatLight} />
-      <rect x="10" y="8" width="2" height="8" fill={collarColor} />
-
-      {/* Right lapel */}
-      <rect x="18" y="8" width="4" height="10" fill={coatDark} />
-      <rect x="20" y="8" width="2" height="8" fill={collarColor} />
-
-      {/* Collar */}
-      <rect x="10" y="4" width="12" height="6" fill={collarColor} />
-      <rect x="12" y="0" width="8" height="5" fill={collarColor} />
-
-      {/* Left sleeve */}
-      <rect x="0" y="10" width="6" height="14" fill={coatColor} />
-      <rect x="0" y="10" width="2" height="14" fill={coatLight} />
-      <rect x="0" y="22" width="6" height="2" fill={coatDark} />
-
-      {/* Right sleeve */}
-      <rect x="26" y="10" width="6" height="14" fill={coatColor} />
-      <rect x="30" y="10" width="2" height="14" fill={coatDark} />
-      <rect x="26" y="22" width="6" height="2" fill={coatDark} />
-
-      {/* Buttons */}
-      <rect x="11" y="14" width="2" height="2" fill={buttonColor} />
-      <rect x="11" y="19" width="2" height="2" fill={buttonColor} />
-      <rect x="11" y="24" width="2" height="2" fill={buttonColor} />
-
-      {/* Pockets */}
-      <rect x="7" y="20" width="4" height="5" fill={coatDark} />
-      <rect x="21" y="20" width="4" height="5" fill={coatDark} />
-
-      {disabled && (
-        <>
-          {/* Lock overlay for disabled state */}
-          <rect x="12" y="22" width="8" height="10" fill="#374151" opacity="0.9" />
-          <rect x="13" y="19" width="6" height="4" fill="none" stroke="#9CA3AF" strokeWidth="1" />
-          <rect x="15" y="25" width="2" height="3" fill="#D1D5DB" />
-        </>
-      )}
     </svg>
   );
 }

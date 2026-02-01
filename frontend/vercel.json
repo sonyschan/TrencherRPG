@@ -6,15 +6,15 @@
     },
     {
       "source": "/wiki",
-      "destination": "https://wiki-five-lime.vercel.app/"
+      "destination": "https://wiki-five-lime.vercel.app/wiki/"
     },
     {
       "source": "/wiki/",
-      "destination": "https://wiki-five-lime.vercel.app/"
+      "destination": "https://wiki-five-lime.vercel.app/wiki/"
     },
     {
       "source": "/wiki/:path+",
-      "destination": "https://wiki-five-lime.vercel.app/:path+"
+      "destination": "https://wiki-five-lime.vercel.app/wiki/:path+"
     }
   ],
   "headers": [
