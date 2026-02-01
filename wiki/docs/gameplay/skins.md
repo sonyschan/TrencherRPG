@@ -7,7 +7,7 @@ title: 🎨 Skin System
 
 Customize your partners with unique character skins! As your partners level up, they unlock access to more powerful and exclusive appearances.
 
-![Skin Selection Interface](/img/skin-system.jpeg)
+![Skin Selection Interface](/wiki/img/skin-system.jpeg)
 
 ## How It Works
 
@@ -64,8 +64,8 @@ Premium skins follow a **1:1 rule**:
 ## Preview Gallery
 
 <div style={{display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap', marginTop: '20px'}}>
-  <img src="/img/knight.png" alt="Knight" style={{width: '280px', borderRadius: '8px'}} />
-  <img src="/img/mage.png" alt="Mage" style={{width: '280px', borderRadius: '8px'}} />
+  <img src="/wiki/img/knight.png" alt="Knight" style={{width: '280px', borderRadius: '8px'}} />
+  <img src="/wiki/img/mage.png" alt="Mage" style={{width: '280px', borderRadius: '8px'}} />
 </div>
 
 *Knight (Lv.10+) and Mage (Lv.7+) — Premium exclusive skins*
