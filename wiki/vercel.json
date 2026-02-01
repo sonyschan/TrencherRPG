@@ -3,5 +3,5 @@
   "outputDirectory": "build",
   "installCommand": "npm install",
   "framework": "docusaurus-2",
-  "trailingSlash": true
+  "trailingSlash": false
 }
