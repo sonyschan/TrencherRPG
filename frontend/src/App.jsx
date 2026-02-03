@@ -15,6 +15,10 @@ import { useSkinAssignment } from './hooks/useSkinAssignment';
 import { updateDesignatedValue, updateSkin, exploreWallet } from './services/api';
 import './App.css';
 
+// Constants
+const IDLE_CA = '9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump';
+const OKX_DEX_URL = 'https://web3.okx.com/ul/GkvfeR3?ref=H2CRYTO5';
+
 function App() {
   const { ready, authenticated, user } = usePrivy();
   const { walletAddress, wallet, partners, access, loading, isLoading, isUpdating, error, refresh, lastUpdated, isConnected, isDemo } = useWalletData();
@@ -71,6 +75,16 @@ function App() {
   const [showExploreDialog, setShowExploreDialog] = useState(false);
   const [exploreData, setExploreData] = useState(null);
   const [exploreAddress, setExploreAddress] = useState(null);
+
+  // Copy CA state
+  const [caCopied, setCaCopied] = useState(false);
+
+  // Handle CA copy
+  const handleCopyCA = useCallback(() => {
+    navigator.clipboard.writeText(IDLE_CA);
+    setCaCopied(true);
+    setTimeout(() => setCaCopied(false), 2000);
+  }, []);
 
   // Handle partner card click
   const handlePartnerClick = useCallback((partner) => {
@@ -175,6 +189,39 @@ function App() {
           onPartnerClick={handlePartnerClick}
         />
       </main>
+
+      {/* Bottom-left: OKX DEX Logo */}
+      <a
+        href={OKX_DEX_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="okx-logo-link"
+        title="Trade on OKX DEX"
+      >
+        <img src="/assets/idleTrencherLogo.png" alt="IdleTrencher" className="okx-logo" />
+      </a>
+
+      {/* Bottom-right: $IDLE Token Info */}
+      <div className="token-info-badge">
+        <span className="token-symbol">$IDLE</span>
+        <span className="token-ca">{IDLE_CA.slice(0, 4)}...{IDLE_CA.slice(-4)}</span>
+        <button
+          className="copy-ca-btn"
+          onClick={handleCopyCA}
+          title={caCopied ? 'Copied!' : 'Copy CA'}
+        >
+          {caCopied ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* Explore Dialog */}
       <ExploreDialog

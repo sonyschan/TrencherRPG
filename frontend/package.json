@@ -1,6 +1,6 @@
 {
   "name": "idletrencher-frontend",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "idleTrencher - 3D partner visualization frontend",
   "type": "module",
   "scripts": {

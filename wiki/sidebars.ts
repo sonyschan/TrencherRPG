@@ -15,6 +15,14 @@ const sidebars: SidebarsConfig = {
         'gameplay/explore',
       ],
     },
+    {
+      type: 'category',
+      label: '🌐 Social',
+      items: [
+        'social/og-card',
+        'social/trenchbot',
+      ],
+    },
     'tokenomics',
     'roadmap',
   ],
