@@ -142,20 +142,27 @@
   bottom: 20px;
   left: 20px;
   z-index: 100;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  opacity: 0.85;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
 }
 
 .okx-logo-link:hover {
-  transform: scale(1.05);
-  opacity: 1;
+  transform: translateY(-4px) scale(1.1);
+}
+
+.okx-logo-link:active {
+  transform: translateY(0) scale(0.95);
 }
 
 .okx-logo {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 72px;
+  height: 72px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 /* $IDLE Token Info - Bottom Right */
@@ -215,17 +222,19 @@
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .okx-logo-link {
-    bottom: 100px;
-    left: 12px;
+    bottom: 10px;
+    left: 10px;
+    width: 64px;
+    height: 64px;
   }
 
   .okx-logo {
-    width: 40px;
-    height: 40px;
+    width: 64px;
+    height: 64px;
   }
 
   .token-info-badge {
-    bottom: 100px;
+    bottom: 80px;
     right: 12px;
     padding: 6px 10px;
     font-size: 12px;
