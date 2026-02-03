@@ -49,7 +49,7 @@ title: 🎨 造型系統
 
 ---
 
-## 給藝術家：創作你自己的造型！
+## 給藝術家：創作你自己的造型！ {#for-artists-create-your-own-skin}
 
 我們正在將 IdleTrencher 建設為社群專案，非常歡迎你的貢獻。
 

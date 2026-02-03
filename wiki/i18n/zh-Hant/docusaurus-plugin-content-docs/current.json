@@ -1,0 +1,10 @@
+{
+  "version.label": {
+    "message": "最新版",
+    "description": "The label for version current"
+  },
+  "sidebar.wikiSidebar.category.🎮 Gameplay": {
+    "message": "🎮 玩法",
+    "description": "The label for category '🎮 Gameplay' in sidebar 'wikiSidebar'"
+  }
+}

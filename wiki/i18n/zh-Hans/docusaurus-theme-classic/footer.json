@@ -1,0 +1,46 @@
+{
+  "link.title.Learn": {
+    "message": "学习",
+    "description": "The title of the footer links column with title=Learn in the footer"
+  },
+  "link.title.Community": {
+    "message": "社区",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.Contribute": {
+    "message": "贡献",
+    "description": "The title of the footer links column with title=Contribute in the footer"
+  },
+  "link.item.label.Introduction": {
+    "message": "简介",
+    "description": "The label of footer link with label=Introduction linking to /"
+  },
+  "link.item.label.Gameplay": {
+    "message": "玩法",
+    "description": "The label of footer link with label=Gameplay linking to /gameplay/partners"
+  },
+  "link.item.label.Tokenomics": {
+    "message": "代币经济",
+    "description": "The label of footer link with label=Tokenomics linking to /tokenomics"
+  },
+  "link.item.label.Creator: H2Crypto": {
+    "message": "创作者: H2Crypto",
+    "description": "The label of footer link with label=Creator: H2Crypto linking to https://x.com/idleTrencher"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/sonyschan/TrencherRPG"
+  },
+  "link.item.label.3D Character Artists": {
+    "message": "3D 角色设计师",
+    "description": "The label of footer link with label=3D Character Artists linking to /gameplay/skins#for-artists-create-your-own-skin"
+  },
+  "link.item.label.Report Issues": {
+    "message": "报告问题",
+    "description": "The label of footer link with label=Report Issues linking to https://github.com/sonyschan/TrencherRPG/issues"
+  },
+  "copyright": {
+    "message": "由 H2Crypto 用 💜 制作 · 2026",
+    "description": "The footer copyright"
+  }
+}

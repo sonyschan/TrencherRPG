@@ -1,0 +1,26 @@
+{
+  "title": {
+    "message": "IdleTrencher",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "IdleTrencher Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.📖 Wiki": {
+    "message": "📖 文档",
+    "description": "Navbar item with label 📖 Wiki"
+  },
+  "item.label.🎮 Play": {
+    "message": "🎮 开始游戏",
+    "description": "Navbar item with label 🎮 Play"
+  },
+  "item.label.𝕏": {
+    "message": "𝕏",
+    "description": "Navbar item with label 𝕏"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

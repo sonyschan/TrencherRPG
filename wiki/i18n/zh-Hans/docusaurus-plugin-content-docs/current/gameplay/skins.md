@@ -49,7 +49,7 @@ title: 🎨 皮肤系统
 
 ---
 
-## 给艺术家：创作你自己的皮肤！
+## 给艺术家：创作你自己的皮肤！ {#for-artists-create-your-own-skin}
 
 我们正在将 IdleTrencher 建设为社区项目，非常欢迎你的贡献。
 
