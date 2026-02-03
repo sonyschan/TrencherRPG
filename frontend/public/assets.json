@@ -1,86 +1,86 @@
 {
   "characters": [
-    { "key": "adventurer", "path": "assets/characters/Adventurer_Walking_withSkin.glb" },
-    { "key": "villager", "path": "assets/characters/Villager_Walking_withSkin.glb" },
-    { "key": "villager2", "path": "assets/characters/Villager2_Walking_withSkin.glb" },
-    { "key": "villagerGirl", "path": "assets/characters/VillagerGirl_Walking_withSkin.glb" },
-    { "key": "villagerGirl2", "path": "assets/characters/VillagerGirl2_Walking_withSkin.glb" },
-    { "key": "mage", "path": "assets/characters/Mage_Walking_withSkin.glb" },
-    { "key": "knight", "path": "assets/characters/Knight_Walking_withSkin.glb" }
+    { "key": "adventurer", "path": "/assets/characters/Adventurer_Walking_withSkin.glb" },
+    { "key": "villager", "path": "/assets/characters/Villager_Walking_withSkin.glb" },
+    { "key": "villager2", "path": "/assets/characters/Villager2_Walking_withSkin.glb" },
+    { "key": "villagerGirl", "path": "/assets/characters/VillagerGirl_Walking_withSkin.glb" },
+    { "key": "villagerGirl2", "path": "/assets/characters/VillagerGirl2_Walking_withSkin.glb" },
+    { "key": "mage", "path": "/assets/characters/Mage_Walking_withSkin.glb" },
+    { "key": "knight", "path": "/assets/characters/Knight_Walking_withSkin.glb" }
   ],
   "adventurerAnimations": {
-    "walking": "assets/characters/Adventurer_Walking_withSkin.glb",
-    "running": "assets/characters/Adventurer_Running_withSkin.glb",
-    "cheer": "assets/characters/Adventurer_Cheer_withSkin.glb",
-    "situps": "assets/characters/Adventurer_Situps_withSkin.glb",
-    "talk": "assets/characters/Adventurer_Talk_withSkin.glb"
+    "walking": "/assets/characters/Adventurer_Walking_withSkin.glb",
+    "running": "/assets/characters/Adventurer_Running_withSkin.glb",
+    "cheer": "/assets/characters/Adventurer_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Adventurer_Situps_withSkin.glb",
+    "talk": "/assets/characters/Adventurer_Talk_withSkin.glb"
   },
   "villagerAnimations": {
-    "walking": "assets/characters/Villager_Walking_withSkin.glb",
-    "running": "assets/characters/Villager_Running_withSkin.glb",
-    "cheer": "assets/characters/Villager_Cheer_withSkin.glb",
-    "situps": "assets/characters/Villager_Situps_withSkin.glb",
-    "talk": "assets/characters/Villager_Talk_withSkin.glb"
+    "walking": "/assets/characters/Villager_Walking_withSkin.glb",
+    "running": "/assets/characters/Villager_Running_withSkin.glb",
+    "cheer": "/assets/characters/Villager_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Villager_Situps_withSkin.glb",
+    "talk": "/assets/characters/Villager_Talk_withSkin.glb"
   },
   "villager2Animations": {
-    "walking": "assets/characters/Villager2_Walking_withSkin.glb",
-    "running": "assets/characters/Villager2_Running_withSkin.glb",
-    "cheer": "assets/characters/Villager2_Cheer_withSkin.glb",
-    "situps": "assets/characters/Villager2_Situps_withSkin.glb",
-    "talk": "assets/characters/Villager2_Talk_withSkin.glb"
+    "walking": "/assets/characters/Villager2_Walking_withSkin.glb",
+    "running": "/assets/characters/Villager2_Running_withSkin.glb",
+    "cheer": "/assets/characters/Villager2_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Villager2_Situps_withSkin.glb",
+    "talk": "/assets/characters/Villager2_Talk_withSkin.glb"
   },
   "villagerGirlAnimations": {
-    "walking": "assets/characters/VillagerGirl_Walking_withSkin.glb",
-    "running": "assets/characters/VillagerGirl_Running_withSkin.glb",
-    "cheer": "assets/characters/VillagerGirl_Cheer_withSkin.glb",
-    "situps": "assets/characters/VillagerGirl_Situps_withSkin.glb",
-    "talk": "assets/characters/VillagerGirl_Talk_withSkin.glb"
+    "walking": "/assets/characters/VillagerGirl_Walking_withSkin.glb",
+    "running": "/assets/characters/VillagerGirl_Running_withSkin.glb",
+    "cheer": "/assets/characters/VillagerGirl_Cheer_withSkin.glb",
+    "situps": "/assets/characters/VillagerGirl_Situps_withSkin.glb",
+    "talk": "/assets/characters/VillagerGirl_Talk_withSkin.glb"
   },
   "villagerGirl2Animations": {
-    "walking": "assets/characters/VillagerGirl2_Walking_withSkin.glb",
-    "running": "assets/characters/VillagerGirl2_Running_withSkin.glb",
-    "cheer": "assets/characters/VillagerGirl2_Cheer_withSkin.glb",
-    "situps": "assets/characters/VillagerGirl2_Situps_withSkin.glb",
-    "talk": "assets/characters/VillagerGirl2_Talk_withSkin.glb"
+    "walking": "/assets/characters/VillagerGirl2_Walking_withSkin.glb",
+    "running": "/assets/characters/VillagerGirl2_Running_withSkin.glb",
+    "cheer": "/assets/characters/VillagerGirl2_Cheer_withSkin.glb",
+    "situps": "/assets/characters/VillagerGirl2_Situps_withSkin.glb",
+    "talk": "/assets/characters/VillagerGirl2_Talk_withSkin.glb"
   },
   "mageAnimations": {
-    "walking": "assets/characters/Mage_Walking_withSkin.glb",
-    "running": "assets/characters/Mage_Running_withSkin.glb",
-    "cheer": "assets/characters/Mage_Cheer_withSkin.glb",
-    "situps": "assets/characters/Mage_Situps_withSkin.glb",
-    "talk": "assets/characters/Mage_Talk_withSkin.glb"
+    "walking": "/assets/characters/Mage_Walking_withSkin.glb",
+    "running": "/assets/characters/Mage_Running_withSkin.glb",
+    "cheer": "/assets/characters/Mage_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Mage_Situps_withSkin.glb",
+    "talk": "/assets/characters/Mage_Talk_withSkin.glb"
   },
   "knightAnimations": {
-    "walking": "assets/characters/Knight_Walking_withSkin.glb",
-    "running": "assets/characters/Knight_Running_withSkin.glb",
-    "cheer": "assets/characters/Knight_Cheer_withSkin.glb",
-    "situps": "assets/characters/Knight_Situps_withSkin.glb",
-    "talk": "assets/characters/Knight_Talk_withSkin.glb"
+    "walking": "/assets/characters/Knight_Walking_withSkin.glb",
+    "running": "/assets/characters/Knight_Running_withSkin.glb",
+    "cheer": "/assets/characters/Knight_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Knight_Situps_withSkin.glb",
+    "talk": "/assets/characters/Knight_Talk_withSkin.glb"
   },
   "ladyAnimations": {
-    "walking": "assets/characters/Lady_Walking_withSkin.glb",
-    "running": "assets/characters/Lady_Running_withSkin.glb",
-    "cheer": "assets/characters/Lady_Cheer_withSkin.glb",
-    "situps": "assets/characters/Lady_Situps_withSkin.glb",
-    "talk": "assets/characters/Lady_Talk_withSkin.glb"
+    "walking": "/assets/characters/Lady_Walking_withSkin.glb",
+    "running": "/assets/characters/Lady_Running_withSkin.glb",
+    "cheer": "/assets/characters/Lady_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Lady_Situps_withSkin.glb",
+    "talk": "/assets/characters/Lady_Talk_withSkin.glb"
   },
   "animals": [
-    { "key": "chick", "path": "assets/animals/Chick.gltf" },
-    { "key": "chicken", "path": "assets/animals/Chicken.gltf" },
-    { "key": "pig", "path": "assets/animals/Pig.gltf" },
-    { "key": "sheep", "path": "assets/animals/Sheep.gltf" }
+    { "key": "chick", "path": "/assets/animals/Chick.gltf" },
+    { "key": "chicken", "path": "/assets/animals/Chicken.gltf" },
+    { "key": "pig", "path": "/assets/animals/Pig.gltf" },
+    { "key": "sheep", "path": "/assets/animals/Sheep.gltf" }
   ],
   "environment": [
-    { "key": "tree1", "path": "assets/environment/Tree_1.gltf" },
-    { "key": "tree2", "path": "assets/environment/Tree_2.gltf" },
-    { "key": "tree3", "path": "assets/environment/Tree_3.gltf" },
-    { "key": "bush", "path": "assets/environment/Bush.gltf" },
-    { "key": "mushroom", "path": "assets/environment/Mushroom.gltf" },
-    { "key": "grassBig", "path": "assets/environment/Grass_Big.gltf" },
-    { "key": "grassSmall", "path": "assets/environment/Grass_Small.gltf" },
-    { "key": "flowers1", "path": "assets/environment/Flowers_1.gltf" },
-    { "key": "flowers2", "path": "assets/environment/Flowers_2.gltf" },
-    { "key": "rock1", "path": "assets/environment/Rock1.gltf" },
-    { "key": "rock2", "path": "assets/environment/Rock2.gltf" }
+    { "key": "tree1", "path": "/assets/environment/Tree_1.gltf" },
+    { "key": "tree2", "path": "/assets/environment/Tree_2.gltf" },
+    { "key": "tree3", "path": "/assets/environment/Tree_3.gltf" },
+    { "key": "bush", "path": "/assets/environment/Bush.gltf" },
+    { "key": "mushroom", "path": "/assets/environment/Mushroom.gltf" },
+    { "key": "grassBig", "path": "/assets/environment/Grass_Big.gltf" },
+    { "key": "grassSmall", "path": "/assets/environment/Grass_Small.gltf" },
+    { "key": "flowers1", "path": "/assets/environment/Flowers_1.gltf" },
+    { "key": "flowers2", "path": "/assets/environment/Flowers_2.gltf" },
+    { "key": "rock1", "path": "/assets/environment/Rock1.gltf" },
+    { "key": "rock2", "path": "/assets/environment/Rock2.gltf" }
   ]
 }
