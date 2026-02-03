@@ -3,5 +3,6 @@
   "outputDirectory": "build",
   "installCommand": "npm install",
   "framework": "docusaurus-2",
-  "cleanUrls": true
+  "cleanUrls": true,
+  "trailingSlash": false
 }
