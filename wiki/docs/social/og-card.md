@@ -73,5 +73,5 @@ When you share your OG card link on Twitter, it looks something like this:
 ---
 
 :::tip Pro Tip
-The OG card is cached for performance. If you want to refresh it after major portfolio changes, add a query parameter like `?v=2` to force regeneration.
+The OG card is cached for 1 hour to ensure fast loading. After major portfolio changes, the card will automatically update on the next cache refresh.
 :::
