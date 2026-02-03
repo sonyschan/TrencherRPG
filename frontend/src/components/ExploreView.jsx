@@ -15,6 +15,28 @@ import './ExploreView.css';
 export function ExploreView({ walletAddress, data, onBack }) {
   const { t } = useTranslation();
   const [showCacheInfo, setShowCacheInfo] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  // Share URL for social media
+  const shareUrl = `https://idletrencher.xyz/api/share/${walletAddress}`;
+
+  // Copy share link to clipboard
+  const handleCopyShare = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  // Share on Twitter
+  const handleTwitterShare = () => {
+    const text = encodeURIComponent('Check out this idleTrencher portfolio! 🎮');
+    const url = encodeURIComponent(shareUrl);
+    window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+  };
 
   // Get tokens from API response (renamed from partners)
   const tokens = data?.tokens || data?.partners || [];
@@ -62,6 +84,23 @@ export function ExploreView({ walletAddress, data, onBack }) {
         {!isRegistered && (
           <div className="explore-unregistered-badge">Not a player</div>
         )}
+        {/* Share Buttons */}
+        <div className="explore-share-buttons">
+          <button
+            className={`share-btn copy-btn ${copied ? 'copied' : ''}`}
+            onClick={handleCopyShare}
+            title="Copy share link"
+          >
+            {copied ? '✓ Copied!' : '🔗 Copy Link'}
+          </button>
+          <button
+            className="share-btn twitter-btn"
+            onClick={handleTwitterShare}
+            title="Share on Twitter"
+          >
+            𝕏 Share
+          </button>
+        </div>
       </div>
 
       {/* Cache Info Toast */}
