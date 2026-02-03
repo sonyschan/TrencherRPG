@@ -13,13 +13,20 @@ OG（Open Graph）卡片是當你在 Twitter/X、Discord、Telegram 等社群媒
 
 ## 如何使用
 
-1. **複製你的錢包 URL** - 從瀏覽器網址列複製
-2. **貼到任何地方** - Twitter、Discord、Telegram 等
+1. **取得你的 OG 卡片 URL** - 使用你的錢包地址
+2. **分享到任何地方** - Twitter、Discord、Telegram 等
 3. **見證魔法** - 漂亮的預覽卡片會自動出現
 
-你的可分享 URL 格式：
+### OG 圖片 URL
+
+你的投資組合 OG 卡片可在以下網址取得：
 ```
-https://idletrencher.xyz/?wallet=你的錢包地址
+https://idletrencher.xyz/api/og/你的錢包地址
+```
+
+例如：
+```
+https://idletrencher.xyz/api/og/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump
 ```
 
 ## 卡片特色
@@ -56,10 +63,10 @@ OG 卡片包含：
 
 ## 範例
 
-當你在 Twitter 分享連結時，效果如下：
+當你在 Twitter 分享 OG 卡片連結時，效果如下：
 
 > 「我的夥伴們正在升級！來參觀我的村莊吧 🏘️
-> https://idletrencher.xyz/?wallet=...」
+> https://idletrencher.xyz/api/og/你的錢包...」
 >
 > *[漂亮的 OG 卡片預覽會在這裡顯示]*
 

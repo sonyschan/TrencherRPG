@@ -13,13 +13,20 @@ OG (Open Graph) cards are the preview images that appear when you share a link o
 
 ## How It Works
 
-1. **Copy your wallet URL** from the browser address bar
-2. **Paste it anywhere** — Twitter, Discord, Telegram, etc.
+1. **Get your OG card URL** using your wallet address
+2. **Share it anywhere** — Twitter, Discord, Telegram, etc.
 3. **Watch the magic** — A beautiful preview card appears automatically
 
-Your shareable URL format:
+### OG Image URL
+
+Your portfolio OG card is available at:
 ```
-https://idletrencher.xyz/?wallet=YOUR_WALLET_ADDRESS
+https://idletrencher.xyz/api/og/YOUR_WALLET_ADDRESS
+```
+
+For example:
+```
+https://idletrencher.xyz/api/og/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump
 ```
 
 ## Card Features
@@ -56,10 +63,10 @@ The OG card includes:
 
 ## Example
 
-When you share your link on Twitter, it looks something like this:
+When you share your OG card link on Twitter, it looks something like this:
 
 > "My partners are leveling up! Come visit my village 🏘️
-> https://idletrencher.xyz/?wallet=..."
+> https://idletrencher.xyz/api/og/YOUR_WALLET..."
 >
 > *[Beautiful OG card preview appears here]*
 
