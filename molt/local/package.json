@@ -1,0 +1,27 @@
+{
+  "name": "trenchbot-local",
+  "version": "1.0.0",
+  "description": "IdleTrencher AI Agent for Moltbook - Local Development",
+  "type": "module",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js",
+    "test:reply": "node test.js reply",
+    "test:post": "node test.js post",
+    "test:engage": "node test.js engage",
+    "test:crypto": "node test.js crypto",
+    "test:twitter": "node test.js twitter",
+    "test:heartbeat": "node test.js heartbeat",
+    "test:live": "node test.js live",
+    "start": "node scheduler.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "better-sqlite3": "^11.0.0",
+    "twitter-api-v2": "^1.18.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
