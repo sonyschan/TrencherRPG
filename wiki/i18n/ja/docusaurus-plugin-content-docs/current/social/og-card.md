@@ -13,20 +13,31 @@ OG（Open Graph）カードは、Twitter/X、Discord、Telegramなどのソー�
 
 ## 使い方
 
-1. **OGカードURLを取得** - ウォレットアドレスを使用
+1. **シェアリンクを取得** - ウォレットアドレスを使用
 2. **どこにでもシェア** - Twitter、Discord、Telegramなど
 3. **魔法を見届けよう** - 美しいプレビューカードが自動的に表示されます
 
-### OG画像URL
+### シェアリンク（SNS用）
 
-ポートフォリオのOGカードは以下のURLで取得できます：
+Twitter/X、Discord、Telegramでシェアする際はこのURLを使用：
 ```
-https://idletrencher.xyz/api/og/あなたのウォレットアドレス
+https://idletrencher.xyz/api/share/あなたのウォレットアドレス
 ```
 
 例：
 ```
-https://idletrencher.xyz/api/og/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump
+https://idletrencher.xyz/api/share/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump
+```
+
+:::info なぜ /api/share/ を使う？
+Twitterなどのソーシャルプラットフォームは、プレビューカードを表示するために特別なmetaタグを含むウェブページが必要です。シェアリンクはこれらを提供し、訪問者をポートフォリオページにリダイレクトします。
+:::
+
+### 画像直接リンク
+
+生の画像が必要な場合（ウェブサイトやmarkdownに埋め込む用）：
+```
+https://idletrencher.xyz/api/og/あなたのウォレットアドレス
 ```
 
 ## カードの特徴
@@ -63,10 +74,10 @@ OGカードには以下が含まれます：
 
 ## 例
 
-TwitterでOGカードリンクをシェアすると、こんな感じになります：
+Twitterでシェアリンクを共有すると、こんな感じになります：
 
 > 「パートナーたちがレベルアップ中！私の村に遊びに来てね 🏘️
-> https://idletrencher.xyz/api/og/あなたのウォレット...」
+> https://idletrencher.xyz/api/share/あなたのウォレット...」
 >
 > *[美しいOGカードプレビューがここに表示されます]*
 

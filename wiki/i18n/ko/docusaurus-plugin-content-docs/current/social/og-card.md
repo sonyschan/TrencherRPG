@@ -13,20 +13,31 @@ OG(Open Graph) 카드는 Twitter/X, Discord, Telegram 등의 소셜 미디어 �
 
 ## 사용 방법
 
-1. **OG 카드 URL 얻기** - 지갑 주소 사용
+1. **공유 링크 얻기** - 지갑 주소 사용
 2. **어디든 공유하기** - Twitter, Discord, Telegram 등
 3. **마법을 지켜보세요** - 아름다운 미리보기 카드가 자동으로 나타납니다
 
-### OG 이미지 URL
+### 공유 링크 (소셜 미디어용)
 
-포트폴리오 OG 카드는 다음 URL에서 사용 가능합니다:
+Twitter/X, Discord, Telegram에서 공유할 때 이 URL을 사용하세요:
 ```
-https://idletrencher.xyz/api/og/당신의_지갑_주소
+https://idletrencher.xyz/api/share/당신의_지갑_주소
 ```
 
 예시:
 ```
-https://idletrencher.xyz/api/og/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump
+https://idletrencher.xyz/api/share/9jwHJHSD7geYvTy6WUtoDVuuvuoJiWH2XHWMggPUpump
+```
+
+:::info 왜 /api/share/를 사용하나요?
+Twitter 같은 소셜 플랫폼은 미리보기 카드를 표시하려면 특수 meta 태그가 있는 웹페이지가 필요합니다. 공유 링크는 이를 제공하고 방문자를 포트폴리오 페이지로 리다이렉트합니다.
+:::
+
+### 이미지 직접 링크
+
+원본 이미지가 필요한 경우 (웹사이트나 마크다운에 임베드할 때):
+```
+https://idletrencher.xyz/api/og/당신의_지갑_주소
 ```
 
 ## 카드 특징
@@ -63,10 +74,10 @@ OG 카드에는 다음이 포함됩니다:
 
 ## 예시
 
-Twitter에서 OG 카드 링크를 공유하면 이렇게 보입니다:
+Twitter에서 공유 링크를 공유하면 이렇게 보입니다:
 
 > "파트너들이 레벨업 중! 내 마을에 놀러 와 🏘️
-> https://idletrencher.xyz/api/og/당신의_지갑..."
+> https://idletrencher.xyz/api/share/당신의_지갑..."
 >
 > *[아름다운 OG 카드 미리보기가 여기에 표시됩니다]*
 
