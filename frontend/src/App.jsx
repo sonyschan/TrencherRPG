@@ -33,10 +33,16 @@ function App() {
   // Merge skin info into partners for 3D rendering
   // Priority: localStorage assignment > backend skin > default skin
   const partnersWithSkins = useMemo(() => {
-    return partners.map(partner => ({
-      ...partner,
-      skin: getExplicitSkinForToken(partner.tokenAddress) || partner.skin || 'villager',
-    }));
+    const result = partners.map(partner => {
+      const explicitSkin = getExplicitSkinForToken(partner.tokenAddress);
+      const finalSkin = explicitSkin || partner.skin || 'villager';
+      console.log(`[App] partnersWithSkins - ${partner.tokenSymbol}: explicit=${explicitSkin}, backend=${partner.skin}, final=${finalSkin}`);
+      return {
+        ...partner,
+        skin: finalSkin,
+      };
+    });
+    return result;
   }, [partners, getExplicitSkinForToken]);
 
   // Debug: Log Privy state changes
@@ -58,6 +64,7 @@ function App() {
 
   // Handle partner card click
   const handlePartnerClick = useCallback((partner) => {
+    console.log('[App] Partner clicked:', partner.tokenSymbol, 'skin:', partner.skin);
     setSelectedPartner(partner);
   }, []);
 
