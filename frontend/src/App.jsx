@@ -20,7 +20,7 @@ function App() {
   const { walletAddress, wallet, partners, access, loading, isLoading, isUpdating, error, refresh, lastUpdated, isConnected, isDemo } = useWalletData();
 
   // Skin assignment management
-  const { getSkinForToken, assignSkin, getTokenUsingSkin } = useSkinAssignment(walletAddress);
+  const { getSkinForToken, getExplicitSkinForToken, assignSkin, getTokenUsingSkin } = useSkinAssignment(walletAddress);
 
   // Handle skin change
   const handleSkinChange = useCallback((tokenAddress, skinId) => {
@@ -31,12 +31,13 @@ function App() {
   }, [partners, assignSkin]);
 
   // Merge skin info into partners for 3D rendering
+  // Priority: localStorage assignment > backend skin > default skin
   const partnersWithSkins = useMemo(() => {
     return partners.map(partner => ({
       ...partner,
-      skin: getSkinForToken(partner.tokenAddress),
+      skin: getExplicitSkinForToken(partner.tokenAddress) || partner.skin || 'villager',
     }));
-  }, [partners, getSkinForToken]);
+  }, [partners, getExplicitSkinForToken]);
 
   // Debug: Log Privy state changes
   useEffect(() => {
@@ -151,7 +152,7 @@ function App() {
           idleBalance={access?.idleBalance || 0}
         />
         <PartnerList
-          partners={partners}
+          partners={partnersWithSkins}
           access={access}
           loading={loading}
           onPartnerClick={handlePartnerClick}
@@ -172,7 +173,7 @@ function App() {
           walletAddress={walletAddress}
           onClose={handleModalClose}
           onUpdateDesignatedValue={handleUpdateDesignatedValue}
-          currentSkin={getSkinForToken(selectedPartner.tokenAddress)}
+          currentSkin={selectedPartner.skin || getSkinForToken(selectedPartner.tokenAddress)}
           onSkinChange={handleSkinChange}
           getTokenUsingSkin={getTokenUsingSkin}
           partners={partners}

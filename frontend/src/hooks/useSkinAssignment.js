@@ -55,6 +55,15 @@ export function useSkinAssignment(walletAddress) {
   }, [assignments]);
 
   /**
+   * Get explicitly assigned skin for a token (returns undefined if no assignment)
+   * @param {string} tokenMint - Token mint address
+   * @returns {string|undefined} Skin ID or undefined if not explicitly assigned
+   */
+  const getExplicitSkinForToken = useCallback((tokenMint) => {
+    return assignments[tokenMint];
+  }, [assignments]);
+
+  /**
    * Assign a skin to a token
    * Handles 1:1 exclusive skin logic
    * @param {string} tokenMint - Token mint address
@@ -142,6 +151,7 @@ export function useSkinAssignment(walletAddress) {
 
   return {
     getSkinForToken,
+    getExplicitSkinForToken,
     assignSkin,
     getTokenUsingSkin,
     isSkinFree,
