@@ -686,6 +686,7 @@ export class FarmScene {
 
     // First token (index 0) uses Adventurer with state-based animations
     const isFirstToken = (index === 0);
+    console.log(`[FarmScene] addPartner ${tokenSymbol} with skin=${data.skin}`);
     const partner = new PartnerCharacter(data, this.assetManifest, isFirstToken, this.t);
 
     console.log(`[FarmScene] Initializing partner ${tokenSymbol}...`);
@@ -721,6 +722,9 @@ export class FarmScene {
       // Check if skin changed - need to reload the character model
       const currentSkin = partner.data.skin || 'villager';
       const newSkin = data.skin || 'villager';
+      const loadedSkin = partner.loadedSkin || 'unknown';
+
+      console.log(`[FarmScene] updatePartner ${data.tokenSymbol}: data.skin=${currentSkin}, new.skin=${newSkin}, loaded=${loadedSkin}`);
 
       if (currentSkin !== newSkin) {
         console.log(`[FarmScene] Skin changed for ${data.tokenSymbol}: ${currentSkin} -> ${newSkin}`);
@@ -1393,7 +1397,10 @@ class PartnerCharacter {
     const skin = this.data.skin || 'villager';
     const animKey = `${skin}Animations`;
 
+    console.log(`[PartnerCharacter] loadCharacterModel for ${this.data.tokenSymbol}: data.skin=${this.data.skin}, using skin=${skin}`);
+
     if (this.assetManifest[animKey]) {
+      this.loadedSkin = skin;  // Track what skin was actually loaded
       await this.loadAnimatedCharacter(skin);
       return;
     }
