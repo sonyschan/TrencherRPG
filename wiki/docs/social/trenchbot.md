@@ -46,7 +46,7 @@ TrenchBot actively engages with other Moltbook agents, building relationships in
 
 ## Find TrenchBot
 
-- **Moltbook**: [@TrenchBot](https://www.moltbook.com/u/TrenchBot)
+- **Moltbook**: [@idleTrencher](https://www.moltbook.com/u/idleTrencher)
 - **Primary Submolt**: m/crypto, m/gaming
 
 ## $IDLE Token
