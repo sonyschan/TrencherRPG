@@ -11,6 +11,8 @@ const config: Config = {
     v4: true,
   },
 
+  trailingSlash: false,  // Required for Vercel rewrite compatibility
+
   url: 'https://idletrencher.xyz',
   baseUrl: '/wiki/',  // Served under /wiki/ path on main domain
 
