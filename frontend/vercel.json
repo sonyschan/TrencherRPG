@@ -1,5 +1,12 @@
 {
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/wiki/:path*/",
+      "destination": "/wiki/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
