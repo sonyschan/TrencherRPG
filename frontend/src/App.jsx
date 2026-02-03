@@ -12,7 +12,7 @@ import { ExploreDialog } from './components/ExploreDialog';
 import { ExploreView } from './components/ExploreView';
 import { useWalletData } from './hooks/useWalletData';
 import { useSkinAssignment } from './hooks/useSkinAssignment';
-import { updateDesignatedValue, exploreWallet } from './services/api';
+import { updateDesignatedValue, updateSkin, exploreWallet } from './services/api';
 import './App.css';
 
 function App() {
@@ -22,13 +22,23 @@ function App() {
   // Skin assignment management
   const { getSkinForToken, getExplicitSkinForToken, assignSkin, getTokenUsingSkin } = useSkinAssignment(walletAddress);
 
-  // Handle skin change
-  const handleSkinChange = useCallback((tokenAddress, skinId) => {
+  // Handle skin change - save to localStorage and persist to backend
+  const handleSkinChange = useCallback(async (tokenAddress, skinId) => {
     const partner = partners.find(p => p.tokenAddress === tokenAddress);
     if (partner) {
+      // Save to localStorage (immediate UI update)
       assignSkin(tokenAddress, skinId, partner.level);
+
+      // Persist to backend (async, don't block UI)
+      try {
+        await updateSkin(walletAddress, tokenAddress, skinId);
+        console.log('[Skin] Saved to backend:', tokenAddress, skinId);
+      } catch (error) {
+        console.warn('[Skin] Failed to save to backend:', error.message);
+        // localStorage still has it, so UI is consistent
+      }
     }
-  }, [partners, assignSkin]);
+  }, [partners, assignSkin, walletAddress]);
 
   // Merge skin info into partners for 3D rendering
   // Priority: localStorage assignment > backend skin > default skin

@@ -217,3 +217,29 @@ export async function checkIdleBalance(address) {
 
   return response.json();
 }
+
+/**
+ * Update skin for a partner token
+ * Requires authentication
+ * @param {string} walletAddress
+ * @param {string} tokenAddress
+ * @param {string} skin - Skin ID (villager, knight, mage, etc.)
+ */
+export async function updateSkin(walletAddress, tokenAddress, skin) {
+  const headers = await buildHeaders(true);
+  const response = await fetch(
+    `${API_BASE}/wallet/${walletAddress}/partner/${tokenAddress}/skin`,
+    {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({ skin })
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to update skin');
+  }
+
+  return response.json();
+}
