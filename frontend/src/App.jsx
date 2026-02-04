@@ -76,6 +76,26 @@ function App() {
   const [exploreData, setExploreData] = useState(null);
   const [exploreAddress, setExploreAddress] = useState(null);
 
+  // Detect /explore/:address URL on page load
+  useEffect(() => {
+    const path = window.location.pathname;
+    const exploreMatch = path.match(/^\/explore\/([A-Za-z0-9]+)$/);
+    if (exploreMatch) {
+      const address = exploreMatch[1];
+      console.log('[App] Detected explore URL:', address);
+      // Load explore data for this address
+      exploreWallet(address).then(data => {
+        setExploreData(data);
+        setExploreAddress(address);
+        setCurrentView('explore');
+      }).catch(err => {
+        console.error('[App] Failed to load explore data:', err);
+        // Navigate to home on error
+        window.history.replaceState({}, '', '/');
+      });
+    }
+  }, []);
+
   // Copy CA state
   const [caCopied, setCaCopied] = useState(false);
 
@@ -134,6 +154,8 @@ function App() {
     setCurrentView('home');
     setExploreData(null);
     setExploreAddress(null);
+    // Navigate URL to home
+    window.history.pushState({}, '', '/');
   }, []);
 
   if (!ready) {
