@@ -29,6 +29,8 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
   const { t, i18n } = useTranslation();
   const [webglSupported, setWebglSupported] = useState(true);
   const [sceneError, setSceneError] = useState(null);
+  const [loadingAsset, setLoadingAsset] = useState('Initializing...');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Keep callback ref up to date
   useEffect(() => {
@@ -39,6 +41,16 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
   const handlePartnerClick = useCallback((partner) => {
     if (onPartnerClickRef.current) {
       onPartnerClickRef.current(partner);
+    }
+  }, []);
+
+  // Loading progress callback
+  const handleLoadingProgress = useCallback(({ assetName, isComplete }) => {
+    if (isComplete) {
+      setIsLoading(false);
+      setLoadingAsset(null);
+    } else if (assetName) {
+      setLoadingAsset(assetName);
     }
   }, []);
 
@@ -55,11 +67,15 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
   useEffect(() => {
     if (!containerRef.current || !webglSupported) return;
 
+    setIsLoading(true);
+    setLoadingAsset('Initializing...');
+
     try {
-      sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick, t);
+      sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick, t, handleLoadingProgress);
     } catch (error) {
       console.error('Failed to initialize 3D scene:', error);
       setSceneError(error.message);
+      setIsLoading(false);
     }
 
     return () => {
@@ -69,7 +85,7 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handlePartnerClick, webglSupported]); // Don't include t - use setTranslation instead
+  }, [handlePartnerClick, handleLoadingProgress, webglSupported]); // Don't include t - use setTranslation instead
 
   // Update translation function when language changes
   useEffect(() => {
@@ -102,6 +118,21 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
                 : `Failed to load 3D scene: ${sceneError}`
               }
             </p>
+          </div>
+        </div>
+      )}
+
+      {/* Loading overlay */}
+      {!showError && isLoading && partners && partners.length > 0 && (
+        <div className="scene-loading">
+          <div className="loading-content">
+            <div className="loading-spinner">
+              <span className="spinner-sword">⚔️</span>
+            </div>
+            <div className="loading-text">
+              <span className="loading-label">Loading</span>
+              <span className="loading-asset">{loadingAsset || '...'}</span>
+            </div>
           </div>
         </div>
       )}

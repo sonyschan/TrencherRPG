@@ -86,10 +86,11 @@ function normalizeToHeightAndGround(object, targetHeight, sink = 0.0) {
 }
 
 export class FarmScene {
-  constructor(container, onPartnerClick = null, translateFn = null) {
+  constructor(container, onPartnerClick = null, translateFn = null, onLoadingProgress = null) {
     this.container = container;
     this.onPartnerClick = onPartnerClick;
     this.t = translateFn || ((key) => key);  // Translation function
+    this.onLoadingProgress = onLoadingProgress; // Loading progress callback
     this.partners = new Map();
     this.environmentObjects = [];
     this.animationId = null;
@@ -445,8 +446,18 @@ export class FarmScene {
     }
   }
 
+  /**
+   * Report loading progress
+   */
+  reportLoading(assetName, isComplete = false) {
+    if (this.onLoadingProgress) {
+      this.onLoadingProgress({ assetName, isComplete });
+    }
+  }
+
   async loadAssets() {
     try {
+      this.reportLoading('assets.json');
       const response = await fetch('/assets.json');
       this.assetManifest = await response.json();
 
@@ -454,6 +465,7 @@ export class FarmScene {
       await this.setupEnvironment();
 
       this.assetsLoaded = true;
+      this.reportLoading(null, true);
 
       // Check if disposed during asset loading
       if (this.disposed) return;
@@ -496,6 +508,7 @@ export class FarmScene {
     const outerRadius = 16;
 
     // Trees around the perimeter (reduced from 15 to 10)
+    this.reportLoading('Trees');
     const treeAssets = envAssets.filter(a => a.key.startsWith('tree'));
     for (let i = 0; i < 10; i++) {
       const angle = (i / 10) * Math.PI * 2 + Math.random() * 0.3;
@@ -517,6 +530,7 @@ export class FarmScene {
     }
 
     // Bushes around the farm area (reduced from 12 to 8)
+    this.reportLoading('Bushes');
     const bushAsset = envAssets.find(a => a.key === 'bush');
     if (bushAsset) {
       for (let i = 0; i < 8; i++) {
@@ -539,6 +553,7 @@ export class FarmScene {
     }
 
     // Flowers scattered in the farm (reduced from 20 to 12)
+    this.reportLoading('Flowers');
     const flowerAssets = envAssets.filter(a => a.key.startsWith('flower'));
     for (let i = 0; i < 12; i++) {
       const x = (Math.random() - 0.5) * farmRadius * 2;
@@ -563,6 +578,7 @@ export class FarmScene {
     }
 
     // Grass tufts (reduced from 30 to 15)
+    this.reportLoading('Grass');
     const grassAssets = envAssets.filter(a => a.key.startsWith('grass'));
     for (let i = 0; i < 15; i++) {
       const x = (Math.random() - 0.5) * 30;
@@ -584,6 +600,7 @@ export class FarmScene {
     }
 
     // Rocks scattered (reduced from 8 to 5)
+    this.reportLoading('Rocks');
     const rockAssets = envAssets.filter(a => a.key.startsWith('rock'));
     for (let i = 0; i < 5; i++) {
       const x = (Math.random() - 0.5) * 25;
@@ -650,6 +667,7 @@ export class FarmScene {
           await this.updatePartner(data);
         } else {
           console.log(`[FarmScene] Adding new partner: ${data.tokenSymbol} (${data.tokenAddress})`);
+          this.reportLoading(data.tokenSymbol || 'Character');
           await this.addPartner(data, i);
         }
       }
@@ -657,6 +675,9 @@ export class FarmScene {
       // Arrange partners in a semi-circle
       this.arrangePartners(partnerData.length);
       console.log('[FarmScene] Update complete. Partners in Map:', Array.from(this.partners.keys()));
+
+      // Report loading complete after characters are added
+      this.reportLoading(null, true);
 
     } finally {
       this.updateInProgress = false;

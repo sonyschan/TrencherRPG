@@ -55,6 +55,81 @@
   50% { transform: translateY(-10px); }
 }
 
+/* Loading Overlay - RPG Style */
+.scene-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #87ceeb 0%, #87ceeb 60%, #4a7c4e 60%, #3d6b40 100%);
+  z-index: 5;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 32px 48px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 3px solid #4a4a6a;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.loading-spinner {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-sword {
+  font-size: 40px;
+  animation: swordSpin 1.5s ease-in-out infinite;
+}
+
+@keyframes swordSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-15deg) scale(1.1); }
+  50% { transform: rotate(15deg) scale(1); }
+  75% { transform: rotate(-10deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.loading-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.loading-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #8b8bab;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.loading-asset {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fbbf24;
+  animation: assetPulse 1s ease-in-out infinite;
+}
+
+@keyframes assetPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 /* WebGL Error Fallback */
 .webgl-error {
   position: absolute;
