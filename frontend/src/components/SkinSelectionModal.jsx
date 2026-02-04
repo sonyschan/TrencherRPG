@@ -48,6 +48,7 @@ export function SkinSelectionModal({
   onClose,
   getTokenUsingSkin,
   partners = [], // All partners for showing which token is using a skin
+  idleBalance = 0, // User's $IDLE balance for legendary skins
 }) {
   const { t } = useTranslation();
   const [selectedSkin, setSelectedSkin] = useState(currentSkin);
@@ -57,6 +58,7 @@ export function SkinSelectionModal({
   const allSkins = useMemo(() => getAllSkins(), []);
   const villagerSkins = useMemo(() => allSkins.filter(s => s.category === SKIN_CATEGORIES.VILLAGER), [allSkins]);
   const premiumSkins = useMemo(() => allSkins.filter(s => s.category === SKIN_CATEGORIES.PREMIUM), [allSkins]);
+  const legendarySkins = useMemo(() => allSkins.filter(s => s.category === SKIN_CATEGORIES.LEGENDARY), [allSkins]);
 
   // Find partner by token mint
   const findPartnerByMint = (mint) => {
@@ -65,7 +67,7 @@ export function SkinSelectionModal({
 
   // Handle skin click
   const handleSkinClick = (skin) => {
-    const isAvailable = isSkinAvailable(skin.id, partner.level);
+    const isAvailable = isSkinAvailable(skin.id, partner.level, idleBalance);
     if (!isAvailable) return; // Can't select locked skins
 
     // Check if exclusive skin is used by another token
@@ -97,17 +99,36 @@ export function SkinSelectionModal({
     setSkinToConfirm(null);
   };
 
+  // Format number with K/M suffix
+  const formatNumber = (num) => {
+    if (num >= 1000000) return `${(num / 1000000).toFixed(0)}M`;
+    if (num >= 1000) return `${(num / 1000).toFixed(0)}K`;
+    return num.toString();
+  };
+
+  // Get requirement text for a skin
+  const getRequirementText = (skin) => {
+    if (skin.idleRequired) {
+      return `${formatNumber(skin.idleRequired)} $IDLE`;
+    }
+    if (skin.levelRequired > 1) {
+      return `Lv.${skin.levelRequired}+`;
+    }
+    return null;
+  };
+
   // Render skin grid
   const renderSkinGrid = (skins, title) => (
     <div className="skin-section">
       <h4 className="skin-section-title">{title}</h4>
       <div className="skin-grid">
         {skins.map(skin => {
-          const isLocked = !isSkinAvailable(skin.id, partner.level);
+          const isLocked = !isSkinAvailable(skin.id, partner.level, idleBalance);
           const isSelected = selectedSkin === skin.id;
           const usingToken = skin.exclusive ? getTokenUsingSkin(skin.id) : null;
           const isUsedByOther = usingToken && usingToken !== partner.tokenAddress;
           const usingPartner = isUsedByOther ? findPartnerByMint(usingToken) : null;
+          const requirementText = getRequirementText(skin);
 
           return (
             <div
@@ -124,7 +145,7 @@ export function SkinSelectionModal({
               <div className="skin-info">
                 <span className="skin-name">{skin.name}</span>
                 {isLocked ? (
-                  <span className="skin-requirement">Lv.{skin.levelRequired}+</span>
+                  <span className="skin-requirement">{requirementText}</span>
                 ) : isUsedByOther ? (
                   <span className="skin-used-by">Used by {usingPartner?.tokenSymbol || 'Unknown'}</span>
                 ) : (
@@ -152,6 +173,7 @@ export function SkinSelectionModal({
         <div className="skin-modal-content">
           {renderSkinGrid(villagerSkins, 'Basic Skins')}
           {renderSkinGrid(premiumSkins, 'Premium Skins (Exclusive)')}
+          {legendarySkins.length > 0 && renderSkinGrid(legendarySkins, 'Legendary Skins (1M $IDLE)')}
         </div>
 
         <div className="skin-modal-footer">

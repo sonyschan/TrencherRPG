@@ -263,6 +263,7 @@ function App() {
           onSkinChange={handleSkinChange}
           getTokenUsingSkin={getTokenUsingSkin}
           partners={partners}
+          idleBalance={access?.idleBalance || 0}
         />
       )}
 

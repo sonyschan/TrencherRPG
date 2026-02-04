@@ -19,6 +19,7 @@ export function TokenDetailModal({
   onSkinChange,
   getTokenUsingSkin,
   partners = [],
+  idleBalance = 0, // User's $IDLE balance for legendary skins
 }) {
   const { t } = useTranslation();
   const [showEditForm, setShowEditForm] = useState(false);
@@ -134,7 +135,7 @@ export function TokenDetailModal({
                   </div>
                 )}
               </div>
-              <div className="avatar-label">Token</div>
+              <div className="avatar-label">{partner.tokenSymbol}</div>
             </div>
 
             {/* Skin Preview */}
@@ -146,7 +147,7 @@ export function TokenDetailModal({
                   className="skin-preview-img"
                 />
               </div>
-              <div className="avatar-label">Skin</div>
+              <div className="avatar-label">{skinInfo.name}</div>
             </div>
           </div>
 
@@ -288,6 +289,7 @@ export function TokenDetailModal({
           onClose={() => setShowSkinModal(false)}
           getTokenUsingSkin={getTokenUsingSkin}
           partners={partners}
+          idleBalance={idleBalance}
         />
       )}
     </div>

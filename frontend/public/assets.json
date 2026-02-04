@@ -6,7 +6,8 @@
     { "key": "villagerGirl", "path": "/assets/characters/VillagerGirl_Walking_withSkin.glb" },
     { "key": "villagerGirl2", "path": "/assets/characters/VillagerGirl2_Walking_withSkin.glb" },
     { "key": "mage", "path": "/assets/characters/Mage_Walking_withSkin.glb" },
-    { "key": "knight", "path": "/assets/characters/Knight_Walking_withSkin.glb" }
+    { "key": "knight", "path": "/assets/characters/Knight_Walking_withSkin.glb" },
+    { "key": "purple", "path": "/assets/characters/Purple_Walking_withSkin.glb" }
   ],
   "adventurerAnimations": {
     "walking": "/assets/characters/Adventurer_Walking_withSkin.glb",
@@ -63,6 +64,13 @@
     "cheer": "/assets/characters/Lady_Cheer_withSkin.glb",
     "situps": "/assets/characters/Lady_Situps_withSkin.glb",
     "talk": "/assets/characters/Lady_Talk_withSkin.glb"
+  },
+  "purpleAnimations": {
+    "walking": "/assets/characters/Purple_Walking_withSkin.glb",
+    "running": "/assets/characters/Purple_Running_withSkin.glb",
+    "cheer": "/assets/characters/Purple_Cheer_withSkin.glb",
+    "situps": "/assets/characters/Purple_Situps_withSkin.glb",
+    "talk": "/assets/characters/Purple_Talk_withSkin.glb"
   },
   "animals": [
     { "key": "chick", "path": "/assets/animals/Chick.gltf" },

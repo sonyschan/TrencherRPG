@@ -6,6 +6,7 @@
 export const SKIN_CATEGORIES = {
   VILLAGER: 'villager',  // Basic skins, no restriction
   PREMIUM: 'premium',    // 1:1 allocation, level gated
+  LEGENDARY: 'legendary', // 1:1 allocation, $IDLE balance gated
 };
 
 export const SKINS = {
@@ -92,6 +93,19 @@ export const SKINS = {
     glbPrefix: 'Knight',
     icon: '/assets/skin-icon/Knight.png',
   },
+
+  // === Legendary Skins - 1:1 allocation, $IDLE balance gated ===
+  purple: {
+    id: 'purple',
+    name: 'Purple',
+    category: SKIN_CATEGORIES.LEGENDARY,
+    levelRequired: 1,  // No level requirement
+    idleRequired: 1000000,  // Requires 1M $IDLE
+    exclusive: true,
+    description: 'A mysterious purple entity. Requires 1M $IDLE to unlock.',
+    glbPrefix: 'Purple',
+    icon: '/assets/skin-icon/Purple.png',
+  },
 };
 
 // Get all villager skins
@@ -104,16 +118,28 @@ export const getPremiumSkins = () => {
   return Object.values(SKINS).filter(s => s.category === SKIN_CATEGORIES.PREMIUM);
 };
 
+// Get all legendary skins
+export const getLegendarySkins = () => {
+  return Object.values(SKINS).filter(s => s.category === SKIN_CATEGORIES.LEGENDARY);
+};
+
 // Get all skins sorted by level requirement
 export const getAllSkins = () => {
   return Object.values(SKINS).sort((a, b) => a.levelRequired - b.levelRequired);
 };
 
-// Check if a skin is available for a given level
-export const isSkinAvailable = (skinId, level) => {
+// Check if a skin is available for a given level and $IDLE balance
+export const isSkinAvailable = (skinId, level, idleBalance = 0) => {
   const skin = SKINS[skinId];
   if (!skin) return false;
-  return level >= skin.levelRequired;
+
+  // Check level requirement
+  if (level < skin.levelRequired) return false;
+
+  // Check $IDLE requirement for legendary skins
+  if (skin.idleRequired && idleBalance < skin.idleRequired) return false;
+
+  return true;
 };
 
 // Get skin by ID
