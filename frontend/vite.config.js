@@ -26,6 +26,7 @@ export default defineConfig({
       includeAssets: ['idle.svg', 'assets/**/*'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,glb,gltf,json}'],
+        globIgnores: ['**/Purple_*.glb'], // Exclude large Purple character GLBs from precache
         maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10MB for 3D assets
         skipWaiting: true,      // Force new SW to activate immediately
         clientsClaim: true,     // Take control of all clients immediately
