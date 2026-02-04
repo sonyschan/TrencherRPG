@@ -220,7 +220,7 @@ function App() {
         className="okx-logo-link"
         title="Trade on OKX DEX"
       >
-        <img src="/assets/idleTrencherLogo-trans.png" alt="IdleTrencher" className="okx-logo" />
+        <img src="/assets/idleTrencherLogo-72.png" alt="IdleTrencher" className="okx-logo" />
       </a>
 
       {/* Bottom-right: $IDLE Token Info */}
