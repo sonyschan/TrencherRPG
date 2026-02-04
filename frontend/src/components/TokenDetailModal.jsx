@@ -1,16 +1,13 @@
 /**
- * TokenDetailModal - RPG-style dialog for token details
- * Features: typewriter effect, typing sound, editable designated value
- * Reference: /Users/sonyschan/gt/beedog/mayor/rig/landing/modules/DialogBox.js
+ * TokenDetailModal - RPG-style attribute table for token details
+ * Features: Skin preview, attribute table, editable values
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { getSkinById } from '../config/skins';
+import { getSkinById, SKINS } from '../config/skins';
 import { SkinSelectionModal } from './SkinSelectionModal';
 import './TokenDetailModal.css';
-
-const TYPING_SPEED = 50; // ms per character
 
 export function TokenDetailModal({
   partner,
@@ -24,8 +21,6 @@ export function TokenDetailModal({
   partners = [],
 }) {
   const { t } = useTranslation();
-  const [displayedText, setDisplayedText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [editValue, setEditValue] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -35,191 +30,45 @@ export function TokenDetailModal({
   // Get current skin info
   const skinInfo = getSkinById(currentSkin || 'villager');
 
-  const audioContextRef = useRef(null);
-  const typingIntervalRef = useRef(null);
-  const fullTextRef = useRef('');
-  const dialogTextRef = useRef(null);
+  // Calculate stats
+  const calculateStats = useCallback(() => {
+    if (!partner) return {};
 
-  // Generate the dialog text with 24h price change and state-based fun messages
-  const generateDialogText = useCallback(() => {
-    if (!partner) return '';
+    const { currentValue, designatedValue, level, state, priceChange24h, levelInfo, hpBars } = partner;
 
-    const { tokenSymbol, currentValue, designatedValue, level, state, priceChange24h, levelInfo, isDemo, hpBars } = partner;
-
-    // Calculate total HP blocks for display
-    const calculateTotalHPBlocks = () => {
+    // Total HP blocks
+    const totalHP = (() => {
       if (!hpBars) return 10;
-      const bar1Green = hpBars.bar1?.green || 0;
-      const bar2Green = hpBars.bar2?.show ? (hpBars.bar2?.green || 0) : 0;
-      const bar3Green = hpBars.bar3?.show ? (hpBars.bar3?.green || 0) : 0;
-      return bar1Green + bar2Green + bar3Green;
-    };
-    const totalHPBlocks = calculateTotalHPBlocks();
+      const bar1 = hpBars.bar1?.green || 0;
+      const bar2 = hpBars.bar2?.show ? (hpBars.bar2?.green || 0) : 0;
+      const bar3 = hpBars.bar3?.show ? (hpBars.bar3?.green || 0) : 0;
+      return bar1 + bar2 + bar3;
+    })();
 
-    // Special onboarding message for demo SOL token (logged-out users)
-    if (isDemo) {
-      return `${t('dialog.demo.greeting')}
-
-${t('dialog.demo.intro', { symbol: tokenSymbol })}
-
-${t('dialog.demo.description')}
-
-${t('dialog.demo.companion')}
-
-${t('dialog.demo.upAction')}
-${t('dialog.demo.downAction')}
-${t('dialog.demo.stableAction')}
-
-${t('dialog.demo.levelUp')}
-
-${t('dialog.demo.cta')}`;
-    }
-
+    // HP change percent
     const multiplier = designatedValue > 0 ? (currentValue / designatedValue) : 1;
-    const baseChangePercent = ((multiplier - 1) * 100).toFixed(2);
+    const hpChangePercent = ((multiplier - 1) * 100).toFixed(2);
 
-    // Check if 24h data is available (requires refresh)
-    const has24hData = priceChange24h !== null && priceChange24h !== undefined;
-    const change24h = has24hData ? priceChange24h : 0;
-    const change24hText = change24h > 0 ? `+${change24h.toFixed(2)}%` : `${change24h.toFixed(2)}%`;
-
-    // Fun status text based on animation state
-    let statusText = '';
-    if (!has24hData) {
-      statusText = t('dialog.needRefresh');
-    } else if (state === 'increasing') {
-      statusText = t('dialog.statusUp', { change: change24hText });
-    } else if (state === 'decreasing') {
-      statusText = t('dialog.statusDown', { change: change24hText });
-    } else {
-      statusText = t('dialog.statusStable', { change: change24hText });
-    }
-
-    // Base value comparison text with HP info
-    let baseValueText = '';
-    const changePercent = parseFloat(baseChangePercent);
-    if (multiplier >= 2) {
-      baseValueText = t('dialog.hpUpBig', { percent: baseChangePercent, blocks: totalHPBlocks });
-    } else if (changePercent > 0.5) {
-      // Only say "up" if actually increased by more than 0.5%
-      baseValueText = t('dialog.hpUp', { percent: baseChangePercent, blocks: totalHPBlocks });
-    } else if (changePercent >= -0.5) {
-      // Between -0.5% and +0.5% is considered stable
-      baseValueText = t('dialog.hpStable', { blocks: totalHPBlocks });
-    } else {
-      baseValueText = t('dialog.hpDown', { percent: Math.abs(changePercent).toFixed(2), blocks: totalHPBlocks });
-    }
-
-    // Days held text (exp is in hours, convert to days)
+    // Days held (exp is in hours)
     const daysHeld = levelInfo?.exp ? Math.floor(levelInfo.exp / 24) : 0;
-    const daysHeldText = levelInfo
-      ? (daysHeld > 0 ? t('dialog.daysHeld', { days: daysHeld }) : t('dialog.daysHeldFirst'))
-      : '';
 
-    return `${t('dialog.greeting')}
+    // 24h change
+    const has24hData = priceChange24h !== null && priceChange24h !== undefined;
+    const change24h = has24hData ? priceChange24h : null;
 
-${t('dialog.intro', { symbol: tokenSymbol, level: level })}
-${daysHeldText}
-
-${statusText}
-
-${baseValueText}
-
-${t('dialog.baseValue', { value: designatedValue?.toFixed(2) || '0.00' })}
-${t('dialog.currentValue', { value: currentValue?.toFixed(2) || '0.00' })}
-
-${t('dialog.adjustBase')}`;
-  }, [partner, t]);
-
-  // Initialize audio context
-  const initAudio = useCallback(() => {
-    if (!audioContextRef.current) {
-      try {
-        audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-      } catch (e) {
-        console.warn('Audio not supported');
-      }
-    }
-    if (audioContextRef.current?.state === 'suspended') {
-      audioContextRef.current.resume();
-    }
-  }, []);
-
-  // Play typing sound
-  const playTypingSound = useCallback(() => {
-    if (!audioContextRef.current) return;
-
-    try {
-      const oscillator = audioContextRef.current.createOscillator();
-      const gainNode = audioContextRef.current.createGain();
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContextRef.current.destination);
-
-      // Soft click sound (800-1000Hz range)
-      oscillator.frequency.value = 800 + Math.random() * 200;
-      oscillator.type = 'sine';
-
-      gainNode.gain.setValueAtTime(0.03, audioContextRef.current.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContextRef.current.currentTime + 0.05);
-
-      oscillator.start(audioContextRef.current.currentTime);
-      oscillator.stop(audioContextRef.current.currentTime + 0.05);
-    } catch (e) {
-      // Ignore audio errors
-    }
-  }, []);
-
-  // Start typewriter effect
-  const startTyping = useCallback(() => {
-    const fullText = generateDialogText();
-    fullTextRef.current = fullText;
-    setIsTyping(true);
-    setDisplayedText('');
-
-    let charIndex = 0;
-
-    const typeNextChar = () => {
-      if (charIndex < fullText.length) {
-        const char = fullText[charIndex];
-        setDisplayedText(fullText.slice(0, charIndex + 1));
-        charIndex++;
-
-        // Play sound for non-space characters
-        if (char !== ' ' && char !== '\n') {
-          playTypingSound();
-        }
-
-        // Adjust timing for punctuation
-        let delay = TYPING_SPEED;
-        if (['.', '!', '?'].includes(char)) delay = 200;
-        else if ([',', '\n'].includes(char)) delay = 150;
-
-        typingIntervalRef.current = setTimeout(typeNextChar, delay);
-      } else {
-        setIsTyping(false);
-      }
+    return {
+      totalHP,
+      hpChangePercent,
+      daysHeld,
+      change24h,
+      state,
+      currentValue,
+      designatedValue,
+      level,
     };
+  }, [partner]);
 
-    typeNextChar();
-  }, [generateDialogText, playTypingSound]);
-
-  // Skip typing animation
-  const skipTyping = useCallback(() => {
-    if (typingIntervalRef.current) {
-      clearTimeout(typingIntervalRef.current);
-    }
-    setDisplayedText(fullTextRef.current);
-    setIsTyping(false);
-  }, []);
-
-  // Handle click on dialog
-  const handleDialogClick = useCallback(() => {
-    initAudio();
-    if (isTyping) {
-      skipTyping();
-    }
-  }, [initAudio, isTyping, skipTyping]);
+  const stats = calculateStats();
 
   // Handle edit button click
   const handleEditClick = useCallback((e) => {
@@ -256,28 +105,13 @@ ${t('dialog.adjustBase')}`;
     setEditError('');
   }, []);
 
-  // Start typing on mount
-  useEffect(() => {
-    if (partner) {
-      initAudio();
-      startTyping();
-    }
-
-    return () => {
-      if (typingIntervalRef.current) {
-        clearTimeout(typingIntervalRef.current);
-      }
-    };
-  }, [partner, initAudio, startTyping]);
-
-  // Auto-scroll to bottom while typing
-  useEffect(() => {
-    if (isTyping && dialogTextRef.current) {
-      dialogTextRef.current.scrollTop = dialogTextRef.current.scrollHeight;
-    }
-  }, [displayedText, isTyping]);
-
   if (!partner) return null;
+
+  // Find skin thumbnail path
+  const getSkinThumbnail = (skinId) => {
+    const skin = SKINS.find(s => s.id === skinId);
+    return skin?.thumbnail || '/assets/skins/villager-thumb.png';
+  };
 
   return (
     <div className="token-detail-modal">
@@ -286,17 +120,34 @@ ${t('dialog.adjustBase')}`;
       <div className="modal-container">
         <button className="modal-close" onClick={onClose}>×</button>
 
-        <div className="modal-content" onClick={handleDialogClick}>
-          {/* Token avatar */}
-          <div className="token-avatar-large">
-            {partner.logoUrl ? (
-              <img src={partner.logoUrl} alt={partner.tokenSymbol} referrerPolicy="no-referrer" />
-            ) : (
-              <div className="avatar-placeholder-large">
-                {partner.tokenSymbol?.[0] || '?'}
+        <div className="modal-content rpg-style">
+          {/* Header with Token Avatar and Skin Preview */}
+          <div className="modal-header-row">
+            {/* Token Avatar */}
+            <div className="token-avatar-section">
+              <div className="token-avatar-large">
+                {partner.logoUrl ? (
+                  <img src={partner.logoUrl} alt={partner.tokenSymbol} referrerPolicy="no-referrer" />
+                ) : (
+                  <div className="avatar-placeholder-large">
+                    {partner.tokenSymbol?.[0] || '?'}
+                  </div>
+                )}
               </div>
-            )}
-            <div className={`avatar-glow ${isTyping ? 'talking' : ''}`} />
+              <div className="avatar-label">Token</div>
+            </div>
+
+            {/* Skin Preview */}
+            <div className="skin-preview-section">
+              <div className="skin-preview-frame">
+                <img
+                  src={getSkinThumbnail(currentSkin || 'villager')}
+                  alt={skinInfo.name}
+                  className="skin-preview-img"
+                />
+              </div>
+              <div className="avatar-label">Skin</div>
+            </div>
           </div>
 
           {/* Social links bar */}
@@ -306,63 +157,123 @@ ${t('dialog.adjustBase')}`;
             dexscreenerUrl={partner.dexscreenerUrl}
           />
 
-          {/* Dialog box */}
-          <div className="dialog-box">
-            <div className="dialog-header">
-              <span className="speaker-name">{partner.tokenSymbol}</span>
-              <span className="speaker-level">Lv{partner.level}</span>
+          {/* RPG Attribute Table */}
+          <div className="rpg-stats-table">
+            <div className="stat-row">
+              <span className="stat-label">Token</span>
+              <span className="stat-value">{partner.tokenSymbol}</span>
             </div>
 
-            <div className="dialog-text" ref={dialogTextRef}>
-              {displayedText}
-              {isTyping && <span className="typing-cursor">|</span>}
-            </div>
-
-            {!isTyping && !showEditForm && (
-              <div className="dialog-hint" onClick={onClose} style={{ cursor: 'pointer' }}>
-                {partner?.isDemo ? (
-                  <span>Click to close</span>
-                ) : (
-                  <>
-                    Click to close or{' '}
-                    <button className="edit-btn" onClick={handleEditClick}>Edit Base Value</button>
-                    {' | '}
-                    <button className="edit-btn skin-btn" onClick={(e) => { e.stopPropagation(); setShowSkinModal(true); }}>
-                      Change Skin ({skinInfo.name})
-                    </button>
-                  </>
+            <div className="stat-row">
+              <span className="stat-label">Skin</span>
+              <span className="stat-value">
+                {skinInfo.name}
+                {!partner.isDemo && (
+                  <button
+                    className="inline-btn change-btn"
+                    onClick={(e) => { e.stopPropagation(); setShowSkinModal(true); }}
+                  >
+                    Change
+                  </button>
                 )}
-              </div>
-            )}
+              </span>
+            </div>
 
-            {/* Edit form */}
-            {showEditForm && (
-              <div className="edit-form" onClick={(e) => e.stopPropagation()}>
-                <label>New Base Value ($)</label>
-                <input
-                  type="number"
-                  value={editValue}
-                  onChange={(e) => {
-                    setEditValue(e.target.value);
-                    setEditError('');
-                  }}
-                  placeholder="Enter new base value"
-                  min="0.01"
-                  step="0.01"
-                  autoFocus
-                />
-                {editError && <div className="edit-error">{editError}</div>}
-                <div className="edit-actions">
-                  <button className="btn-cancel" onClick={handleCancel} disabled={isSaving}>
-                    Cancel
+            <div className="stat-row">
+              <span className="stat-label">Level</span>
+              <span className="stat-value stat-highlight">{stats.level}</span>
+            </div>
+
+            <div className="stat-row">
+              <span className="stat-label">Age</span>
+              <span className="stat-value">
+                {stats.daysHeld > 0 ? `${stats.daysHeld} days` : 'New partner!'}
+              </span>
+            </div>
+
+            <div className="stat-row">
+              <span className="stat-label">HP</span>
+              <span className="stat-value">
+                <span className={`hp-value ${stats.state}`}>
+                  {stats.totalHP}
+                </span>
+                <span className={`hp-change ${parseFloat(stats.hpChangePercent) >= 0 ? 'positive' : 'negative'}`}>
+                  ({parseFloat(stats.hpChangePercent) >= 0 ? '+' : ''}{stats.hpChangePercent}%)
+                </span>
+                {!partner.isDemo && (
+                  <button
+                    className="inline-btn edit-btn"
+                    onClick={handleEditClick}
+                  >
+                    Edit
                   </button>
-                  <button className="btn-save" onClick={handleSave} disabled={isSaving}>
-                    {isSaving ? 'Saving...' : 'Save'}
-                  </button>
-                </div>
-              </div>
-            )}
+                )}
+              </span>
+            </div>
+
+            <div className="stat-row">
+              <span className="stat-label">24h</span>
+              <span className="stat-value">
+                {stats.change24h !== null ? (
+                  <span className={`change-value ${stats.change24h >= 0 ? 'positive' : 'negative'}`}>
+                    {stats.change24h >= 0 ? '+' : ''}{stats.change24h.toFixed(2)}%
+                  </span>
+                ) : (
+                  <span className="no-data">Refresh for data</span>
+                )}
+              </span>
+            </div>
+
+            <div className="stat-row">
+              <span className="stat-label">Value</span>
+              <span className="stat-value stat-currency">
+                ${stats.currentValue?.toFixed(2) || '0.00'}
+              </span>
+            </div>
+
+            <div className="stat-row">
+              <span className="stat-label">Base</span>
+              <span className="stat-value stat-currency muted">
+                ${stats.designatedValue?.toFixed(2) || '0.00'}
+              </span>
+            </div>
           </div>
+
+          {/* Edit form */}
+          {showEditForm && (
+            <div className="edit-form" onClick={(e) => e.stopPropagation()}>
+              <label>New Base Value ($)</label>
+              <input
+                type="number"
+                value={editValue}
+                onChange={(e) => {
+                  setEditValue(e.target.value);
+                  setEditError('');
+                }}
+                placeholder="Enter new base value"
+                min="0.01"
+                step="0.01"
+                autoFocus
+              />
+              {editError && <div className="edit-error">{editError}</div>}
+              <div className="edit-actions">
+                <button className="btn-cancel" onClick={handleCancel} disabled={isSaving}>
+                  Cancel
+                </button>
+                <button className="btn-save" onClick={handleSave} disabled={isSaving}>
+                  {isSaving ? 'Saving...' : 'Save'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Demo message */}
+          {partner.isDemo && (
+            <div className="demo-hint">
+              <span className="demo-icon">💡</span>
+              Connect your wallet to track your own tokens!
+            </div>
+          )}
         </div>
       </div>
 
@@ -387,9 +298,6 @@ ${t('dialog.adjustBase')}`;
  * SocialLinksBar - Display social links with icons
  */
 function SocialLinksBar({ socials = [], websites = [], dexscreenerUrl }) {
-  // Debug: log social data
-  console.log('SocialLinksBar data:', { socials, websites, dexscreenerUrl });
-
   // Get social link by type
   const getSocialByType = (type) => {
     return socials.find(s =>
