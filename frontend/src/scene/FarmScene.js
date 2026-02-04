@@ -465,7 +465,7 @@ export class FarmScene {
       await this.setupEnvironment();
 
       this.assetsLoaded = true;
-      this.reportLoading(null, true);
+      // Note: Don't report complete here - wait for characters to load in updatePartners()
 
       // Check if disposed during asset loading
       if (this.disposed) return;
