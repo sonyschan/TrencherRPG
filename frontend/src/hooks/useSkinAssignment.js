@@ -69,9 +69,10 @@ export function useSkinAssignment(walletAddress) {
    * @param {string} tokenMint - Token mint address
    * @param {string} skinId - Skin ID to assign
    * @param {number} tokenLevel - Token's current level (for validation)
+   * @param {number} idleBalance - User's $IDLE balance (for legendary skins)
    * @returns {{ success: boolean, removedFrom?: string, error?: string }}
    */
-  const assignSkin = useCallback((tokenMint, skinId, tokenLevel) => {
+  const assignSkin = useCallback((tokenMint, skinId, tokenLevel, idleBalance = 0) => {
     const skin = SKINS[skinId];
 
     // Validate skin exists
@@ -79,8 +80,11 @@ export function useSkinAssignment(walletAddress) {
       return { success: false, error: 'Skin not found' };
     }
 
-    // Validate level requirement
-    if (!isSkinAvailable(skinId, tokenLevel)) {
+    // Validate level and $IDLE requirements
+    if (!isSkinAvailable(skinId, tokenLevel, idleBalance)) {
+      if (skin.idleRequired && idleBalance < skin.idleRequired) {
+        return { success: false, error: `Requires ${skin.idleRequired.toLocaleString()} $IDLE` };
+      }
       return {
         success: false,
         error: `Requires Level ${skin.levelRequired}`

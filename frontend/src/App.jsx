@@ -31,7 +31,8 @@ function App() {
     const partner = partners.find(p => p.tokenAddress === tokenAddress);
     if (partner) {
       // Save to localStorage (immediate UI update)
-      assignSkin(tokenAddress, skinId, partner.level);
+      const idleBalance = access?.idleBalance || 0;
+      assignSkin(tokenAddress, skinId, partner.level, idleBalance);
 
       // Persist to backend (async, don't block UI)
       try {
@@ -42,7 +43,7 @@ function App() {
         // localStorage still has it, so UI is consistent
       }
     }
-  }, [partners, assignSkin, walletAddress]);
+  }, [partners, assignSkin, walletAddress, access]);
 
   // Merge skin info into partners for 3D rendering
   // Priority: localStorage assignment > backend skin > default skin
