@@ -3,7 +3,7 @@
  * Low-poly farm visualization for token partners
  */
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FarmScene } from '../scene/FarmScene';
 import { FeatureMenu } from './FeatureMenu';
@@ -32,27 +32,30 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
   const [loadingAsset, setLoadingAsset] = useState('Initializing...');
   const [isLoading, setIsLoading] = useState(true);
 
+  // Track if scene has been initialized to prevent re-creation
+  const sceneInitializedRef = useRef(false);
+
   // Keep callback ref up to date
   useEffect(() => {
     onPartnerClickRef.current = onPartnerClick;
   }, [onPartnerClick]);
 
-  // Stable callback that uses ref
-  const handlePartnerClick = useCallback((partner) => {
+  // Stable callback using ref pattern - never changes reference
+  const handlePartnerClickRef = useRef((partner) => {
     if (onPartnerClickRef.current) {
       onPartnerClickRef.current(partner);
     }
-  }, []);
+  });
 
-  // Loading progress callback
-  const handleLoadingProgress = useCallback(({ assetName, isComplete }) => {
+  // Loading progress callback using ref pattern - never changes reference
+  const handleLoadingProgressRef = useRef(({ assetName, isComplete }) => {
     if (isComplete) {
       setIsLoading(false);
       setLoadingAsset(null);
     } else if (assetName) {
       setLoadingAsset(assetName);
     }
-  }, []);
+  });
 
   // Check WebGL support on mount
   useEffect(() => {
@@ -65,13 +68,25 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
 
   // Initialize Three.js scene (only once)
   useEffect(() => {
+    // Skip if container not ready, WebGL not supported, or scene already initialized
     if (!containerRef.current || !webglSupported) return;
+    if (sceneInitializedRef.current && sceneRef.current) {
+      console.log('[Scene3D] Scene already initialized, skipping re-creation');
+      return;
+    }
 
     setIsLoading(true);
     setLoadingAsset('Initializing...');
 
     try {
-      sceneRef.current = new FarmScene(containerRef.current, handlePartnerClick, t, handleLoadingProgress);
+      sceneRef.current = new FarmScene(
+        containerRef.current,
+        handlePartnerClickRef.current,
+        t,
+        handleLoadingProgressRef.current
+      );
+      sceneInitializedRef.current = true;
+      console.log('[Scene3D] Scene initialized successfully');
     } catch (error) {
       console.error('Failed to initialize 3D scene:', error);
       setSceneError(error.message);
@@ -82,10 +97,11 @@ export function Scene3D({ partners, isExploreMode = false, onPartnerClick, curre
       if (sceneRef.current) {
         sceneRef.current.dispose();
         sceneRef.current = null;
+        sceneInitializedRef.current = false;
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handlePartnerClick, handleLoadingProgress, webglSupported]); // Don't include t - use setTranslation instead
+  }, [webglSupported]); // Only re-run if WebGL support changes (shouldn't happen)
 
   // Update translation function when language changes
   useEffect(() => {

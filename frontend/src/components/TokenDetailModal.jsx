@@ -109,8 +109,8 @@ export function TokenDetailModal({
 
   // Find skin thumbnail path
   const getSkinThumbnail = (skinId) => {
-    const skin = SKINS.find(s => s.id === skinId);
-    return skin?.thumbnail || '/assets/skins/villager-thumb.png';
+    const skin = SKINS[skinId];
+    return skin?.icon || '/assets/skin-icon/villager.png';
   };
 
   return (
